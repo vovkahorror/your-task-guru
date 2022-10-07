@@ -25,7 +25,7 @@ function App() {
             title: title,
             isDone: false,
         };
-        setTasks([...tasks, newTask]);
+        setTasks([newTask, ...tasks]);
     };
     const changeTaskStatus = (taskId: string, newStatus: boolean) => {
         setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: newStatus} : t));
