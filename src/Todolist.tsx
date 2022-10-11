@@ -8,13 +8,15 @@ export type TaskType = {
 };
 
 type TodolistPropsType = {
+    todoListID: string;
     title: string;
     tasks: Array<TaskType>;
     filter: FilterValuesType;
-    removeTask: (taskId: string) => void;
-    changeFilter: (filter: FilterValuesType) => void;
-    addTask: (title: string) => void;
-    changeTaskStatus: (taskId: string, newStatus: boolean) => void;
+    removeTask: (todoListID: string, taskId: string) => void;
+    changeFilter: (todoListID: string, filter: FilterValuesType) => void;
+    addTask: (todoListID: string, title: string) => void;
+    changeTaskStatus: (todoListID: string, taskId: string, newStatus: boolean) => void;
+    removeTodoList: (todoListID: string) => void;
 };
 
 export function Todolist(props: TodolistPropsType) {
@@ -22,9 +24,9 @@ export function Todolist(props: TodolistPropsType) {
     const [error, setError] = useState<boolean>(false);
 
     const getTaskListItem = (task: TaskType) => {
-        const removeTask = () => props.removeTask(task.id);
+        const removeTask = () => props.removeTask(props.todoListID, task.id);
         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeTaskStatus(task.id, e.currentTarget.checked);
+            props.changeTaskStatus(props.todoListID, task.id, e.currentTarget.checked);
         };
 
         return (
@@ -45,12 +47,12 @@ export function Todolist(props: TodolistPropsType) {
 
     const addTask = () => {
         const trimmedTitle = title.trim();
-        trimmedTitle ? props.addTask(trimmedTitle) : setError(true);
+        trimmedTitle ? props.addTask(props.todoListID, trimmedTitle) : setError(true);
         setTitle('');
     };
 
-    const handlerCreator = (filter: FilterValuesType) => {
-        return () => props.changeFilter(filter);
+    const handlerCreator = (todoListID: string, filter: FilterValuesType) => {
+        return () => props.changeFilter(todoListID, filter);
     };
 
     const onChangeSetLocalTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +62,16 @@ export function Todolist(props: TodolistPropsType) {
     const onEnterDownAddTask = (event: KeyboardEvent<HTMLInputElement>) => event.key === 'Enter' && addTask();
     const errorMessage = error ? <div style={{fontWeight: 'bold', color: 'hotpink'}}>Tittle is required</div> : null;
 
+    const removeTodoListHandler = () => {
+        props.removeTodoList(props.todoListID);
+    }
+
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>
+                {props.title}
+                <button onClick={removeTodoListHandler}>X</button>
+            </h3>
             <div>
                 <input
                     value={title}
@@ -78,15 +87,15 @@ export function Todolist(props: TodolistPropsType) {
             <div>
                 <button
                     className={props.filter === 'all' ? 'btn activeBtn' : 'btn'}
-                    onClick={handlerCreator('all')}>All
+                    onClick={handlerCreator(props.todoListID, 'all')}>All
                 </button>
                 <button
                     className={props.filter === 'active' ? 'btn activeBtn' : 'btn'}
-                    onClick={handlerCreator('active')}>Active
+                    onClick={handlerCreator(props.todoListID,'active')}>Active
                 </button>
                 <button
                     className={props.filter === 'completed' ? 'btn activeBtn' : 'btn'}
-                    onClick={handlerCreator('completed')}>Completed
+                    onClick={handlerCreator(props.todoListID,'completed')}>Completed
                 </button>
             </div>
         </div>
