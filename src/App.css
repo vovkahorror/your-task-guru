@@ -37,3 +37,7 @@
   border: 2px solid hotpink;
   outline: none;
 }
+
+.error-message {
+  color: hotpink;
+}
