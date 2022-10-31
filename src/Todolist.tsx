@@ -45,7 +45,6 @@ export function Todolist(props: PropsType) {
 
     return <div>
         <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
-            {/*<button onClick={removeTodolist}>x</button>*/}
             <IconButton aria-label="delete" onClick={removeTodolist}>
                 <DeleteIcon/>
             </IconButton>
@@ -83,16 +82,6 @@ export function Todolist(props: PropsType) {
                     onClick={onActiveClickHandler}>Active</Button>
             <Button variant={props.filter === 'completed' ? "outlined" : "contained"} color="error"
                     onClick={onCompletedClickHandler}>Completed</Button>
-
-            {/*<button className={props.filter === 'all' ? "active-filter" : ""}*/}
-            {/*        onClick={onAllClickHandler}>All*/}
-            {/*</button>*/}
-            {/*<button className={props.filter === 'active' ? "active-filter" : ""}*/}
-            {/*        onClick={onActiveClickHandler}>Active*/}
-            {/*</button>*/}
-            {/*<button className={props.filter === 'completed' ? "active-filter" : ""}*/}
-            {/*        onClick={onCompletedClickHandler}>Completed*/}
-            {/*</button>*/}
         </div>
     </div>;
 }
