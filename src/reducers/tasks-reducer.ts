@@ -24,19 +24,19 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
         case "CHANGE-STATUS":
             return {
                 ...state,
-                [action.payload.todolistId]: state[action.payload.todolistId].map(el => el.id === action.payload.id ? {
-                    ...el,
+                [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.id ? {
+                    ...t,
                     isDone: action.payload.isDone,
-                } : el),
+                } : t),
             };
 
         case "CHANGE-TASK-TITLE":
             return {
                 ...state,
-                [action.payload.todolistId]: state[action.payload.todolistId].map(el => el.id === action.payload.id ? {
-                    ...el,
+                [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.id ? {
+                    ...t,
                     title: action.payload.newTitle,
-                } : el),
+                } : t),
             };
 
         case "REMOVE-TODOLIST-TASKS":
