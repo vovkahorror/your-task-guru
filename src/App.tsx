@@ -7,8 +7,8 @@ import ButtonAppBar from "./ButtonAppBar";
 import {Container, Grid} from "@mui/material";
 import Paper from '@mui/material/Paper';
 import {
-    addTaskAC, addTodolistTaskAC,
-    changeStatusAC,
+    addTaskAC,
+    changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
     removeTodolistTasksAC,
@@ -67,7 +67,7 @@ function App() {
     }
 
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
-        tasksDispatch(changeStatusAC(id, isDone, todolistId));
+        tasksDispatch(changeTaskStatusAC(id, isDone, todolistId));
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
@@ -84,9 +84,9 @@ function App() {
     }
 
     function addTodolist(title: string) {
-        const newTodolistId = v1();
-        todolistsDispatch(addTodolistAC(newTodolistId, title));
-        tasksDispatch(addTodolistTaskAC(newTodolistId));
+        const action = addTodolistAC(title);
+        todolistsDispatch(action);
+        tasksDispatch(action);
     }
 
     return (
