@@ -37,12 +37,12 @@ function App() {
     const todolistId1 = v1();
     const todolistId2 = v1();
 
-    const [todolists, todolistsDispatch] = useReducer(todolistsReducer, [
+    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"},
     ]);
 
-    const [tasks, tasksDispatch] = useReducer(tasksReducer, {
+    const [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -54,38 +54,38 @@ function App() {
     });
 
     function removeTask(id: string, todolistId: string) {
-        tasksDispatch(removeTaskAC(id, todolistId));
+        dispatchToTasks(removeTaskAC(id, todolistId));
     }
 
     function addTask(title: string, todolistId: string) {
-        tasksDispatch(addTaskAC(title, todolistId));
+        dispatchToTasks(addTaskAC(title, todolistId));
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        todolistsDispatch(changeFilterAC(value, todolistId));
+        dispatchToTodolists(changeFilterAC(value, todolistId));
     }
 
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
-        tasksDispatch(changeTaskStatusAC(id, isDone, todolistId));
+        dispatchToTasks(changeTaskStatusAC(id, isDone, todolistId));
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        tasksDispatch(changeTaskTitleAC(id, newTitle, todolistId));
+        dispatchToTasks(changeTaskTitleAC(id, newTitle, todolistId));
     }
 
     function removeTodolist(id: string) {
-        todolistsDispatch(removeTodolistAC(id));
-        tasksDispatch(removeTodolistAC(id));
+        dispatchToTodolists(removeTodolistAC(id));
+        dispatchToTasks(removeTodolistAC(id));
     }
 
     function changeTodolistTitle(todolistId: string, title: string) {
-        todolistsDispatch(changeTodolistTitleAC(todolistId, title));
+        dispatchToTodolists(changeTodolistTitleAC(todolistId, title));
     }
 
     function addTodolist(title: string) {
         const action = addTodolistAC(title);
-        todolistsDispatch(action);
-        tasksDispatch(action);
+        dispatchToTodolists(action);
+        dispatchToTasks(action);
     }
 
     return (
