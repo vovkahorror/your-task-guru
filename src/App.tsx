@@ -74,8 +74,9 @@ function App() {
     }
 
     function removeTodolist(id: string) {
-        dispatchToTodolists(removeTodolistAC(id));
-        dispatchToTasks(removeTodolistAC(id));
+        const action = removeTodolistAC(id);
+        dispatchToTodolists(action);
+        dispatchToTasks(action);
     }
 
     function changeTodolistTitle(todolistId: string, title: string) {
