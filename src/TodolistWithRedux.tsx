@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TaskType} from "./Todolist";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
 
 export type TodolistWithReduxPropsType = {
     todolist: TodolistType;
@@ -17,24 +19,32 @@ export type TodolistWithReduxPropsType = {
 export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = ({todolist}) => {
     const {id, title, filter} = todolist;
 
-    const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
+    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
 
     const dispatch = useDispatch();
 
     const addTask = (title: string) => {
-        props.addTask(title, props.id);
+        dispatch(addTaskAC(title, id));
     };
 
     const removeTodolist = () => {
-        props.removeTodolist(props.id);
-    };
-    const changeTodolistTitle = (title: string) => {
-        props.changeTodolistTitle(props.id, title);
+        dispatch(removeTodolistAC(id));
     };
 
-    const onAllClickHandler = () => props.changeFilter("all", props.id);
-    const onActiveClickHandler = () => props.changeFilter("active", props.id);
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
+    const changeTodolistTitle = (title: string) => {
+        dispatch(changeTodolistTitleAC(id, title));
+    };
+
+    const onAllClickHandler = () => dispatch(changeFilterAC("all", id));
+    const onActiveClickHandler = () => dispatch(changeFilterAC("active", id));
+    const onCompletedClickHandler = () => dispatch(changeFilterAC("completed", id));
+
+    if (filter === "active") {
+        tasks = tasks.filter(t => !t.isDone);
+    }
+    if (filter === "completed") {
+        tasks = tasks.filter(t => t.isDone);
+    }
 
     return <div>
         <h3><EditableSpan value={title} onChange={changeTodolistTitle}/>
@@ -45,14 +55,14 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = ({todolist}) =>
         <AddItemForm addItem={addTask}/>
         <ul>
             {
-                props.tasks.map(t => {
-                    const onClickHandler = () => props.removeTask(t.id, props.id);
+                tasks.map(t => {
+                    const onClickHandler = () => dispatch(removeTaskAC(t.id, id));
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
+                        const newIsDoneValue = e.currentTarget.checked;
+                        dispatch(changeTaskStatusAC(t.id, newIsDoneValue, id));
                     };
                     const onTitleChangeHandler = (newValue: string) => {
-                        props.changeTaskTitle(t.id, newValue, props.id);
+                        dispatch(changeTaskTitleAC(t.id, newValue, id));
                     };
 
 
