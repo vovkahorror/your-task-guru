@@ -20,7 +20,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TodolistWithRedux} from "./TodolistWithRedux";
-import {todolistsSelector} from "./state/todolistsSelector";
+import {todolistsSelector} from "./state/selectors/todolistsSelector";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
