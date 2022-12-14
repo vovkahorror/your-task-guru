@@ -22,7 +22,6 @@ export type TodolistWithReduxPropsType = {
 }
 
 export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist}) => {
-    console.log('TodolistWithRedux');
     const {id, title, filter} = todolist;
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
@@ -42,13 +41,19 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist
     }, [dispatch, id]);
 
     const onAllClickHandler = useCallback(() => {
-        dispatch(changeFilterAC("all", id));
+        if (filter !== "all") {
+            dispatch(changeFilterAC("all", id));
+        }
     }, [dispatch, filter, id]);
     const onActiveClickHandler = useCallback(() => {
-        dispatch(changeFilterAC("active", id));
+        if (filter !== "active") {
+            dispatch(changeFilterAC("active", id));
+        }
     }, [dispatch, filter, id]);
     const onCompletedClickHandler = useCallback(() => {
-        dispatch(changeFilterAC("completed", id));
+        if (filter !== "completed") {
+            dispatch(changeFilterAC("completed", id));
+        }
     }, [dispatch, filter, id]);
 
     if (filter === "active") {
