@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {ChangeEvent, FC, memo, useCallback} from 'react';
 import {TodolistType} from "./AppWithRedux";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
@@ -8,36 +8,48 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {TaskType} from "./Todolist";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
 
 export type TodolistWithReduxPropsType = {
     todolist: TodolistType;
 }
 
-export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = ({todolist}) => {
+export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist}) => {
+    console.log('TodolistWithRedux');
     const {id, title, filter} = todolist;
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
 
     const dispatch = useDispatch();
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, id));
-    };
+    }, [dispatch, id]);
 
-    const removeTodolist = () => {
+    const removeTodolist = useCallback(() => {
         dispatch(removeTodolistAC(id));
-    };
+    }, [dispatch, id]);
 
-    const changeTodolistTitle = (title: string) => {
+    const changeTodolistTitle = useCallback((title: string) => {
         dispatch(changeTodolistTitleAC(id, title));
-    };
+    }, [dispatch, id]);
 
-    const onAllClickHandler = () => dispatch(changeFilterAC("all", id));
-    const onActiveClickHandler = () => dispatch(changeFilterAC("active", id));
-    const onCompletedClickHandler = () => dispatch(changeFilterAC("completed", id));
+    const onAllClickHandler = useCallback(() => {
+        dispatch(changeFilterAC("all", id));
+    }, [dispatch, filter, id]);
+    const onActiveClickHandler = useCallback(() => {
+        dispatch(changeFilterAC("active", id));
+    }, [dispatch, filter, id]);
+    const onCompletedClickHandler = useCallback(() => {
+        dispatch(changeFilterAC("completed", id));
+    }, [dispatch, filter, id]);
 
     if (filter === "active") {
         tasks = tasks.filter(t => !t.isDone);
@@ -85,4 +97,4 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = ({todolist}) =>
                     onClick={onCompletedClickHandler}>Completed</Button>
         </div>
     </div>;
-};
+});
