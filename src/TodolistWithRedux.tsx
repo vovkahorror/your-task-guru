@@ -94,12 +94,23 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist
             }
         </ul>
         <div>
-            <Button variant={filter === 'all' ? "outlined" : "contained"} color="secondary"
-                    onClick={onAllClickHandler}>All</Button>
-            <Button variant={filter === 'active' ? "outlined" : "contained"} color="success"
-                    onClick={onActiveClickHandler}>Active</Button>
-            <Button variant={filter === 'completed' ? "outlined" : "contained"} color="error"
-                    onClick={onCompletedClickHandler}>Completed</Button>
+            <ButtonWithMemo variant={filter === 'all' ? "outlined" : "contained"} color="secondary"
+                            onClick={onAllClickHandler} title={'All'}/>
+            <ButtonWithMemo variant={filter === 'active' ? "outlined" : "contained"} color="success"
+                            onClick={onActiveClickHandler} title={'Active'}/>
+            <ButtonWithMemo variant={filter === 'completed' ? "outlined" : "contained"} color="error"
+                            onClick={onCompletedClickHandler} title={'Completed'}/>
         </div>
     </div>;
+});
+
+type ButtonWithMemoPropsType = {
+    variant: 'text' | 'outlined' | 'contained';
+    color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+    onClick: () => void;
+    title: string;
+}
+
+const ButtonWithMemo: FC<ButtonWithMemoPropsType> = memo(({variant, color, onClick, title}) => {
+    return <Button variant={variant} color={color} onClick={onClick}>{title}</Button>;
 });
