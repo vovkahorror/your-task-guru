@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {ChangeEvent, FC, memo} from 'react';
 import Checkbox from "@mui/material/Checkbox";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
@@ -12,7 +12,7 @@ export type TaskWithReduxPropsType = {
     todolistId: string
 }
 
-const TaskWithRedux: FC<TaskWithReduxPropsType> = ({task, todolistId}) => {
+const TaskWithRedux: FC<TaskWithReduxPropsType> = memo(({task, todolistId}) => {
     const dispatch = useDispatch();
 
     const onClickHandler = () => dispatch(removeTaskAC(task.id, todolistId));
@@ -33,6 +33,6 @@ const TaskWithRedux: FC<TaskWithReduxPropsType> = ({task, todolistId}) => {
             </IconButton>
         </li>
     );
-};
+});
 
 export default TaskWithRedux;
