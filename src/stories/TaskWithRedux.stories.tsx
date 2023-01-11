@@ -2,8 +2,6 @@ import React, {ChangeEvent, useState} from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import TaskWithRedux from "../TaskWithRedux";
-import {Provider} from "react-redux";
-import {store} from "../state/store";
 import Checkbox from "@mui/material/Checkbox";
 import {EditableSpan} from "../EditableSpan";
 import IconButton from "@mui/material/IconButton";
