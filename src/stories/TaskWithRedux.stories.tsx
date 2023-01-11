@@ -8,8 +8,8 @@ import Checkbox from "@mui/material/Checkbox";
 import {EditableSpan} from "../EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {action} from '@storybook/addon-actions';
+import ReduxStoreProviderDecorator from "./decorators/ReduxStoreProviderDecorator";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -19,16 +19,11 @@ export default {
         task: {id: '1', title: 'JS', isDone: true},
         todolistId: 'td1',
     },
+    decorators: [ReduxStoreProviderDecorator],
 } as ComponentMeta<typeof TaskWithRedux>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TaskWithRedux> = (args) => {
-    return (
-        <Provider store={store}>
-            <TaskWithRedux {...args} />
-        </Provider>
-    );
-};
+const Template: ComponentStory<typeof TaskWithRedux> = (args) => <TaskWithRedux {...args} />;
 
 export const TaskIsDoneStory = Template.bind({});
 
