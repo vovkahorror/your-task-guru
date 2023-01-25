@@ -15,14 +15,14 @@ export const todolistAPI = {
     getTodolists() {
         return axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings);
     },
-    updateTodolist(todolistId: string, title: string) {
+    updateTodolist(todolistID: string, title: string) {
         return axios.put(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
+            `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistID}`,
             {title},
             settings,
         );
     },
-    deleteTodolist(todolistId: string) {
-        return axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, settings);
+    deleteTodolist(todolistID: string) {
+        return axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistID}`, settings);
     },
 };
