@@ -46,3 +46,61 @@ export const UpdateTodolistTitle = () => {
     return <div>{JSON.stringify(state)}</div>;
 };
 
+export const GetTasks = () => {
+    const [state, setState] = useState<any>(null);
+    const todolistID = '2b867055-1ae2-4712-a98a-aa8ba1ee74c0';
+
+    useEffect(() => {
+        todolistAPI.getTasks(todolistID).then(res => setState(res));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+export const CreateTask = () => {
+    const [state, setState] = useState<any>(null);
+    const todolistID = '2b867055-1ae2-4712-a98a-aa8ba1ee74c0';
+    const title = 'Aria3';
+
+    useEffect(() => {
+        todolistAPI.createTask(todolistID, title).then(res => setState(res));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+export const DeleteTask = () => {
+    const [state, setState] = useState<any>(null);
+    const todolistID = '18602624-a501-45d5-afd5-b3eeca15e5a5';
+    const taskID = '43650c3e-8b26-477b-8562-bd0e873b6631';
+
+    useEffect(() => {
+        todolistAPI.deleteTask(todolistID, taskID).then(res => setState(res));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+export const UpdateTask = () => {
+    const [state, setState] = useState<any>(null);
+    const todolistID = '2b867055-1ae2-4712-a98a-aa8ba1ee74c0';
+    const taskID = 'c772aef5-fe4d-40e1-935c-46e006eeea55';
+
+    const title = 'Super Aria';
+    const description = 'description 1';
+    const status = 0;
+    const priority = 0;
+    const startDate = '';
+    const deadline = '';
+
+    useEffect(() => {
+        todolistAPI.updateTask(todolistID, taskID, {
+            title,
+            description,
+            status,
+            priority,
+            startDate,
+            deadline,
+        }).then(res => setState(res));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+
