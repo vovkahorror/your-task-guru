@@ -1,25 +1,18 @@
-import React, {ChangeEvent, FC, memo, useCallback} from 'react';
-import {TodolistType} from "./AppWithRedux";
+import React, {FC, memo, useCallback} from 'react';
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {AddItemForm} from "./AddItemForm";
-import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
-import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
+import {addTaskAC} from "./state/tasks-reducer";
+import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC, TodolistDomainType} from './state/todolists-reducer';
 import TaskWithRedux from "./TaskWithRedux";
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+import {TaskStatuses, TaskType} from './api/todolist-api';
 
 export type TodolistWithReduxPropsType = {
-    todolist: TodolistType;
+    todolist: TodolistDomainType;
 }
 
 export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist}) => {
@@ -58,10 +51,10 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist
     }, [dispatch, filter, id]);
 
     if (filter === "active") {
-        tasks = tasks.filter(t => !t.isDone);
+        tasks = tasks.filter(t => t.status === TaskStatuses.New);
     }
     if (filter === "completed") {
-        tasks = tasks.filter(t => t.isDone);
+        tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
     return <div>

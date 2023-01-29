@@ -1,28 +1,36 @@
-import {v1} from "uuid";
-import {FilterValuesType, TodolistType} from "../AppWithRedux";
+import {v1} from 'uuid';
+import {TodolistType} from '../api/todolist-api';
 
-type ActionsType = ChangeFilterACType | RemoveTodolistACType | ChangeTodolistTitleACType | AddTodolistACType;
+export type ActionsType = ChangeFilterACType | RemoveTodolistACType | ChangeTodolistTitleACType | AddTodolistACType;
 
-const initialState: TodolistType[] = [];
+export type FilterValuesType = 'all' | 'active' | 'completed';
 
-export const todolistsReducer = (state = initialState, action: ActionsType): TodolistType[] => {
+export type TodolistDomainType = TodolistType & {
+    filter: FilterValuesType;
+}
+
+const initialState: TodolistDomainType[] = [];
+
+export const todolistsReducer = (state = initialState, action: ActionsType): TodolistDomainType[] => {
     switch (action.type) {
-        case "CHANGE-FILTER":
+        case 'CHANGE-FILTER':
             return state.map(tl => tl.id === action.payload.todolistId ? {...tl, filter: action.payload.value} : tl);
 
-        case "CHANGE-TODOLIST-TITLE":
+        case 'CHANGE-TODOLIST-TITLE':
             return state.map(tl => tl.id === action.payload.todolistId ? {...tl, title: action.payload.title} : tl);
 
-        case "ADD-TODOLIST":
+        case 'ADD-TODOLIST':
             return [
                 {
                     id: action.payload.newTodolistId,
                     title: action.payload.title,
                     filter: 'all',
+                    addedDate: '',
+                    order: 0,
                 },
                 ...state];
 
-        case "REMOVE-TODOLIST":
+        case 'REMOVE-TODOLIST':
             return state.filter(tl => tl.id !== action.payload.id);
 
         default:
