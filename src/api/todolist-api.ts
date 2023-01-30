@@ -3,8 +3,8 @@ import axios from 'axios';
 export type TodolistType = {
     id: string;
     addedDate: string;
-    order: number;
     title: string;
+    order: number;
 }
 
 export type ResponseType<D = {}> = {
