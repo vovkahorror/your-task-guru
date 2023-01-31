@@ -4,12 +4,13 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {AddItemForm} from "./AddItemForm";
 import Button from "@mui/material/Button";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {addTaskAC} from "./state/tasks-reducer";
 import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC, TodolistDomainType} from './state/todolists-reducer';
 import TaskWithRedux from "./TaskWithRedux";
 import {TaskStatuses, TaskType} from './api/todolist-api';
+import {AppDispatch} from './custom-hooks/AppDispatch';
 
 export type TodolistWithReduxPropsType = {
     todolist: TodolistDomainType;
@@ -20,7 +21,7 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
 
-    const dispatch = useDispatch();
+    const dispatch = AppDispatch();
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, id));
