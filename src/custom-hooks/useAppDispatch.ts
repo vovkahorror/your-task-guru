@@ -3,6 +3,6 @@ import {AnyAction} from 'redux';
 import {useDispatch} from 'react-redux';
 import {AppRootStateType} from '../state/store';
 
-type AppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
+type UseAppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
 
-export const AppDispatch = () => useDispatch<AppDispatchType>();
+export const useAppDispatch = () => useDispatch<UseAppDispatchType>();

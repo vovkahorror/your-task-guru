@@ -4,21 +4,20 @@ import {AddItemForm} from './AddItemForm';
 import ButtonAppBar from './ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
-import {addTodolistAC, getTodolistsTC, setTodolistsAC, TodolistDomainType} from './state/todolists-reducer';
-import {useSelector} from 'react-redux';
-import {AppRootStateType} from './state/store';
+import {addTodolistAC, getTodolistsTC, TodolistDomainType} from './state/todolists-reducer';
 import {TodolistWithRedux} from './TodolistWithRedux';
 import {todolistsSelector} from './state/selectors/todolistsSelector';
-import {AppDispatch} from './custom-hooks/AppDispatch';
+import {useAppDispatch} from './custom-hooks/useAppDispatch';
+import {useAppSelector} from './custom-hooks/useAppSelector';
 
 function AppWithRedux() {
     useEffect(() => {
         dispatch(getTodolistsTC());
     }, []);
 
-    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(todolistsSelector);
+    const todolists = useAppSelector<TodolistDomainType[]>(todolistsSelector);
 
-    const dispatch = AppDispatch();
+    const dispatch = useAppDispatch();
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title));

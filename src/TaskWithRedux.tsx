@@ -3,9 +3,9 @@ import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {changeTaskStatusAC, changeTaskTitleAC, getTasksTC, removeTaskAC} from './state/tasks-reducer';
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskTC} from './state/tasks-reducer';
 import {TaskStatuses, TaskType} from './api/todolist-api';
-import {AppDispatch} from './custom-hooks/AppDispatch';
+import {useAppDispatch} from './custom-hooks/useAppDispatch';
 
 export type TaskWithReduxPropsType = {
     task: TaskType;
@@ -13,13 +13,9 @@ export type TaskWithReduxPropsType = {
 }
 
 const TaskWithRedux: FC<TaskWithReduxPropsType> = memo(({task, todolistId}) => {
-    useEffect(() => {
-        dispatch(getTasksTC(todolistId));
-    }, []);
+    const dispatch = useAppDispatch();
 
-    const dispatch = AppDispatch();
-
-    const onClickHandler = () => dispatch(removeTaskAC(task.id, todolistId));
+    const onClickHandler = () => dispatch(removeTaskTC(task.id, todolistId));
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
         dispatch(changeTaskStatusAC(task.id, newStatusValue, todolistId));

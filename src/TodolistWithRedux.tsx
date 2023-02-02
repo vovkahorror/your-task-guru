@@ -1,16 +1,15 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC, memo, useCallback, useEffect} from 'react';
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {AddItemForm} from "./AddItemForm";
 import Button from "@mui/material/Button";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
-import {addTaskAC} from "./state/tasks-reducer";
+import {addTaskAC, getTasksTC} from './state/tasks-reducer';
 import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC, TodolistDomainType} from './state/todolists-reducer';
 import TaskWithRedux from "./TaskWithRedux";
 import {TaskStatuses, TaskType} from './api/todolist-api';
-import {AppDispatch} from './custom-hooks/AppDispatch';
+import {useAppDispatch} from './custom-hooks/useAppDispatch';
+import {useAppSelector} from './custom-hooks/useAppSelector';
 
 export type TodolistWithReduxPropsType = {
     todolist: TodolistDomainType;
@@ -19,9 +18,13 @@ export type TodolistWithReduxPropsType = {
 export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist}) => {
     const {id, title, filter} = todolist;
 
-    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
+    useEffect(() => {
+        dispatch(getTasksTC(id));
+    }, []);
 
-    const dispatch = AppDispatch();
+    let tasks = useAppSelector<Array<TaskType>>(state => state.tasks[id]);
+
+    const dispatch = useAppDispatch();
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, id));
