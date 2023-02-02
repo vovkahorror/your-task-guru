@@ -41,19 +41,10 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
         }
 
         case 'ADD-TASK': {
-            const newTask = {
-                id: v1(),
-                title: action.payload.title,
-                status: TaskStatuses.New,
-                todoListId: action.payload.todolistId,
-                description: '',
-                startDate: '',
-                deadline: '',
-                addedDate: '',
-                order: 0,
-                priority: TaskPriorities.Low,
+            return {
+                ...state,
+                [action.payload.task.todoListId]: [...state[action.payload.task.todoListId], action.payload.task],
             };
-            return {...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]};
         }
 
         case 'CHANGE-STATUS': {
@@ -106,12 +97,11 @@ export const removeTaskAC = (id: string, todolistId: string) => {
 
 type AddTaskActionType = ReturnType<typeof addTaskAC>;
 
-export const addTaskAC = (title: string, todolistId: string) => {
+export const addTaskAC = (task: TaskType) => {
     return {
         type: 'ADD-TASK',
         payload: {
-            title,
-            todolistId,
+            task,
         },
     } as const;
 };
@@ -148,8 +138,8 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => {
     return {
         type: 'SET-TASKS',
         payload: {
-            tasks,
             todolistId,
+            tasks,
         },
     } as const;
 };
@@ -162,4 +152,9 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispatch) => {
     todolistAPI.deleteTask(todolistId, id)
         .then(() => dispatch(removeTaskAC(id, todolistId)));
+};
+
+export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    todolistAPI.createTask(todolistId, title)
+        .then(res => dispatch(addTaskAC(res.data.item)));
 };
