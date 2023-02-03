@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {AddItemForm} from './AddItemForm';
 import Button from '@mui/material/Button';
 import {addTaskTC, getTasksTC} from './state/tasks-reducer';
-import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC, TodolistDomainType} from './state/todolists-reducer';
+import {changeFilterAC, changeTodolistTitleTC, removeTodolistsTC, TodolistDomainType} from './state/todolists-reducer';
 import TaskWithRedux from './TaskWithRedux';
 import {TaskStatuses, TaskType} from './api/todolist-api';
 import {useAppDispatch} from './custom-hooks/useAppDispatch';
@@ -31,11 +31,11 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist
     }, [dispatch, id]);
 
     const removeTodolist = useCallback(() => {
-        dispatch(removeTodolistAC(id));
+        dispatch(removeTodolistsTC(id));
     }, [dispatch, id]);
 
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleAC(id, title));
+        dispatch(changeTodolistTitleTC(id, title));
     }, [dispatch, id]);
 
     const onAllClickHandler = useCallback(() => {

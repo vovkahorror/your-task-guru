@@ -4,7 +4,7 @@ import {AddItemForm} from './AddItemForm';
 import ButtonAppBar from './ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
-import {addTodolistAC, getTodolistsTC, TodolistDomainType} from './state/todolists-reducer';
+import {addTodolistsTC, getTodolistsTC, TodolistDomainType} from './state/todolists-reducer';
 import {TodolistWithRedux} from './TodolistWithRedux';
 import {todolistsSelector} from './state/selectors/todolistsSelector';
 import {useAppDispatch} from './custom-hooks/useAppDispatch';
@@ -20,7 +20,7 @@ function AppWithRedux() {
     const dispatch = useAppDispatch();
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(title));
+        dispatch(addTodolistsTC(title));
     }, [dispatch]);
 
     return (

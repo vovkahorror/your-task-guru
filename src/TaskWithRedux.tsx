@@ -1,9 +1,9 @@
-import React, {ChangeEvent, FC, memo, useEffect} from 'react';
+import React, {ChangeEvent, FC, memo} from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskTC} from './state/tasks-reducer';
+import {removeTaskTC, updateTaskTC} from './state/tasks-reducer';
 import {TaskStatuses, TaskType} from './api/todolist-api';
 import {useAppDispatch} from './custom-hooks/useAppDispatch';
 
@@ -18,10 +18,10 @@ const TaskWithRedux: FC<TaskWithReduxPropsType> = memo(({task, todolistId}) => {
     const onClickHandler = () => dispatch(removeTaskTC(task.id, todolistId));
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-        dispatch(changeTaskStatusAC(task.id, newStatusValue, todolistId));
+        dispatch(updateTaskTC(todolistId, task.id, {status: newStatusValue}));
     };
     const onTitleChangeHandler = (newValue: string) => {
-        dispatch(changeTaskTitleAC(task.id, newValue, todolistId));
+        dispatch(updateTaskTC(todolistId, task.id, {title: newValue}));
     };
 
     return (

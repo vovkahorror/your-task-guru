@@ -8,8 +8,7 @@ import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {
     addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
+    updateTaskAC,
     removeTaskAC,
     tasksReducer,
 } from './state/tasks-reducer';
@@ -80,11 +79,11 @@ function App() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(changeTaskStatusAC(id, status, todolistId));
+        dispatchToTasks(updateTaskAC(todolistId, id, {status}));
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(changeTaskTitleAC(id, newTitle, todolistId));
+        dispatchToTasks(updateTaskAC(todolistId, id, {title: newTitle}));
     }
 
     function removeTodolist(id: string) {
@@ -98,7 +97,14 @@ function App() {
     }
 
     function addTodolist(title: string) {
-        const action = addTodolistAC(title);
+        const newTodolist = {
+            id: v1(),
+            addedDate: '',
+            title,
+            order: 0
+        }
+
+        const action = addTodolistAC(newTodolist);
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }

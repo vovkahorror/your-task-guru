@@ -1,8 +1,7 @@
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 import {
     addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
+    updateTaskAC,
     removeTaskAC,
     tasksReducer,
     TasksStateType,
@@ -104,7 +103,7 @@ test('correct task should be added to correct array', () => {
 });
 
 test('status of specified task should be changed', () => {
-    const action = changeTaskStatusAC('2', TaskStatuses.New, 'todolistId2');
+    const action = updateTaskAC('todolistId2', '2', {status: TaskStatuses.New});
 
     const endState = tasksReducer(startState, action);
 
@@ -113,7 +112,7 @@ test('status of specified task should be changed', () => {
 });
 
 test('title of specified task should be changed', () => {
-    const action = changeTaskTitleAC('2', 'juice', 'todolistId2');
+    const action = updateTaskAC('todolistId2', '2', {title: 'juice'});
 
     const endState = tasksReducer(startState, action);
 
@@ -122,7 +121,14 @@ test('title of specified task should be changed', () => {
 });
 
 test('new array should be added when new todolist is added', () => {
-    const action = addTodolistAC('new todolist');
+    const newTodolist = {
+        id: v1(),
+        addedDate: '',
+        title: 'new todolist',
+        order: 0
+    }
+
+    const action = addTodolistAC(newTodolist);
 
     const endState = tasksReducer(startState, action);
 
