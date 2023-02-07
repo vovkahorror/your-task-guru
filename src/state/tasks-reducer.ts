@@ -4,13 +4,13 @@ import {Dispatch} from 'redux';
 import {AppRootStateType} from './store';
 
 type ActionsType =
-    RemoveTaskActionType
-    | AddTaskActionType
-    | UpdateTaskActionType
+    ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof updateTaskAC>
+    | ReturnType<typeof setTasksAC>
     | AddTodolistActionType
     | RemoveTodolistActionType
-    | SetTodolistsActionType
-    | SetTasksActionType
+    | SetTodolistsActionType;
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -72,54 +72,28 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
     }
 };
 
-type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
+//actions
+export const removeTaskAC = (id: string, todolistId: string) => ({
+    type: 'REMOVE-TASK',
+    payload: {id, todolistId},
+} as const);
 
-export const removeTaskAC = (id: string, todolistId: string) => {
-    return {
-        type: 'REMOVE-TASK',
-        payload: {
-            id,
-            todolistId,
-        },
-    } as const;
-};
+export const addTaskAC = (task: TaskType) => ({
+    type: 'ADD-TASK',
+    payload: {task},
+} as const);
 
-type AddTaskActionType = ReturnType<typeof addTaskAC>;
+export const updateTaskAC = (todolistId: string, id: string, model: UpdateDomainTaskModelType) => ({
+    type: 'UPDATE-TASK',
+    payload: {todolistId, id, model},
+} as const);
 
-export const addTaskAC = (task: TaskType) => {
-    return {
-        type: 'ADD-TASK',
-        payload: {
-            task,
-        },
-    } as const;
-};
+export const setTasksAC = (tasks: TaskType[], todolistId: string) => ({
+    type: 'SET-TASKS',
+    payload: {todolistId, tasks},
+} as const);
 
-type UpdateTaskActionType = ReturnType<typeof updateTaskAC>
-
-export const updateTaskAC = (todolistId: string, id: string, model: UpdateDomainTaskModelType) => {
-    return {
-        type: 'UPDATE-TASK',
-        payload: {
-            todolistId,
-            id,
-            model,
-        },
-    } as const;
-};
-
-type SetTasksActionType = ReturnType<typeof setTasksAC>
-
-export const setTasksAC = (tasks: TaskType[], todolistId: string) => {
-    return {
-        type: 'SET-TASKS',
-        payload: {
-            todolistId,
-            tasks,
-        },
-    } as const;
-};
-
+//thunks
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     todolistAPI.getTasks(todolistId)
         .then(res => dispatch(setTasksAC(res.items, todolistId)));
