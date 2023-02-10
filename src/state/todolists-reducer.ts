@@ -60,28 +60,28 @@ export const setTodolistsAC = (todolists: TodolistType[]) => ({
 } as const);
 
 //thunks
-export const getTodolistsTC = () => (dispatch: Dispatch) => {
+export const getTodolistsTC = () => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.getTodolists()
         .then((res) => {
             dispatch(setTodolistsAC(res));
         });
 };
 
-export const addTodolistsTC = (title: string) => (dispatch: Dispatch) => {
+export const addTodolistsTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.createTodolist(title)
         .then((res) => {
             dispatch(addTodolistAC(res.data.item));
         });
 };
 
-export const removeTodolistsTC = (todolistId: string) => (dispatch: Dispatch) => {
+export const removeTodolistsTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.deleteTodolist(todolistId)
         .then(() => {
             dispatch(removeTodolistAC(todolistId));
         });
 };
 
-export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.updateTodolist(todolistId, title)
         .then(() => {
             dispatch(changeTodolistTitleAC(todolistId, title));

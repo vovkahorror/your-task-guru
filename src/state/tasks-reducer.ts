@@ -81,23 +81,23 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => ({
 } as const);
 
 //thunks
-export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+export const getTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.getTasks(todolistId)
         .then(res => dispatch(setTasksAC(res.items, todolistId)));
 };
 
-export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispatch) => {
+export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.deleteTask(todolistId, id)
         .then(() => dispatch(removeTaskAC(id, todolistId)));
 };
 
-export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistAPI.createTask(todolistId, title)
         .then(res => dispatch(addTaskAC(res.data.item)));
 };
 
 export const updateTaskTC = (todolistId: string, taskID: string, domainModel: UpdateDomainTaskModelType) => {
-    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    return (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
         const state = getState();
         const task = state.tasks[todolistId].find(t => t.id === taskID);
 
