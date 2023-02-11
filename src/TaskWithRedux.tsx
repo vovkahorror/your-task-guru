@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, memo} from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import {EditableSpan} from './EditableSpan';
+import {EditableSpan} from './components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {removeTaskTC, updateTaskTC} from './state/tasks-reducer';

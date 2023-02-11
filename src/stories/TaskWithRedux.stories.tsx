@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import TaskWithRedux from "../TaskWithRedux";
 import Checkbox from "@mui/material/Checkbox";
-import {EditableSpan} from "../EditableSpan";
+import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {action} from '@storybook/addon-actions';

@@ -1,0 +1,8 @@
+.is-done {
+  list-style-type: none;
+  opacity: 0.8;
+}
+
+.not-is-done {
+  list-style-type: none;
+}

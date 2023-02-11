@@ -1,8 +1,8 @@
 import React, {FC, memo, useCallback, useEffect} from 'react';
-import {EditableSpan} from './EditableSpan';
+import {EditableSpan} from './components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {AddItemForm} from './AddItemForm';
+import {AddItemForm} from './components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
 import {addTaskTC, getTasksTC} from './state/tasks-reducer';
 import {changeFilterAC, changeTodolistTitleTC, removeTodolistsTC, TodolistDomainType} from './state/todolists-reducer';

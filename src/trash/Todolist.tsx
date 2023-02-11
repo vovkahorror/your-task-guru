@@ -1,12 +1,12 @@
 import React, {ChangeEvent} from 'react';
-import {AddItemForm} from './AddItemForm';
-import {EditableSpan} from './EditableSpan';
+import {AddItemForm} from '../components/AddItemForm/AddItemForm';
+import {EditableSpan} from '../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import {TaskStatuses, TaskType} from './api/todolist-api';
-import {FilterValuesType} from './state/todolists-reducer';
+import {TaskStatuses, TaskType} from '../api/todolist-api';
+import {FilterValuesType} from '../state/todolists-reducer';
 
 type PropsType = {
     id: string

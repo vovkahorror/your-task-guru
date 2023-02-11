@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect} from 'react';
-import './App.css';
-import {AddItemForm} from './AddItemForm';
-import ButtonAppBar from './ButtonAppBar';
+import './AppWithRedux.css';
+import {AddItemForm} from '../components/AddItemForm/AddItemForm';
+import ButtonAppBar from '../ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
-import {addTodolistsTC, getTodolistsTC, TodolistDomainType} from './state/todolists-reducer';
-import {TodolistWithRedux} from './TodolistWithRedux';
-import {todolistsSelector} from './state/selectors/todolistsSelector';
-import {useAppDispatch} from './custom-hooks/useAppDispatch';
-import {useAppSelector} from './custom-hooks/useAppSelector';
+import {addTodolistsTC, getTodolistsTC, TodolistDomainType} from '../state/todolists-reducer';
+import {TodolistWithRedux} from '../TodolistWithRedux';
+import {todolistsSelector} from '../state/selectors/todolistsSelector';
+import {useAppDispatch} from '../custom-hooks/useAppDispatch';
+import {useAppSelector} from '../custom-hooks/useAppSelector';
 
 function AppWithRedux() {
     useEffect(() => {
