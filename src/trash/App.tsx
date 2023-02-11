@@ -3,7 +3,7 @@ import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from '../components/AddItemForm/AddItemForm';
-import ButtonAppBar from '../ButtonAppBar';
+import ButtonAppBar from '../app/ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {
@@ -11,14 +11,14 @@ import {
     updateTaskAC,
     removeTaskAC,
     tasksReducer,
-} from '../state/tasks-reducer';
+} from '../features/TodolistsList/tasks-reducer';
 import {
     addTodolistAC,
     changeFilterAC,
     changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
     todolistsReducer,
-} from '../state/todolists-reducer';
+} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 
 function App() {

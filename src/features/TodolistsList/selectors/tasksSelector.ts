@@ -1,3 +1,3 @@
-import {AppRootStateType} from "../store";
+import {AppRootStateType} from "../../../app/store";
 
 // export const tasksSelector = (state: AppRootStateType) => state.tasks[id]

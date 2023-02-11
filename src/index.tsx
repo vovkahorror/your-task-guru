@@ -3,12 +3,12 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";
-import {store} from "./state/store";
-import AppWithRedux from "./app/AppWithRedux";
+import {store} from "./app/store";
+import App from "./app/App";
 
 const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(<Provider store={store}><AppWithRedux/></Provider>);
+root.render(<Provider store={store}><App/></Provider>);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

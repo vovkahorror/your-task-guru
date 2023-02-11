@@ -1,3 +1,3 @@
-import {AppRootStateType} from "../store";
+import {AppRootStateType} from "../../../app/store";
 
 export const todolistsSelector = (state: AppRootStateType) => state.todolists;

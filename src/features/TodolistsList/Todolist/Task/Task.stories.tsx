@@ -1,28 +1,28 @@
 import React, {ChangeEvent, useState} from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import TaskWithRedux from "../TaskWithRedux";
+import Task from "./Task";
 import Checkbox from "@mui/material/Checkbox";
-import {EditableSpan} from "../components/EditableSpan/EditableSpan";
+import {EditableSpan} from "../../../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {action} from '@storybook/addon-actions';
-import ReduxStoreProviderDecorator from "./decorators/ReduxStoreProviderDecorator";
-import {TaskPriorities, TaskStatuses } from '../api/todolist-api';
+import ReduxStoreProviderDecorator from "../../../../stories/decorators/ReduxStoreProviderDecorator";
+import {TaskPriorities, TaskStatuses } from '../../../../api/todolist-api';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-    title: 'Todolist/TaskWithRedux',
-    component: TaskWithRedux,
+    title: 'Todolist/Task',
+    component: Task,
     args: {
         task: {id: '1', title: 'JS', status: TaskStatuses.Completed, todoListId: 'todolistId1', description: '',
             startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low},
         todolistId: 'td1',
     },
     decorators: [ReduxStoreProviderDecorator],
-} as ComponentMeta<typeof TaskWithRedux>;
+} as ComponentMeta<typeof Task>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TaskWithRedux> = (args) => <TaskWithRedux {...args} />;
+const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
 export const TaskIsDoneStory = Template.bind({});
 
@@ -33,7 +33,7 @@ TaskIsNotDoneStory.args = {
         startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low},
 };
 
-const TemplateWork: ComponentStory<typeof TaskWithRedux> = (args) => {
+const TemplateWork: ComponentStory<typeof Task> = (args) => {
     const [task, setTask] = useState(args.task);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

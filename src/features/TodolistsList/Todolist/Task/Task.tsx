@@ -1,18 +1,18 @@
 import React, {ChangeEvent, FC, memo} from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import {EditableSpan} from './components/EditableSpan/EditableSpan';
+import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {removeTaskTC, updateTaskTC} from './state/tasks-reducer';
-import {TaskStatuses, TaskType} from './api/todolist-api';
-import {useAppDispatch} from './custom-hooks/useAppDispatch';
+import {removeTaskTC, updateTaskTC} from '../../tasks-reducer';
+import {TaskStatuses, TaskType} from '../../../../api/todolist-api';
+import {useAppDispatch} from '../../../../custom-hooks/useAppDispatch';
 
-export type TaskWithReduxPropsType = {
+export type TaskPropsType = {
     task: TaskType;
     todolistId: string
 }
 
-const TaskWithRedux: FC<TaskWithReduxPropsType> = memo(({task, todolistId}) => {
+const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     const dispatch = useAppDispatch();
 
     const onClickHandler = () => dispatch(removeTaskTC(task.id, todolistId));
@@ -35,4 +35,4 @@ const TaskWithRedux: FC<TaskWithReduxPropsType> = memo(({task, todolistId}) => {
     );
 });
 
-export default TaskWithRedux;
+export default Task;

@@ -1,21 +1,21 @@
 import React, {FC, memo, useCallback, useEffect} from 'react';
-import {EditableSpan} from './components/EditableSpan/EditableSpan';
+import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {AddItemForm} from './components/AddItemForm/AddItemForm';
+import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
-import {addTaskTC, getTasksTC} from './state/tasks-reducer';
-import {changeFilterAC, changeTodolistTitleTC, removeTodolistsTC, TodolistDomainType} from './state/todolists-reducer';
-import TaskWithRedux from './TaskWithRedux';
-import {TaskStatuses, TaskType} from './api/todolist-api';
-import {useAppDispatch} from './custom-hooks/useAppDispatch';
-import {useAppSelector} from './custom-hooks/useAppSelector';
+import {addTaskTC, getTasksTC} from '../tasks-reducer';
+import {changeFilterAC, changeTodolistTitleTC, removeTodolistsTC, TodolistDomainType} from '../todolists-reducer';
+import Task from './Task/Task';
+import {TaskStatuses, TaskType} from '../../../api/todolist-api';
+import {useAppDispatch} from '../../../custom-hooks/useAppDispatch';
+import {useAppSelector} from '../../../custom-hooks/useAppSelector';
 
-export type TodolistWithReduxPropsType = {
+export type TodolistPropsType = {
     todolist: TodolistDomainType;
 }
 
-export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist}) => {
+export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {id, title, filter} = todolist;
 
     useEffect(() => {
@@ -72,7 +72,7 @@ export const TodolistWithRedux: FC<TodolistWithReduxPropsType> = memo(({todolist
             {
                 tasks.map(t => {
                     return (
-                        <TaskWithRedux
+                        <Task
                             key={t.id}
                             task={t}
                             todolistId={id}
