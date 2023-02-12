@@ -2,13 +2,15 @@ import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import {composeWithDevTools} from '@redux-devtools/extension';
+import {appReducer} from './app-reducer';
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
+    app: appReducer,
 });
 // непосредственно создаём store
 export const store = legacy_createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
