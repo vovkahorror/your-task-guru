@@ -25,4 +25,4 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 type InitialStateType = typeof initialState;
 
-type AppActionsType = ReturnType<typeof setAppStatusAC>;
+export type AppActionsType = ReturnType<typeof setAppStatusAC>;
