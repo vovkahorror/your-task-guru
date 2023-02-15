@@ -39,7 +39,7 @@ export function Todolist(props: PropsType) {
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
     return <div>
-        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
+        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} type={'ToDo-list'}/>
             <IconButton aria-label="delete" onClick={removeTodolist}>
                 <DeleteIcon/>
             </IconButton>
@@ -60,7 +60,7 @@ export function Todolist(props: PropsType) {
 
                     return <li key={t.id} className={t.status === TaskStatuses.Completed ? "is-done" : "not-is-done"}>
                         <Checkbox color={'primary'} checked={t.status === TaskStatuses.Completed} onChange={onChangeHandler}/>
-                        <EditableSpan value={t.title} onChange={onTitleChangeHandler}/>
+                        <EditableSpan value={t.title} onChange={onTitleChangeHandler} type={'task'}/>
                         <IconButton aria-label="delete" onClick={onClickHandler}>
                             <DeleteIcon/>
                         </IconButton>

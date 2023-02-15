@@ -61,35 +61,38 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
-    return <div>
-        <h3><EditableSpan value={title} onChange={changeTodolistTitle}/>
-            <IconButton aria-label='delete' onClick={removeTodolist}>
-                <DeleteIcon/>
-            </IconButton>
-        </h3>
-        <AddItemForm addItem={addTask}/>
-        <ul>
-            {
-                tasks.map(t => {
-                    return (
-                        <Task
-                            key={t.id}
-                            task={t}
-                            todolistId={id}
-                        />
-                    );
-                })
-            }
-        </ul>
+    return (
         <div>
-            <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color='secondary'
-                            onClick={onAllClickHandler} title={'All'}/>
-            <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'contained'} color='success'
-                            onClick={onActiveClickHandler} title={'Active'}/>
-            <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'contained'} color='error'
-                            onClick={onCompletedClickHandler} title={'Completed'}/>
+            <h3>
+                <EditableSpan value={title} onChange={changeTodolistTitle} type={'ToDo-list'}/>
+                <IconButton aria-label='delete' onClick={removeTodolist}>
+                    <DeleteIcon/>
+                </IconButton>
+            </h3>
+            <AddItemForm addItem={addTask}/>
+            <ul>
+                {
+                    tasks.map(t => {
+                        return (
+                            <Task
+                                key={t.id}
+                                task={t}
+                                todolistId={id}
+                            />
+                        );
+                    })
+                }
+            </ul>
+            <div>
+                <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color='secondary'
+                                onClick={onAllClickHandler} title={'All'}/>
+                <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'contained'} color='success'
+                                onClick={onActiveClickHandler} title={'Active'}/>
+                <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'contained'} color='error'
+                                onClick={onCompletedClickHandler} title={'Completed'}/>
+            </div>
         </div>
-    </div>;
+    );
 });
 
 type ButtonWithMemoPropsType = {

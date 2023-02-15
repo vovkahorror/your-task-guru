@@ -27,7 +27,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     return (
         <li className={task.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>
             <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed} onChange={onChangeHandler}/>
-            <EditableSpan value={task.title} onChange={onTitleChangeHandler}/>
+            <EditableSpan value={task.title} onChange={onTitleChangeHandler} type={'task'}/>
             <IconButton aria-label='delete' onClick={onClickHandler}>
                 <DeleteIcon/>
             </IconButton>
