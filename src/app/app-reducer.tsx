@@ -1,6 +1,8 @@
 const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as string | null,
+    isShowedTodolistNotification: false,
+    isShowedTaskNotification: false,
 };
 
 export const appReducer = (state: InitialStateType = initialState, action: AppActionsType): InitialStateType => {
@@ -11,6 +13,14 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
 
         case 'APP/SET-ERROR': {
             return {...state, error: action.payload.error};
+        }
+
+        case 'APP/SET-SHOWING-TODOLIST-NOTIFICATION': {
+            return {...state, isShowedTodolistNotification: action.payload.isShowedTodolistNotification};
+        }
+
+        case 'APP/SET-SHOWING-TASK-NOTIFICATION': {
+            return {...state, isShowedTaskNotification: action.payload.isShowedTaskNotification};
         }
 
         default: {
@@ -30,9 +40,25 @@ export const setAppErrorAC = (error: string | null) => ({
     payload: {error},
 } as const);
 
+export const setTodolistNotificationShowingAC = (isShowedTodolistNotification: boolean) => ({
+    type: 'APP/SET-SHOWING-TODOLIST-NOTIFICATION',
+    payload: {isShowedTodolistNotification},
+} as const);
+
+export const setTaskNotificationShowingAC = (isShowedTaskNotification: boolean) => ({
+    type: 'APP/SET-SHOWING-TASK-NOTIFICATION',
+    payload: {isShowedTaskNotification},
+} as const);
+
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
+export type TitleNotificationType = 'ToDo-list' | 'task';
+
 type InitialStateType = typeof initialState;
 
-export type AppActionsType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setAppErrorAC>;
+export type AppActionsType =
+    ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setAppErrorAC>
+    | ReturnType<typeof setTodolistNotificationShowingAC>
+    | ReturnType<typeof setTaskNotificationShowingAC>;

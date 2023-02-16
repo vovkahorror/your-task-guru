@@ -3,6 +3,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistAPI} from '../../api/tod
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../app/store';
 import {AppActionsType, setAppErrorAC, setAppStatusAC} from '../../app/app-reducer';
+import {AxiosError} from 'axios/index';
 
 const initialState: TasksStateType = {};
 
@@ -50,7 +51,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
 
         case 'REMOVE-TODOLIST': {
             const copyState = {...state};
-            delete copyState[action.payload.id];
+            delete copyState[action.payload.todolistId];
             return copyState;
         }
 
@@ -108,9 +109,17 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
                 dispatch(addTaskAC(res.data.data.item));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
-                dispatch(setAppErrorAC(res.data.messages[0]));
-                dispatch(setAppStatusAC('failed'));
+                if (res.data.messages.length) {
+                    dispatch(setAppErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setAppErrorAC('Some error occurred'))
+                }
+                dispatch(setAppStatusAC('failed'))
             }
+        })
+        .catch((e: AxiosError) => {
+            dispatch(setAppStatusAC('failed'));
+            dispatch(setAppErrorAC(e.message));
         });
 };
 
@@ -136,6 +145,10 @@ export const updateTaskTC = (todolistId: string, taskID: string, domainModel: Up
                 .then(() => {
                     dispatch(updateTaskAC(todolistId, taskID, apiModel));
                     dispatch(setAppStatusAC('succeeded'));
+                })
+                .catch((e: AxiosError) => {
+                    dispatch(setAppStatusAC('failed'));
+                    dispatch(setAppErrorAC(e.message));
                 });
         }
     };

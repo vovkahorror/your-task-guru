@@ -34,13 +34,17 @@ export function Todolist(props: PropsType) {
         props.changeTodolistTitle(props.id, title);
     };
 
-    const onAllClickHandler = () => props.changeFilter("all", props.id);
-    const onActiveClickHandler = () => props.changeFilter("active", props.id);
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
+    const onAllClickHandler = () => props.changeFilter('all', props.id);
+    const onActiveClickHandler = () => props.changeFilter('active', props.id);
+    const onCompletedClickHandler = () => props.changeFilter('completed', props.id);
+
+    const setTaskNotificationShowing = () => {}
 
     return <div>
-        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} type={'ToDo-list'}/>
-            <IconButton aria-label="delete" onClick={removeTodolist}>
+        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} titleType={'ToDo-list'}
+                          isShowedNotification={false}
+                          setNotificationShowing={setTaskNotificationShowing}/>
+            <IconButton aria-label='delete' onClick={removeTodolist}>
                 <DeleteIcon/>
             </IconButton>
         </h3>
@@ -58,10 +62,12 @@ export function Todolist(props: PropsType) {
                     };
 
 
-                    return <li key={t.id} className={t.status === TaskStatuses.Completed ? "is-done" : "not-is-done"}>
-                        <Checkbox color={'primary'} checked={t.status === TaskStatuses.Completed} onChange={onChangeHandler}/>
-                        <EditableSpan value={t.title} onChange={onTitleChangeHandler} type={'task'}/>
-                        <IconButton aria-label="delete" onClick={onClickHandler}>
+                    return <li key={t.id} className={t.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>
+                        <Checkbox color={'primary'} checked={t.status === TaskStatuses.Completed}
+                                  onChange={onChangeHandler}/>
+                        <EditableSpan value={t.title} onChange={onTitleChangeHandler} titleType={'task'} isShowedNotification={false}
+                                      setNotificationShowing={setTaskNotificationShowing}/>
+                        <IconButton aria-label='delete' onClick={onClickHandler}>
                             <DeleteIcon/>
                         </IconButton>
                     </li>;
@@ -69,11 +75,11 @@ export function Todolist(props: PropsType) {
             }
         </ul>
         <div>
-            <Button variant={props.filter === 'all' ? "outlined" : "contained"} color="secondary"
+            <Button variant={props.filter === 'all' ? 'outlined' : 'contained'} color='secondary'
                     onClick={onAllClickHandler}>All</Button>
-            <Button variant={props.filter === 'active' ? "outlined" : "contained"} color="success"
+            <Button variant={props.filter === 'active' ? 'outlined' : 'contained'} color='success'
                     onClick={onActiveClickHandler}>Active</Button>
-            <Button variant={props.filter === 'completed' ? "outlined" : "contained"} color="error"
+            <Button variant={props.filter === 'completed' ? 'outlined' : 'contained'} color='error'
                     onClick={onCompletedClickHandler}>Completed</Button>
         </div>
     </div>;

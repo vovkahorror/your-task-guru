@@ -10,19 +10,22 @@ import Task from './Task/Task';
 import {TaskStatuses, TaskType} from '../../../api/todolist-api';
 import {useAppDispatch} from '../../../custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../custom-hooks/useAppSelector';
+import {setTodolistNotificationShowingAC} from '../../../app/app-reducer';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
 }
 
 export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
-    const {id, title, filter} = todolist;
+    const {id, title, filter, entityStatus} = todolist;
 
     useEffect(() => {
         dispatch(getTasksTC(id));
     }, []);
 
     let tasks = useAppSelector<Array<TaskType>>(state => state.tasks[id]);
+
+    const isShowedTodolistNotification = useAppSelector<boolean>(state => state.app.isShowedTodolistNotification);
 
     const dispatch = useAppDispatch();
 
@@ -53,6 +56,9 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
             dispatch(changeFilterAC('completed', id));
         }
     }, [dispatch, filter, id]);
+    const setTodolistNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {
+        dispatch(setTodolistNotificationShowingAC(isShowedTodolistNotification));
+    }, [dispatch]);
 
     if (filter === 'active') {
         tasks = tasks.filter(t => t.status === TaskStatuses.New);
@@ -64,12 +70,14 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     return (
         <div>
             <h3>
-                <EditableSpan value={title} onChange={changeTodolistTitle} type={'ToDo-list'}/>
-                <IconButton aria-label='delete' onClick={removeTodolist}>
+                <EditableSpan value={title} onChange={changeTodolistTitle} titleType={'ToDo-list'}
+                              isShowedNotification={isShowedTodolistNotification}
+                              setNotificationShowing={setTodolistNotificationShowing}/>
+                <IconButton aria-label='delete' onClick={removeTodolist} disabled={entityStatus === 'loading'}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} disabled={entityStatus === 'loading'}/>
             <ul>
                 {
                     tasks.map(t => {

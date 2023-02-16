@@ -3,25 +3,26 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => void;
+    disabled?: boolean;
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
-    const [title, setTitle] = useState("")
-    const [error, setError] = useState<string | null>(null)
+    const [title, setTitle] = useState('');
+    const [error, setError] = useState<string | null>(null);
 
     const addItem = () => {
-        if (title.trim() !== "") {
+        if (title.trim() !== '') {
             props.addItem(title);
-            setTitle("");
+            setTitle('');
         } else {
-            setError("Title is required");
+            setError('Title is required');
         }
-    }
+    };
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
+        setTitle(e.currentTarget.value);
+    };
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error) {
@@ -30,21 +31,23 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         if (e.key === 'Enter') {
             addItem();
         }
-    }
+    };
 
     return <div>
         <TextField
             value={title}
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
-            id="outlined-basic"
-            label={error ? "Title is required" : "type out here..."}
-            variant="outlined"
-            size="small"
+            id='outlined-basic'
+            label={error ? 'Title is required' : 'type out here...'}
+            variant='outlined'
+            size='small'
             error={!!error}
+            disabled={props.disabled}
         />
 
-        <Button variant="contained" style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
+        <Button variant='contained' disabled={props.disabled}
+                style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
                 onClick={addItem}>+</Button>
-    </div>
-})
+    </div>;
+});
