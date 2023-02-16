@@ -7,8 +7,8 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
-    let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
+    const [title, setTitle] = useState("")
+    const [error, setError] = useState<string | null>(null)
 
     const addItem = () => {
         if (title.trim() !== "") {
@@ -23,11 +23,11 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         setTitle(e.currentTarget.value)
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error) {
             setError(null);
         }
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             addItem();
         }
     }
@@ -36,7 +36,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         <TextField
             value={title}
             onChange={onChangeHandler}
-            onKeyPress={onKeyPressHandler}
+            onKeyDown={onKeyDownHandler}
             id="outlined-basic"
             label={error ? "Title is required" : "type out here..."}
             variant="outlined"
