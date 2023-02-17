@@ -1,5 +1,5 @@
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from './todolists-reducer';
-import {TaskPriorities, TaskStatuses, TaskType, todolistsApi} from '../../api/todolists-api';
+import {ResultCode, TaskPriorities, TaskStatuses, TaskType, todolistsApi} from '../../api/todolists-api';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../app/store';
 import {AppActionsType, setAppErrorAC, setAppStatusAC} from '../../app/app-reducer';
@@ -100,7 +100,7 @@ export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispa
     dispatch(setAppStatusAC('loading'));
     todolistsApi.deleteTask(todolistId, id)
         .then(res => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCode.OK) {
                 dispatch(removeTaskAC(id, todolistId));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
@@ -116,7 +116,7 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
     dispatch(setAppStatusAC('loading'));
     todolistsApi.createTask(todolistId, title)
         .then(res => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCode.OK) {
                 dispatch(addTaskAC(res.data.data.item));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
@@ -148,7 +148,7 @@ export const updateTaskTC = (todolistId: string, taskID: string, domainModel: Up
 
             todolistsApi.updateTask(todolistId, taskID, apiModel)
                 .then(res => {
-                    if (res.data.resultCode === 0) {
+                    if (res.data.resultCode === ResultCode.OK) {
                         dispatch(updateTaskAC(todolistId, taskID, apiModel));
                         dispatch(setAppStatusAC('succeeded'));
                     } else {

@@ -1,7 +1,8 @@
-import {todolistsApi, TodolistType} from '../../api/todolists-api';
+import {ResultCode, todolistsApi, TodolistType} from '../../api/todolists-api';
 import {Dispatch} from 'redux';
 import {AppActionsType, RequestStatusType, setAppErrorAC, setAppStatusAC} from '../../app/app-reducer';
 import { AxiosError } from 'axios';
+import {handleServerNetworkError} from '../../utils/error-utils';
 
 const initialState: TodolistDomainType[] = [];
 
@@ -80,6 +81,9 @@ export const getTodolistsTC = () => (dispatch: Dispatch<ActionsType>) => {
         .then((res) => {
             dispatch(setTodolistsAC(res));
             dispatch(setAppStatusAC('succeeded'));
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e.message, dispatch);
         });
 };
 
@@ -87,7 +91,7 @@ export const addTodolistsTC = (title: string) => (dispatch: Dispatch<ActionsType
     dispatch(setAppStatusAC('loading'));
     todolistsApi.createTodolist(title)
         .then((res) => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCode.OK) {
                 dispatch(addTodolistAC(res.data.data.item));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
@@ -100,8 +104,7 @@ export const addTodolistsTC = (title: string) => (dispatch: Dispatch<ActionsType
             }
         })
         .catch((e: AxiosError) => {
-            dispatch(setAppStatusAC('failed'));
-            dispatch(setAppErrorAC(e.message));
+            handleServerNetworkError(e.message, dispatch);
         });
 };
 
@@ -114,9 +117,8 @@ export const removeTodolistsTC = (todolistId: string) => (dispatch: Dispatch<Act
             dispatch(setAppStatusAC('succeeded'));
         })
         .catch((e: AxiosError) => {
-            dispatch(setAppStatusAC('failed'));
+            handleServerNetworkError(e.message, dispatch);
             dispatch(changeTodolistEntityStatusAC(todolistId, 'failed'));
-            dispatch(setAppErrorAC(e.message));
         });
 };
 
@@ -126,6 +128,9 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => (dis
         .then(() => {
             dispatch(changeTodolistTitleAC(todolistId, title));
             dispatch(setAppStatusAC('succeeded'));
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e.message, dispatch);
         });
 };
 

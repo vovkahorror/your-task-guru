@@ -45,10 +45,16 @@ export type TodolistType = {
 }
 
 export type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors: Array<string>
-    data: D
+    resultCode: ResultCode;
+    messages: Array<string>;
+    fieldsErrors: Array<string>;
+    data: D;
+}
+
+export enum ResultCode {
+    OK = 0,
+    Error = 1,
+    Captcha = 10
 }
 
 export enum TaskStatuses {
