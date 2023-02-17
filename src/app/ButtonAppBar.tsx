@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from '@mui/material/LinearProgress';
-import {useAppSelector} from '../custom-hooks/useAppSelector';
+import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {RequestStatusType} from './app-reducer';
 
 export default function ButtonAppBar() {

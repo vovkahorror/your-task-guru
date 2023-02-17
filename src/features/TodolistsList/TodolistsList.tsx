@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
 import {addTodolistsTC, getTodolistsTC, TodolistDomainType} from './todolists-reducer';
-import {useAppSelector} from '../../custom-hooks/useAppSelector';
+import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
 import {todolistsSelector} from './selectors/todolistsSelector';
-import {useAppDispatch} from '../../custom-hooks/useAppDispatch';
+import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import {Grid} from '@mui/material';
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm';
 import Paper from '@mui/material/Paper';

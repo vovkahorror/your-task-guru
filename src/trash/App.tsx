@@ -19,7 +19,7 @@ import {
     removeTodolistAC,
     todolistsReducer,
 } from '../features/TodolistsList/todolists-reducer';
-import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 
 function App() {
     const todolistId1 = v1();

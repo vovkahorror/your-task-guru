@@ -1,9 +1,10 @@
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from './todolists-reducer';
-import {TaskPriorities, TaskStatuses, TaskType, todolistAPI} from '../../api/todolist-api';
+import {TaskPriorities, TaskStatuses, TaskType, todolistsApi} from '../../api/todolists-api';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../app/store';
 import {AppActionsType, setAppErrorAC, setAppStatusAC} from '../../app/app-reducer';
-import {AxiosError} from 'axios/index';
+import {AxiosError} from 'axios';
+import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
 const initialState: TasksStateType = {};
 
@@ -85,41 +86,45 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => ({
 //thunks
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'));
-    todolistAPI.getTasks(todolistId)
+    todolistsApi.getTasks(todolistId)
         .then(res => {
-            dispatch(setTasksAC(res.items, todolistId));
+            dispatch(setTasksAC(res.data.items, todolistId));
             dispatch(setAppStatusAC('succeeded'));
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e.message, dispatch);
         });
 };
 
 export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'));
-    todolistAPI.deleteTask(todolistId, id)
-        .then(() => {
-            dispatch(removeTaskAC(id, todolistId));
-            dispatch(setAppStatusAC('succeeded'));
+    todolistsApi.deleteTask(todolistId, id)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(removeTaskAC(id, todolistId));
+                dispatch(setAppStatusAC('succeeded'));
+            } else {
+                handleServerAppError(res.data, dispatch);
+            }
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e.message, dispatch);
         });
 };
 
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'));
-    todolistAPI.createTask(todolistId, title)
+    todolistsApi.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
-                dispatch(setAppStatusAC('failed'))
+                handleServerAppError(res.data, dispatch);
             }
         })
         .catch((e: AxiosError) => {
-            dispatch(setAppStatusAC('failed'));
-            dispatch(setAppErrorAC(e.message));
+            handleServerNetworkError(e.message, dispatch);
         });
 };
 
@@ -141,14 +146,17 @@ export const updateTaskTC = (todolistId: string, taskID: string, domainModel: Up
                 ...domainModel,
             };
 
-            todolistAPI.updateTask(todolistId, taskID, apiModel)
-                .then(() => {
-                    dispatch(updateTaskAC(todolistId, taskID, apiModel));
-                    dispatch(setAppStatusAC('succeeded'));
+            todolistsApi.updateTask(todolistId, taskID, apiModel)
+                .then(res => {
+                    if (res.data.resultCode === 0) {
+                        dispatch(updateTaskAC(todolistId, taskID, apiModel));
+                        dispatch(setAppStatusAC('succeeded'));
+                    } else {
+                        handleServerAppError(res.data, dispatch);
+                    }
                 })
                 .catch((e: AxiosError) => {
-                    dispatch(setAppStatusAC('failed'));
-                    dispatch(setAppErrorAC(e.message));
+                    handleServerNetworkError(e.message, dispatch);
                 });
         }
     };

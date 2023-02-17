@@ -9,7 +9,7 @@ const instance = axios.create({
 });
 
 //api
-export const todolistAPI = {
+export const todolistsApi = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists').then(res => res.data);
     },
@@ -23,16 +23,16 @@ export const todolistAPI = {
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title}).then(res => res.data);
     },
     getTasks(todolistId: string) {
-        return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`).then(res => res.data);
+        return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`);
     },
     createTask(todolistId: string, title: string) {
         return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title});
     },
     deleteTask(todolistId: string, taskID: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskID}`).then(res => res.data);
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskID}`);
     },
     updateTask(todolistId: string, taskID: string, model: UpdateTaskModelType) {
-        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskID}`, model).then(res => res.data);
+        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskID}`, model);
     },
 };
 

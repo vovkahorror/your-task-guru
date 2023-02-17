@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import {addTaskTC, getTasksTC} from '../tasks-reducer';
 import {changeFilterAC, changeTodolistTitleTC, removeTodolistsTC, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
-import {TaskStatuses, TaskType} from '../../../api/todolist-api';
-import {useAppDispatch} from '../../../custom-hooks/useAppDispatch';
-import {useAppSelector} from '../../../custom-hooks/useAppSelector';
+import {TaskStatuses, TaskType} from '../../../api/todolists-api';
+import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
+import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
 import {setTodolistNotificationShowingAC} from '../../../app/app-reducer';
 
 export type TodolistPropsType = {

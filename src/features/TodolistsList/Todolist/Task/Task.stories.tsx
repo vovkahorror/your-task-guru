@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {action} from '@storybook/addon-actions';
 import ReduxStoreProviderDecorator from '../../../../stories/decorators/ReduxStoreProviderDecorator';
-import {TaskPriorities, TaskStatuses} from '../../../../api/todolist-api';
+import {TaskPriorities, TaskStatuses} from '../../../../api/todolists-api';
 import {setTaskNotificationShowingAC} from '../../../../app/app-reducer';
 import {useDispatch} from 'react-redux';
 

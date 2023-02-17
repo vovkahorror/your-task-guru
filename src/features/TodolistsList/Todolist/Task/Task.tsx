@@ -4,9 +4,9 @@ import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {removeTaskTC, updateTaskTC} from '../../tasks-reducer';
-import {TaskStatuses, TaskType} from '../../../../api/todolist-api';
-import {useAppDispatch} from '../../../../custom-hooks/useAppDispatch';
-import {useAppSelector} from '../../../../custom-hooks/useAppSelector';
+import {TaskStatuses, TaskType} from '../../../../api/todolists-api';
+import {useAppDispatch} from '../../../../utils/custom-hooks/useAppDispatch';
+import {useAppSelector} from '../../../../utils/custom-hooks/useAppSelector';
 import {setTaskNotificationShowingAC, setTodolistNotificationShowingAC} from '../../../../app/app-reducer';
 
 export type TaskPropsType = {

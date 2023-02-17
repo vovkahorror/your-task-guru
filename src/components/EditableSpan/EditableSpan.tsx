@@ -1,12 +1,12 @@
 import React, {ChangeEvent, memo, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
-import {TitleNotificationType} from '../../app/app-reducer';
+import {TitleNotificationTextType} from '../../app/app-reducer';
 
 type EditableSpanPropsType = {
     value: string;
     onChange: (newValue: string) => void;
-    titleType: TitleNotificationType;
+    titleType: TitleNotificationTextType;
     isShowedNotification: boolean;
     setNotificationShowing: (isShowedNotification: boolean) => void;
 }
