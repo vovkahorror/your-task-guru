@@ -6,6 +6,7 @@ import {TitleNotificationTextType} from '../../app/app-reducer';
 type EditableSpanPropsType = {
     value: string;
     onChange: (newValue: string) => void;
+    disabled?: boolean;
     titleType: TitleNotificationTextType;
     isShowedNotification: boolean;
     setNotificationShowing: (isShowedNotification: boolean) => void;
@@ -17,8 +18,10 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     const [openTooltip, setOpenTooltip] = useState(false);
 
     const activateEditMode = () => {
-        setEditMode(true);
-        setTitle(props.value);
+        if (!props.disabled) {
+            setEditMode(true);
+            setTitle(props.value);
+        }
     };
     const activateViewMode = () => {
         setEditMode(false);

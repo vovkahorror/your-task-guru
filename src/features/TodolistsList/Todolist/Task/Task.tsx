@@ -3,14 +3,14 @@ import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {removeTaskTC, updateTaskTC} from '../../tasks-reducer';
-import {TaskStatuses, TaskType} from '../../../../api/todolists-api';
+import {removeTaskTC, TaskDomainType, updateTaskTC} from '../../tasks-reducer';
+import {TaskStatuses} from '../../../../api/todolists-api';
 import {useAppDispatch} from '../../../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../../utils/custom-hooks/useAppSelector';
-import {setTaskNotificationShowingAC, setTodolistNotificationShowingAC} from '../../../../app/app-reducer';
+import {setTaskNotificationShowingAC} from '../../../../app/app-reducer';
 
 export type TaskPropsType = {
-    task: TaskType;
+    task: TaskDomainType;
     todolistId: string
 }
 
@@ -33,11 +33,13 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
 
     return (
         <li className={task.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>
-            <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed} onChange={onChangeHandler}/>
+            <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed}
+                      disabled={task.entityStatus === 'loading'} onChange={onChangeHandler}/>
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
+                          disabled={task.entityStatus === 'loading'}
                           isShowedNotification={isShowedTaskNotification}
                           setNotificationShowing={setTaskNotificationShowing}/>
-            <IconButton aria-label='delete' onClick={onClickHandler}>
+            <IconButton aria-label='delete' disabled={task.entityStatus === 'loading'} onClick={onClickHandler}>
                 <DeleteIcon/>
             </IconButton>
         </li>

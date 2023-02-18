@@ -34,21 +34,21 @@ function App() {
         [todolistId1]: [
             {
                 id: v1(), title: 'HTML&CSS', status: TaskStatuses.Completed, todoListId: todolistId1, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
             },
             {
                 id: v1(), title: 'JS', status: TaskStatuses.Completed, todoListId: todolistId1, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
             },
         ],
         [todolistId2]: [
             {
                 id: v1(), title: 'Milk', status: TaskStatuses.Completed, todoListId: todolistId2, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
             },
             {
                 id: v1(), title: 'React Book', status: TaskStatuses.Completed, todoListId: todolistId2, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low,
+                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
             },
         ],
     });

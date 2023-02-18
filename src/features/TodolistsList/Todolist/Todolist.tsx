@@ -4,8 +4,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
-import {addTaskTC, getTasksTC} from '../tasks-reducer';
-import {changeFilterAC, changeTodolistTitleTC, removeTodolistsTC, TodolistDomainType} from '../todolists-reducer';
+import {addTaskTC, getTasksTC, TaskDomainType} from '../tasks-reducer';
+import {changeFilterAC, changeTodolistTitleTC, removeTodolistTC, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
 import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
@@ -23,7 +23,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         dispatch(getTasksTC(id));
     }, []);
 
-    let tasks = useAppSelector<Array<TaskType>>(state => state.tasks[id]);
+    let tasks = useAppSelector<Array<TaskDomainType>>(state => state.tasks[id]);
 
     const isShowedTodolistNotification = useAppSelector<boolean>(state => state.app.isShowedTodolistNotification);
 
@@ -34,7 +34,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     }, [dispatch, id]);
 
     const removeTodolist = useCallback(() => {
-        dispatch(removeTodolistsTC(id));
+        dispatch(removeTodolistTC(id));
     }, [dispatch, id]);
 
     const changeTodolistTitle = useCallback((title: string) => {
@@ -71,9 +71,10 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         <div>
             <h3>
                 <EditableSpan value={title} onChange={changeTodolistTitle} titleType={'ToDo-list'}
+                              disabled={entityStatus === 'loading'}
                               isShowedNotification={isShowedTodolistNotification}
                               setNotificationShowing={setTodolistNotificationShowing}/>
-                <IconButton aria-label='delete' onClick={removeTodolist} disabled={entityStatus === 'loading'}>
+                <IconButton aria-label='delete' disabled={entityStatus === 'loading'} onClick={removeTodolist}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>

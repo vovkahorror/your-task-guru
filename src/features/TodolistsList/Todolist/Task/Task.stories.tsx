@@ -18,7 +18,7 @@ export default {
     args: {
         task: {
             id: '1', title: 'JS', status: TaskStatuses.Completed, todoListId: 'todolistId1', description: '',
-            startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low,
+            startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
         },
         todolistId: 'td1',
     },
@@ -35,7 +35,7 @@ export const TaskIsNotDoneStory = Template.bind({});
 TaskIsNotDoneStory.args = {
     task: {
         id: '2', title: 'CSS', status: TaskStatuses.New, todoListId: 'todolistId1', description: '',
-        startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low,
+        startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
     },
 };
 

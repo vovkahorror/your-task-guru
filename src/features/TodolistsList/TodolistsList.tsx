@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {addTodolistsTC, getTodolistsTC, TodolistDomainType} from './todolists-reducer';
+import {addTodolistTC, getTodolistsTC, TodolistDomainType} from './todolists-reducer';
 import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
 import {todolistsSelector} from './selectors/todolistsSelector';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
@@ -18,7 +18,7 @@ export const TodolistsList = () => {
     const dispatch = useAppDispatch();
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistsTC(title));
+        dispatch(addTodolistTC(title));
     }, [dispatch]);
 
     return (
