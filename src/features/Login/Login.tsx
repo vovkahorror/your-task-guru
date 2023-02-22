@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -13,19 +13,16 @@ export const Login = () => {
         <Grid item justifyContent={'center'}>
             <FormControl>
                 <FormLabel>
-                    <p>To log in get registered
-                        <a href={'https://social-network.samuraijs.com/'}
-                           target={'_blank'}> here
-                        </a>
-                    </p>
+                    <p>To log in get registered <a href={'https://social-network.samuraijs.com/'}
+                                                   target={'_blank'}>here</a></p>
                     <p>or use common test account credentials:</p>
                     <p>Email: free@samuraijs.com</p>
                     <p>Password: free</p>
                 </FormLabel>
                 <FormGroup>
-                    <TextField label="Email" margin="normal"/>
-                    <TextField type="password" label="Password"
-                               margin="normal"
+                    <TextField label='Email' type='email' margin='normal'/>
+                    <TextField type='password' label='Password'
+                               margin='normal'
                     />
                     <FormControlLabel label={'Remember me'} control={<Checkbox/>}/>
                     <Button type={'submit'} variant={'contained'} color={'primary'}>
@@ -34,5 +31,5 @@ export const Login = () => {
                 </FormGroup>
             </FormControl>
         </Grid>
-    </Grid>
-}
+    </Grid>;
+};
