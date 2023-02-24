@@ -26,15 +26,15 @@ export const Login = () => {
             const errors: FormikErrorType = {};
 
             if (!values.email) {
-                errors.email = 'Required';
+                errors.email = 'Email is required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
 
             if (!values.password) {
-                errors.password = 'Required';
+                errors.password = 'Password is required';
             } else if (values.password.length < 6) {
-                errors.password = 'Less than six characters long';
+                errors.password = 'The length must be more than six characters';
             }
 
             return errors;
@@ -66,10 +66,10 @@ export const Login = () => {
                             type='password' margin='normal'
                             error={!!(formik.touched.password && formik.errors.password)}
                             {...formik.getFieldProps('password')}/>
-                        <FormControlLabel label={'Remember me'} control={<Checkbox name={'rememberMe'}
-                                                                                   onChange={formik.handleChange}
-                                                                                   value={formik.values.rememberMe}/>}/>
-                        <Button type={'submit'} variant={'contained'} color={'primary'}>
+                        <FormControlLabel label={'Remember me'}
+                                          control={<Checkbox {...formik.getFieldProps('rememberMe')}/>}/>
+                        <Button type={'submit'} variant={'contained'} color={'primary'}
+                                disabled={!Object.keys(formik.touched).length || !!Object.keys(formik.errors).length}>
                             Login
                         </Button>
                     </FormGroup>
