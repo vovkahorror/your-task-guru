@@ -54,6 +54,9 @@ const initialGlobalState: AppRootStateType = {
         isShowedTodolistNotification: false,
         isShowedTaskNotification: false,
     },
+    auth: {
+        isLoggedIn: false,
+    }
 };
 
 export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState);

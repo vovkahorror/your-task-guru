@@ -4,6 +4,7 @@ import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from '@redux-devtools/extension';
 import {appReducer} from './app-reducer';
+import {authReducer} from '../features/Login/auth-reducer';
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
+    auth: authReducer,
 });
 // непосредственно создаём store
 export const store = legacy_createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

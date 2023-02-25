@@ -9,6 +9,12 @@ const instance = axios.create({
 });
 
 //api
+export const authAPI = {
+    login(data: LoginType) {
+        return instance.post<ResponseType<{ userId: number }>>('auth/login', data);
+    },
+};
+
 export const todolistsApi = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists').then(res => res.data);
@@ -17,10 +23,10 @@ export const todolistsApi = {
         return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title});
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}`).then(res => res.data);
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`);
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title}).then(res => res.data);
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title});
     },
     getTasks(todolistId: string) {
         return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`);
@@ -37,6 +43,13 @@ export const todolistsApi = {
 };
 
 //types
+export type LoginType = {
+    email: string;
+    password: string;
+    rememberMe?: boolean;
+    captcha?: string;
+}
+
 export type TodolistType = {
     id: string;
     addedDate: string;

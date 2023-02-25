@@ -41,7 +41,7 @@ export function Todolist(props: PropsType) {
     const setTaskNotificationShowing = () => {}
 
     return <div>
-        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} titleType={'ToDo-list'}
+        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} titleType={'To-Do list'}
                           isShowedNotification={false}
                           setNotificationShowing={setTaskNotificationShowing}/>
             <IconButton aria-label='delete' onClick={removeTodolist}>

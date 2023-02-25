@@ -53,7 +53,7 @@ export const setTaskNotificationShowingAC = (isShowedTaskNotification: boolean) 
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-export type TitleNotificationTextType = 'ToDo-list' | 'task';
+export type TitleNotificationTextType = 'To-Do list' | 'task';
 
 type InitialStateType = typeof initialState;
 

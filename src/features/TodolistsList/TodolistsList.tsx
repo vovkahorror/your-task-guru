@@ -7,9 +7,16 @@ import {Grid} from '@mui/material';
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm';
 import Paper from '@mui/material/Paper';
 import {Todolist} from './Todolist/Todolist';
+import {Navigate} from 'react-router-dom';
 
 export const TodolistsList = () => {
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn);
+
     useEffect(() => {
+        if (!isLoggedIn) {
+            return;
+        }
+
         dispatch(getTodolistsTC());
     }, []);
 
@@ -20,6 +27,10 @@ export const TodolistsList = () => {
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title));
     }, [dispatch]);
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>;
+    }
 
     return (
         <>

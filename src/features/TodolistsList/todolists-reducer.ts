@@ -110,9 +110,13 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
 
     todolistsApi.deleteTodolist(todolistId)
-        .then(() => {
-            dispatch(removeTodolistAC(todolistId));
-            dispatch(setAppStatusAC('succeeded'));
+        .then((res) => {
+            if (res.data.resultCode === ResultCode.OK) {
+                dispatch(removeTodolistAC(todolistId));
+                dispatch(setAppStatusAC('succeeded'));
+            } else {
+                handleServerAppError(res.data, dispatch);
+            }
         })
         .catch((e: AxiosError) => {
             handleServerNetworkError(e.message, dispatch);
@@ -125,10 +129,14 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => (dis
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
 
     todolistsApi.updateTodolist(todolistId, title)
-        .then(() => {
-            dispatch(changeTodolistTitleAC(todolistId, title));
-            dispatch(setAppStatusAC('succeeded'));
-            dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded'));
+        .then((res) => {
+            if (res.data.resultCode === ResultCode.OK) {
+                dispatch(changeTodolistTitleAC(todolistId, title));
+                dispatch(setAppStatusAC('succeeded'));
+                dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded'));
+            } else {
+                handleServerAppError(res.data, dispatch);
+            }
         })
         .catch((e: AxiosError) => {
             handleServerNetworkError(e.message, dispatch);

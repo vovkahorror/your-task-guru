@@ -70,7 +70,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     return (
         <div>
             <h3>
-                <EditableSpan value={title} onChange={changeTodolistTitle} titleType={'ToDo-list'}
+                <EditableSpan value={title} onChange={changeTodolistTitle} titleType={'To-Do list'}
                               disabled={entityStatus === 'loading'}
                               isShowedNotification={isShowedTodolistNotification}
                               setNotificationShowing={setTodolistNotificationShowing}/>
