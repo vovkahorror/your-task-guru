@@ -1,6 +1,7 @@
 const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as string | null,
+    isInitialized: false,
     isShowedTodolistNotification: false,
     isShowedTaskNotification: false,
 };
@@ -13,6 +14,10 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
 
         case 'APP/SET-ERROR': {
             return {...state, error: action.payload.error};
+        }
+
+        case 'APP/SET-IS-INITIALIZED': {
+            return {...state, isInitialized: action.payload.isInitialized};
         }
 
         case 'APP/SET-SHOWING-TODOLIST-NOTIFICATION': {
@@ -40,6 +45,11 @@ export const setAppErrorAC = (error: string | null) => ({
     payload: {error},
 } as const);
 
+export const setIsInitializedAC = (isInitialized: boolean) => ({
+    type: 'APP/SET-IS-INITIALIZED',
+    payload: {isInitialized},
+} as const);
+
 export const setTodolistNotificationShowingAC = (isShowedTodolistNotification: boolean) => ({
     type: 'APP/SET-SHOWING-TODOLIST-NOTIFICATION',
     payload: {isShowedTodolistNotification},
@@ -59,9 +69,11 @@ type InitialStateType = typeof initialState;
 
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>;
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>;
+export type SetIsInitializedActionType = ReturnType<typeof setIsInitializedAC>;
 
 export type AppActionsType =
     SetAppStatusActionType
     | SetAppErrorActionType
+    | SetIsInitializedActionType
     | ReturnType<typeof setTodolistNotificationShowingAC>
     | ReturnType<typeof setTaskNotificationShowingAC>;

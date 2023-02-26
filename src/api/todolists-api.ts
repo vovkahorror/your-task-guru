@@ -10,8 +10,14 @@ const instance = axios.create({
 
 //api
 export const authAPI = {
-    login(data: LoginType) {
+    me() {
+        return instance.get<ResponseType<UserType>>('auth/me');
+    },
+    logIn(data: LoginType) {
         return instance.post<ResponseType<{ userId: number }>>('auth/login', data);
+    },
+    logOut() {
+        return instance.delete<ResponseType>('auth/login');
     },
 };
 
@@ -43,6 +49,12 @@ export const todolistsApi = {
 };
 
 //types
+export type UserType = {
+    id: number;
+    email: string;
+    login: string;
+}
+
 export type LoginType = {
     email: string;
     password: string;

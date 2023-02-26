@@ -51,6 +51,7 @@ const initialGlobalState: AppRootStateType = {
     app: {
         status: 'idle',
         error: null,
+        isInitialized: false,
         isShowedTodolistNotification: false,
         isShowedTaskNotification: false,
     },
