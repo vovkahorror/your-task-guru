@@ -8,6 +8,7 @@ import {
 import {authAPI, LoginType, ResultCode} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {isAxiosError} from 'axios';
+import {clearDataAC, ClearDataActionType} from '../TodolistsList/todolists-reducer';
 
 const initialState = {
     isLoggedIn: false,
@@ -81,6 +82,7 @@ export const logOutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setIsLoggedInAC(false));
             dispatch(setAppStatusAC('succeeded'));
+            dispatch(clearDataAC());
         } else {
             handleServerAppError(res.data, dispatch);
         }
@@ -97,3 +99,4 @@ type ActionsType =
     | SetAppStatusActionType
     | SetAppErrorActionType
     | SetIsInitializedActionType
+    | ClearDataActionType;

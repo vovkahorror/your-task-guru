@@ -19,10 +19,6 @@ export type TodolistPropsType = {
 export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {id, title, filter, entityStatus} = todolist;
 
-    useEffect(() => {
-        dispatch(getTasksTC(id));
-    }, []);
-
     let tasks = useAppSelector<Array<TaskDomainType>>(state => state.tasks[id]);
 
     const isShowedTodolistNotification = useAppSelector<boolean>(state => state.app.isShowedTodolistNotification);
