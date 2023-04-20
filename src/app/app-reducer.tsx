@@ -1,3 +1,9 @@
+import {Dispatch} from 'redux';
+import {authAPI, ResultCode} from '../api/todolists-api';
+import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
+import {isAxiosError} from 'axios';
+import {setIsLoggedInAC} from '../features/Login/auth-reducer';
+
 const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as string | null,
@@ -60,6 +66,28 @@ export const setTaskNotificationShowingAC = (isShowedTaskNotification: boolean) 
     payload: {isShowedTaskNotification},
 } as const);
 
+// thunks
+export const initializeAppTC = () => async (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'));
+
+    try {
+        const res = await authAPI.me();
+
+        if (res.data.resultCode === ResultCode.OK) {
+            dispatch(setIsLoggedInAC({value: true}));
+            dispatch(setAppStatusAC('succeeded'));
+        } else {
+            handleServerAppError(res.data, dispatch);
+        }
+    } catch (e) {
+        if (isAxiosError(e)) {
+            handleServerNetworkError(e.message, dispatch);
+        }
+    } finally {
+        dispatch(setIsInitializedAC(true));
+    }
+};
+
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -77,3 +105,4 @@ export type AppActionsType =
     | SetIsInitializedActionType
     | ReturnType<typeof setTodolistNotificationShowingAC>
     | ReturnType<typeof setTaskNotificationShowingAC>;
+

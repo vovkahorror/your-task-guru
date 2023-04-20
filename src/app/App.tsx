@@ -7,9 +7,9 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
-import {initializeAppTC} from '../features/Login/auth-reducer';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
+import {initializeAppTC} from './app-reducer';
 
 function App() {
     const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized);
@@ -27,7 +27,7 @@ function App() {
     }
 
     return (
-        <div className='App'>
+        <div className="App">
             <ButtonAppBar/>
             <Container fixed>
                 <Routes>
