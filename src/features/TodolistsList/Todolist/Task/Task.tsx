@@ -28,7 +28,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
         dispatch(updateTaskTC(todolistId, task.id, {title: newValue}));
     };
     const setTaskNotificationShowing = useCallback((isShowedTaskNotification: boolean) => {
-        dispatch(setTaskNotificationShowingAC(isShowedTaskNotification));
+        dispatch(setTaskNotificationShowingAC({isShowedTaskNotification}));
     }, [dispatch]);
 
     return (
@@ -39,7 +39,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
                           disabled={task.entityStatus === 'loading'}
                           isShowedNotification={isShowedTaskNotification}
                           setNotificationShowing={setTaskNotificationShowing}/>
-            <IconButton aria-label='delete' disabled={task.entityStatus === 'loading'} onClick={onClickHandler}>
+            <IconButton aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={onClickHandler}>
                 <DeleteIcon/>
             </IconButton>
         </li>

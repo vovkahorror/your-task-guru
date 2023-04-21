@@ -1,13 +1,13 @@
-import React, {FC, memo, useCallback, useEffect} from 'react';
+import React, {FC, memo, useCallback} from 'react';
 import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
-import {addTaskTC, getTasksTC, TaskDomainType} from '../tasks-reducer';
+import {addTaskTC, TaskDomainType} from '../tasks-reducer';
 import {changeFilterAC, changeTodolistTitleTC, removeTodolistTC, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
-import {TaskStatuses, TaskType} from '../../../api/todolists-api';
+import {TaskStatuses} from '../../../api/todolists-api';
 import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
 import {setTodolistNotificationShowingAC} from '../../../app/app-reducer';
@@ -53,7 +53,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         }
     }, [dispatch, filter, id]);
     const setTodolistNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {
-        dispatch(setTodolistNotificationShowingAC(isShowedTodolistNotification));
+        dispatch(setTodolistNotificationShowingAC({isShowedTodolistNotification}));
     }, [dispatch]);
 
     if (filter === 'active') {
@@ -70,7 +70,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                               disabled={entityStatus === 'loading'}
                               isShowedNotification={isShowedTodolistNotification}
                               setNotificationShowing={setTodolistNotificationShowing}/>
-                <IconButton aria-label='delete' disabled={entityStatus === 'loading'} onClick={removeTodolist}>
+                <IconButton aria-label="delete" disabled={entityStatus === 'loading'} onClick={removeTodolist}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>
@@ -89,11 +89,11 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                 }
             </ul>
             <div>
-                <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color='secondary'
+                <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color="secondary"
                                 onClick={onAllClickHandler} title={'All'}/>
-                <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'contained'} color='success'
+                <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'contained'} color="success"
                                 onClick={onActiveClickHandler} title={'Active'}/>
-                <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'contained'} color='error'
+                <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'contained'} color="error"
                                 onClick={onCompletedClickHandler} title={'Completed'}/>
             </div>
         </div>

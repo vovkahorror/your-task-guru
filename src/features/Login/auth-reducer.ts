@@ -24,14 +24,14 @@ export const authReducer = slice.reducer;
 export const {setIsLoggedInAC} = slice.actions;
 
 export const logInTC = (data: LoginType) => async (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
         const res = await authAPI.logIn(data);
 
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setIsLoggedInAC({value: true}));
-            dispatch(setAppStatusAC('succeeded'));
+            dispatch(setAppStatusAC({status: 'succeeded'}));
         } else {
             handleServerAppError(res.data, dispatch);
         }
@@ -43,14 +43,14 @@ export const logInTC = (data: LoginType) => async (dispatch: Dispatch) => {
 };
 
 export const logOutTC = () => async (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
         const res = await authAPI.logOut();
 
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setIsLoggedInAC({value: false}));
-            dispatch(setAppStatusAC('succeeded'));
+            dispatch(setAppStatusAC({status: 'succeeded'}));
             dispatch(clearDataAC());
         } else {
             handleServerAppError(res.data, dispatch);

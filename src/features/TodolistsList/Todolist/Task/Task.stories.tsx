@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useCallback, useState} from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import React, {ChangeEvent, useState} from 'react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Task from './Task';
 import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
@@ -18,7 +18,7 @@ export default {
     args: {
         task: {
             id: '1', title: 'JS', status: TaskStatuses.Completed, todoListId: 'todolistId1', description: '',
-            startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
+            startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle',
         },
         todolistId: 'td1',
     },
@@ -35,7 +35,7 @@ export const TaskIsNotDoneStory = Template.bind({});
 TaskIsNotDoneStory.args = {
     task: {
         id: '2', title: 'CSS', status: TaskStatuses.New, todoListId: 'todolistId1', description: '',
-        startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
+        startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle',
     },
 };
 
@@ -51,7 +51,7 @@ const TemplateWork: ComponentStory<typeof Task> = (args) => {
         setTask({...task, title: newValue});
     };
     const setTaskNotificationShowing = (isShowedTaskNotification: boolean) => {
-        dispatch(setTaskNotificationShowingAC(isShowedTaskNotification));
+        dispatch(setTaskNotificationShowingAC({isShowedTaskNotification}));
     };
 
     return (
@@ -60,7 +60,7 @@ const TemplateWork: ComponentStory<typeof Task> = (args) => {
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
                           isShowedNotification={false}
                           setNotificationShowing={setTaskNotificationShowing}/>
-            <IconButton aria-label='delete' onClick={action('remove task')}>
+            <IconButton aria-label="delete" onClick={action('remove task')}>
                 <DeleteIcon/>
             </IconButton>
         </li>

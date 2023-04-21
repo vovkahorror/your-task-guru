@@ -1,11 +1,10 @@
 import {ResultCode, todolistsApi, TodolistType} from '../../api/todolists-api';
 import {Dispatch} from 'redux';
-import {AppActionsType, RequestStatusType, setAppErrorAC, setAppStatusAC} from '../../app/app-reducer';
+import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {getTasksTC} from './tasks-reducer';
-import {ThunkDispatch} from 'redux-thunk';
-import { AppDispatchType } from '../../utils/custom-hooks/useAppDispatch';
+import {AppDispatchType} from '../../utils/custom-hooks/useAppDispatch';
 
 const initialState: TodolistDomainType[] = [];
 
@@ -85,12 +84,12 @@ export const clearDataAC = () => ({type: 'CLEAR-DATA'} as const);
 
 //thunks
 export const getTodolistsTC = () => (dispatch: AppDispatchType) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC({status: 'loading'}));
 
     todolistsApi.getTodolists()
         .then((res) => {
             dispatch(setTodolistsAC(res));
-            dispatch(setAppStatusAC('succeeded'));
+            dispatch(setAppStatusAC({status: 'succeeded'}));
             return res;
         })
         .then((todolists) => {
@@ -103,14 +102,14 @@ export const getTodolistsTC = () => (dispatch: AppDispatchType) => {
         });
 };
 
-export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'));
+export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC({status: 'loading'}));
 
     todolistsApi.createTodolist(title)
         .then((res) => {
             if (res.data.resultCode === ResultCode.OK) {
                 dispatch(addTodolistAC(res.data.data.item));
-                dispatch(setAppStatusAC('succeeded'));
+                dispatch(setAppStatusAC({status: 'succeeded'}));
             } else {
                 handleServerAppError(res.data, dispatch);
             }
@@ -120,15 +119,15 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsType>
         });
 };
 
-export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'));
+export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC({status: 'loading'}));
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
 
     todolistsApi.deleteTodolist(todolistId)
         .then((res) => {
             if (res.data.resultCode === ResultCode.OK) {
                 dispatch(removeTodolistAC(todolistId));
-                dispatch(setAppStatusAC('succeeded'));
+                dispatch(setAppStatusAC({status: 'succeeded'}));
             } else {
                 handleServerAppError(res.data, dispatch);
             }
@@ -139,15 +138,15 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
         });
 };
 
-export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'));
+export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC({status: 'loading'}));
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
 
     todolistsApi.updateTodolist(todolistId, title)
         .then((res) => {
             if (res.data.resultCode === ResultCode.OK) {
                 dispatch(changeTodolistTitleAC(todolistId, title));
-                dispatch(setAppStatusAC('succeeded'));
+                dispatch(setAppStatusAC({status: 'succeeded'}));
                 dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded'));
             } else {
                 handleServerAppError(res.data, dispatch);
@@ -172,7 +171,6 @@ export type ActionsType =
     | RemoveTodolistActionType
     | AddTodolistActionType
     | SetTodolistsActionType
-    | AppActionsType
     | ClearDataActionType;
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
