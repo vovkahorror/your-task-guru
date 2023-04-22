@@ -1,7 +1,8 @@
 import {
-    AddTodolistActionType,
-    ClearDataActionType,
-    RemoveTodolistActionType,
+    addTodolistAC,
+    AddTodolistActionType, clearDataAC,
+    ClearDataActionType, removeTodolistAC,
+    RemoveTodolistActionType, setTodolistsAC,
     SetTodolistsActionType,
 } from './todolists-reducer';
 import {ResultCode, TaskPriorities, TaskStatuses, TaskType, todolistsApi} from '../../api/todolists-api';
@@ -15,9 +16,9 @@ const initialState: TasksStateType = {};
 
 export const tasksReducer = (state = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
-        case 'SET-TODOLISTS': {
+        case setTodolistsAC.type: {
             const stateCopy = {...state};
-            action.payload.todolists.forEach(tl => {
+            action.payload.todolists.forEach((tl: any) => {
                 stateCopy[tl.id] = [];
             });
             return stateCopy;
@@ -67,17 +68,17 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
             };
         }
 
-        case 'ADD-TODOLIST': {
+        case addTodolistAC.type: {
             return {...state, [action.payload.todolist.id]: []};
         }
 
-        case 'REMOVE-TODOLIST': {
+        case removeTodolistAC.type: {
             const copyState = {...state};
             delete copyState[action.payload.todolistId];
             return copyState;
         }
 
-        case 'CLEAR-DATA': {
+        case clearDataAC.name: {
             return {};
         }
 

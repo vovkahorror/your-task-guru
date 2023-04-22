@@ -39,17 +39,17 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
 
     const onAllClickHandler = useCallback(() => {
         if (filter !== 'all') {
-            dispatch(changeFilterAC('all', id));
+            dispatch(changeFilterAC({value: 'all', todolistId: id}));
         }
     }, [dispatch, filter, id]);
     const onActiveClickHandler = useCallback(() => {
         if (filter !== 'active') {
-            dispatch(changeFilterAC('active', id));
+            dispatch(changeFilterAC({value: 'active', todolistId: id}));
         }
     }, [dispatch, filter, id]);
     const onCompletedClickHandler = useCallback(() => {
         if (filter !== 'completed') {
-            dispatch(changeFilterAC('completed', id));
+            dispatch(changeFilterAC({value: 'completed', todolistId: id}));
         }
     }, [dispatch, filter, id]);
     const setTodolistNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {

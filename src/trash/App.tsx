@@ -33,22 +33,58 @@ function App() {
     const [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
             {
-                id: v1(), title: 'HTML&CSS', status: TaskStatuses.Completed, todoListId: todolistId1, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
+                id: v1(),
+                title: 'HTML&CSS',
+                status: TaskStatuses.Completed,
+                todoListId: todolistId1,
+                description: '',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                entityStatus: 'idle',
             },
             {
-                id: v1(), title: 'JS', status: TaskStatuses.Completed, todoListId: todolistId1, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
+                id: v1(),
+                title: 'JS',
+                status: TaskStatuses.Completed,
+                todoListId: todolistId1,
+                description: '',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                entityStatus: 'idle',
             },
         ],
         [todolistId2]: [
             {
-                id: v1(), title: 'Milk', status: TaskStatuses.Completed, todoListId: todolistId2, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
+                id: v1(),
+                title: 'Milk',
+                status: TaskStatuses.Completed,
+                todoListId: todolistId2,
+                description: '',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                entityStatus: 'idle',
             },
             {
-                id: v1(), title: 'React Book', status: TaskStatuses.Completed, todoListId: todolistId2, description: '',
-                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, entityStatus: 'idle'
+                id: v1(),
+                title: 'React Book',
+                status: TaskStatuses.Completed,
+                todoListId: todolistId2,
+                description: '',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                entityStatus: 'idle',
             },
         ],
     });
@@ -75,7 +111,7 @@ function App() {
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        dispatchToTodolists(changeFilterAC(value, todolistId));
+        dispatchToTodolists(changeFilterAC({value, todolistId}));
     }
 
     function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
@@ -87,13 +123,13 @@ function App() {
     }
 
     function removeTodolist(id: string) {
-        const action = removeTodolistAC(id);
+        const action = removeTodolistAC({todolistId: id});
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }
 
     function changeTodolistTitle(todolistId: string, title: string) {
-        dispatchToTodolists(changeTodolistTitleAC(todolistId, title));
+        dispatchToTodolists(changeTodolistTitleAC({todolistId, title}));
     }
 
     function addTodolist(title: string) {
@@ -101,16 +137,16 @@ function App() {
             id: v1(),
             addedDate: '',
             title,
-            order: 0
-        }
+            order: 0,
+        };
 
-        const action = addTodolistAC(newTodolist);
+        const action = addTodolistAC({todolist: newTodolist});
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }
 
     return (
-        <div className='App'>
+        <div className="App">
             <ButtonAppBar/>
 
             <Container fixed>
