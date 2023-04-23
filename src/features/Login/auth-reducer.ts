@@ -51,7 +51,7 @@ export const logOutTC = () => async (dispatch: Dispatch) => {
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setIsLoggedInAC({value: false}));
             dispatch(setAppStatusAC({status: 'succeeded'}));
-            dispatch(clearDataAC({}));
+            dispatch(clearDataAC());
         } else {
             handleServerAppError(res.data, dispatch);
         }
