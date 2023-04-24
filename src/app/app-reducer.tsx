@@ -20,15 +20,19 @@ const slice = createSlice({
         setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
             state.status = action.payload.status;
         },
+
         setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error;
         },
+
         setIsInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
             state.isInitialized = action.payload.isInitialized;
         },
+
         setTodolistNotificationShowingAC(state, action: PayloadAction<{ isShowedTodolistNotification: boolean }>) {
             state.isShowedTodolistNotification = action.payload.isShowedTodolistNotification;
         },
+        
         setTaskNotificationShowingAC(state, action: PayloadAction<{ isShowedTaskNotification: boolean }>) {
             state.isShowedTaskNotification = action.payload.isShowedTaskNotification;
         },

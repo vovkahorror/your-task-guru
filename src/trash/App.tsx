@@ -90,7 +90,7 @@ function App() {
     });
 
     function removeTask(id: string, todolistId: string) {
-        dispatchToTasks(removeTaskAC(id, todolistId));
+        dispatchToTasks(removeTaskAC({id, todolistId}));
     }
 
     function addTask(title: string, todolistId: string) {
@@ -107,7 +107,7 @@ function App() {
             priority: TaskPriorities.Low,
         };
 
-        dispatchToTasks(addTaskAC(newTask));
+        dispatchToTasks(addTaskAC({task: newTask}));
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
@@ -115,11 +115,11 @@ function App() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(updateTaskAC(todolistId, id, {status}));
+        dispatchToTasks(updateTaskAC({todolistId, id, model: {status}}));
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC(todolistId, id, {title: newTitle}));
+        dispatchToTasks(updateTaskAC({todolistId, id, model: {title: newTitle}}));
     }
 
     function removeTodolist(id: string) {
