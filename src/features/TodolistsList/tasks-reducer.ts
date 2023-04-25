@@ -1,4 +1,4 @@
-import {addTodolistAC, clearDataAC, removeTodolistAC, setTodolistsAC} from './todolists-reducer';
+import {addTodolistAC, removeTodolistAC, setTodolistsAC} from './todolists-reducer';
 import {ResultCode, TaskPriorities, TaskStatuses, TaskType, todolistsApi} from '../../api/todolists-api';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../app/store';
@@ -6,6 +6,7 @@ import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
 const initialState: TasksStateType = {};
 
@@ -69,10 +70,8 @@ const slice = createSlice({
             delete state[action.payload.todolistId];
         });
 
-        builder.addCase(clearDataAC, (state) => {
-            Object.keys(state).forEach(key => {
-                delete state[key];
-            });
+        builder.addCase(clearTasksAndTodolists, () => {
+            return {};
         });
     },
 });

@@ -3,8 +3,8 @@ import {setAppStatusAC} from '../../app/app-reducer';
 import {authAPI, LoginType, ResultCode} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {isAxiosError} from 'axios';
-import {clearDataAC} from '../TodolistsList/todolists-reducer';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
 const initialState = {
     isLoggedIn: false,
@@ -50,8 +50,8 @@ export const logOutTC = () => async (dispatch: Dispatch) => {
 
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setIsLoggedInAC({value: false}));
+            dispatch(clearTasksAndTodolists());
             dispatch(setAppStatusAC({status: 'succeeded'}));
-            dispatch(clearDataAC());
         } else {
             handleServerAppError(res.data, dispatch);
         }
