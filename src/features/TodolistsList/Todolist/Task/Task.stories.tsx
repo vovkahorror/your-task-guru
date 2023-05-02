@@ -6,10 +6,9 @@ import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {action} from '@storybook/addon-actions';
-import ReduxStoreProviderDecorator from '../../../../stories/decorators/ReduxStoreProviderDecorator';
+import {ReduxStoreProviderDecorator} from '../../../../stories/decorators/ReduxStoreProviderDecorator';
 import {TaskPriorities, TaskStatuses} from '../../../../api/todolists-api';
-import {setTaskNotificationShowingAC} from '../../../../app/app-reducer';
-import {useDispatch} from 'react-redux';
+import {BrowserRouterDecorator} from '../../../../stories/decorators/BrowserRouterDecorator';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -22,7 +21,7 @@ export default {
         },
         todolistId: 'td1',
     },
-    decorators: [ReduxStoreProviderDecorator],
+    decorators: [ReduxStoreProviderDecorator, BrowserRouterDecorator],
 } as ComponentMeta<typeof Task>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -40,7 +39,6 @@ TaskIsNotDoneStory.args = {
 };
 
 const TemplateWork: ComponentStory<typeof Task> = (args) => {
-    const dispatch = useDispatch();
     const [task, setTask] = useState(args.task);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,13 +48,12 @@ const TemplateWork: ComponentStory<typeof Task> = (args) => {
     const onTitleChangeHandler = (newValue: string) => {
         setTask({...task, title: newValue});
     };
-    const setTaskNotificationShowing = (isShowedTaskNotification: boolean) => {
-        dispatch(setTaskNotificationShowingAC({isShowedTaskNotification}));
-    };
+    const setTaskNotificationShowing = (isShowedTaskNotification: boolean) => {}
 
     return (
         <li className={task.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>
-            <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed} onChange={onChangeHandler}/>
+            <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed}
+                      onChange={onChangeHandler}/>
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
                           isShowedNotification={false}
                           setNotificationShowing={setTaskNotificationShowing}/>
