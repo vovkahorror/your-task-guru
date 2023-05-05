@@ -3,7 +3,7 @@ import {Dispatch} from 'redux';
 import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {getTasksTC} from './tasks-reducer';
+import {fetchTasksTC} from './tasks-reducer';
 import {AppDispatchType} from '../../utils/custom-hooks/useAppDispatch';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
@@ -75,7 +75,7 @@ export const getTodolistsTC = () => (dispatch: AppDispatchType) => {
         })
         .then((todolists) => {
             todolists.forEach((tl) => {
-                dispatch(getTasksTC(tl.id));
+                dispatch(fetchTasksTC(tl.id));
             });
         })
         .catch((e: AxiosError) => {
