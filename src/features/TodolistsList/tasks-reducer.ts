@@ -20,6 +20,25 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', (todolistId: st
         });
 });
 
+export const removeTaskTC = createAsyncThunk('tasks/removeTask', (param: { taskId: string, todolistId: string }, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
+    thunkAPI.dispatch(changeTaskEntityStatusAC({todolistId: param.todolistId, id: param.taskId, status: 'loading'}));
+
+    todolistsApi.deleteTask(param.todolistId, param.taskId)
+        .then(res => {
+            if (res.data.resultCode === ResultCode.OK) {
+                thunkAPI.dispatch(removeTaskAC({id: param.taskId, todolistId: param.todolistId}));
+                thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
+            } else {
+                handleServerAppError(res.data, thunkAPI.dispatch);
+            }
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e.message, thunkAPI.dispatch);
+            thunkAPI.dispatch(changeTaskEntityStatusAC({todolistId: param.todolistId, id: param.taskId, status: 'failed'}));
+        });
+});
+
 const slice = createSlice({
     name: 'tasks',
     initialState: initialState,
@@ -91,7 +110,7 @@ export const tasksReducer = slice.reducer;
 export const {addTaskAC, changeTaskEntityStatusAC, updateTaskAC, removeTaskAC} = slice.actions;
 
 //thunks
-export const removeTaskTC = (id: string, todolistId: string) => (dispatch: Dispatch) => {
+export const removeTaskTC_ = (id: string, todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}));
     dispatch(changeTaskEntityStatusAC({todolistId, id, status: 'loading'}));
 

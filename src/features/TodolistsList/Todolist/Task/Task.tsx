@@ -19,7 +19,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
 
     const isShowedTaskNotification = useAppSelector<boolean>(state => state.app.isShowedTaskNotification);
 
-    const onClickHandler = () => dispatch(removeTaskTC(task.id, todolistId));
+    const onClickHandler = () => dispatch(removeTaskTC({taskId: task.id, todolistId}));
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
         dispatch(updateTaskTC(todolistId, task.id, {status: newStatusValue}));
