@@ -9,7 +9,7 @@ import {TaskStatuses, TaskType} from '../api/todolists-api';
 import {FilterValuesType} from '../features/TodolistsList/todolists-reducer';
 
 type PropsType = {
-    id: string
+    todolistId: string
     title: string
     tasks: Array<TaskType>
     removeTask: (taskId: string, todolistId: string) => void
@@ -24,19 +24,19 @@ type PropsType = {
 
 export function Todolist(props: PropsType) {
     const addTask = (title: string) => {
-        props.addTask(title, props.id);
+        props.addTask(title, props.todolistId);
     };
 
     const removeTodolist = () => {
-        props.removeTodolist(props.id);
+        props.removeTodolist(props.todolistId);
     };
     const changeTodolistTitle = (title: string) => {
-        props.changeTodolistTitle(props.id, title);
+        props.changeTodolistTitle(props.todolistId, title);
     };
 
-    const onAllClickHandler = () => props.changeFilter('all', props.id);
-    const onActiveClickHandler = () => props.changeFilter('active', props.id);
-    const onCompletedClickHandler = () => props.changeFilter('completed', props.id);
+    const onAllClickHandler = () => props.changeFilter('all', props.todolistId);
+    const onActiveClickHandler = () => props.changeFilter('active', props.todolistId);
+    const onCompletedClickHandler = () => props.changeFilter('completed', props.todolistId);
 
     const setTaskNotificationShowing = () => {}
 
@@ -52,13 +52,13 @@ export function Todolist(props: PropsType) {
         <ul>
             {
                 props.tasks.map(t => {
-                    const onClickHandler = () => props.removeTask(t.id, props.id);
+                    const onClickHandler = () => props.removeTask(t.id, props.todolistId);
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-                        props.changeTaskStatus(t.id, newStatusValue, props.id);
+                        props.changeTaskStatus(t.id, newStatusValue, props.todolistId);
                     };
                     const onTitleChangeHandler = (newValue: string) => {
-                        props.changeTaskTitle(t.id, newValue, props.id);
+                        props.changeTaskTitle(t.id, newValue, props.todolistId);
                     };
 
 

@@ -9,8 +9,7 @@ import Paper from '@mui/material/Paper';
 import {
     addTaskAC,
     updateTaskAC,
-    removeTaskAC,
-    tasksReducer,
+    tasksReducer, removeTaskTC,
 } from '../features/TodolistsList/tasks-reducer';
 import {
     addTodolistAC,
@@ -89,8 +88,9 @@ function App() {
         ],
     });
 
-    function removeTask(id: string, todolistId: string) {
-        dispatchToTasks(removeTaskAC({id, todolistId}));
+    function removeTask(taskId: string, todolistId: string) {
+        const param = {taskId, todolistId};
+        dispatchToTasks(removeTaskTC.fulfilled(param, 'requestId', param));
     }
 
     function addTask(title: string, todolistId: string) {
@@ -114,12 +114,12 @@ function App() {
         dispatchToTodolists(changeFilterAC({value, todolistId}));
     }
 
-    function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(updateTaskAC({todolistId, id, model: {status}}));
+    function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
+        dispatchToTasks(updateTaskAC({todolistId, taskId, model: {status}}));
     }
 
-    function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC({todolistId, id, model: {title: newTitle}}));
+    function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+        dispatchToTasks(updateTaskAC({todolistId, taskId, model: {title: newTitle}}));
     }
 
     function removeTodolist(id: string) {
@@ -171,7 +171,7 @@ function App() {
                             <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}}>
                                     <Todolist
-                                        id={tl.id}
+                                        todolistId={tl.id}
                                         title={tl.title}
                                         tasks={tasksForTodolist}
                                         removeTask={removeTask}
