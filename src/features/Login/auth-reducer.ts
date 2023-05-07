@@ -3,44 +3,49 @@ import {setAppStatusAC} from '../../app/app-reducer';
 import {authAPI, LoginType, ResultCode} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {isAxiosError} from 'axios';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
-const initialState = {
-    isLoggedIn: false,
-};
-
-const slice = createSlice({
-    name: 'auth',
-    initialState: initialState,
-    reducers: {
-        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
-            state.isLoggedIn = action.payload.value;
-        },
-    },
-});
-
-export const authReducer = slice.reducer;
-export const {setIsLoggedInAC} = slice.actions;
-
-export const logInTC = (data: LoginType) => async (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}));
+export const logInTC = createAsyncThunk('auth/login', async (data: LoginType, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
         const res = await authAPI.logIn(data);
 
         if (res.data.resultCode === ResultCode.OK) {
-            dispatch(setIsLoggedInAC({value: true}));
-            dispatch(setAppStatusAC({status: 'succeeded'}));
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
+            return {isLoggedIn: true};
         } else {
-            handleServerAppError(res.data, dispatch);
+            handleServerAppError(res.data, thunkAPI.dispatch);
+            return {isLoggedIn: false};
         }
     } catch (e) {
         if (isAxiosError(e)) {
-            handleServerNetworkError(e.message, dispatch);
+            handleServerNetworkError(e.message, thunkAPI.dispatch);
         }
+        return {isLoggedIn: false};
     }
-};
+});
+
+const slice = createSlice({
+    name: 'auth',
+    initialState: {
+        isLoggedIn: false,
+    },
+    reducers: {
+        setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
+            state.isLoggedIn = action.payload.isLoggedIn;
+        },
+    },
+    extraReducers: builder => {
+        builder.addCase(logInTC.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn;
+        });
+    },
+});
+
+export const authReducer = slice.reducer;
+export const {setIsLoggedInAC} = slice.actions;
 
 export const logOutTC = () => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}));
@@ -49,7 +54,7 @@ export const logOutTC = () => async (dispatch: Dispatch) => {
         const res = await authAPI.logOut();
 
         if (res.data.resultCode === ResultCode.OK) {
-            dispatch(setIsLoggedInAC({value: false}));
+            dispatch(setIsLoggedInAC({isLoggedIn: false}));
             dispatch(clearTasksAndTodolists());
             dispatch(setAppStatusAC({status: 'succeeded'}));
         } else {
