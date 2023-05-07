@@ -10,14 +10,11 @@ import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
 const initialState: TasksStateType = {};
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', (todolistId: string, thunkAPI) => {
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
-
-    return todolistsApi.getTasks(todolistId)
-        .then(res => {
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
-            return {tasks: res.data.items, todolistId};
-        });
+    const res = await todolistsApi.getTasks(todolistId);
+    thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
+    return {tasks: res.data.items, todolistId};
 });
 
 export const removeTaskTC = createAsyncThunk('tasks/removeTask', (param: {

@@ -101,7 +101,7 @@ test('correct task should be deleted from correct array', () => {
     expect(endState).toEqual({
         'todolistId1': [
             {
-                taskId: '1',
+                id: '1',
                 title: 'CSS',
                 status: TaskStatuses.New,
                 todoListId: 'todolistId1',
@@ -114,7 +114,7 @@ test('correct task should be deleted from correct array', () => {
                 priority: TaskPriorities.Low,
             },
             {
-                taskId: '2',
+                id: '2',
                 title: 'JS',
                 status: TaskStatuses.Completed,
                 todoListId: 'todolistId1',
@@ -127,7 +127,7 @@ test('correct task should be deleted from correct array', () => {
                 priority: TaskPriorities.Low,
             },
             {
-                taskId: '3',
+                id: '3',
                 title: 'React',
                 status: TaskStatuses.New,
                 todoListId: 'todolistId1',
@@ -142,7 +142,7 @@ test('correct task should be deleted from correct array', () => {
         ],
         'todolistId2': [
             {
-                taskId: '1',
+                id: '1',
                 title: 'bread',
                 status: TaskStatuses.New,
                 todoListId: 'todolistId2',
@@ -155,7 +155,7 @@ test('correct task should be deleted from correct array', () => {
                 priority: TaskPriorities.Low,
             },
             {
-                taskId: '3',
+                id: '3',
                 title: 'tea',
                 status: TaskStatuses.New,
                 todoListId: 'todolistId2',
