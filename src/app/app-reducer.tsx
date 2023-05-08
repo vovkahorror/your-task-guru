@@ -1,58 +1,12 @@
-import {Dispatch} from 'redux';
 import {authAPI, ResultCode} from '../api/todolists-api';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {isAxiosError} from 'axios';
 import {setIsLoggedInAC} from '../features/Login/auth-reducer';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-const initialState = {
-    status: 'idle' as RequestStatusType,
-    error: null as string | null,
-    isInitialized: false,
-    isShowedTodolistNotification: false,
-    isShowedTaskNotification: false,
-};
-
-const slice = createSlice({
-    name: 'app',
-    initialState: initialState,
-    reducers: {
-        setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
-            state.status = action.payload.status;
-        },
-
-        setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
-            state.error = action.payload.error;
-        },
-
-        setIsInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
-            state.isInitialized = action.payload.isInitialized;
-        },
-
-        setTodolistNotificationShowingAC(state, action: PayloadAction<{ isShowedTodolistNotification: boolean }>) {
-            state.isShowedTodolistNotification = action.payload.isShowedTodolistNotification;
-        },
-
-        setTaskNotificationShowingAC(state, action: PayloadAction<{ isShowedTaskNotification: boolean }>) {
-            state.isShowedTaskNotification = action.payload.isShowedTaskNotification;
-        },
-    },
-});
-
-export const appReducer = slice.reducer;
-
-export const {
-    setAppStatusAC,
-    setAppErrorAC,
-    setIsInitializedAC,
-    setTodolistNotificationShowingAC,
-    setTaskNotificationShowingAC,
-} = slice.actions;
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // thunks
-export const initializeAppTC = () => async (dispatch: Dispatch) => {
+export const initializeAppTC = createAsyncThunk('app/initializeApp', async (_, {dispatch}) => {
     dispatch(setAppStatusAC({status: 'loading'}));
-
     try {
         const res = await authAPI.me();
         if (res.data.resultCode === ResultCode.OK) {
@@ -63,10 +17,54 @@ export const initializeAppTC = () => async (dispatch: Dispatch) => {
         if (isAxiosError(e)) {
             handleServerNetworkError(e.message, dispatch);
         }
-    } finally {
-        dispatch(setIsInitializedAC({isInitialized: true}));
     }
-};
+})
+
+// slice
+const slice = createSlice({
+    name: 'app',
+    initialState: {
+        status: 'idle' as RequestStatusType,
+        error: null as string | null,
+        isInitialized: false,
+        isShowedTodolistNotification: false,
+        isShowedTaskNotification: false,
+    },
+    reducers: {
+        setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+            state.status = action.payload.status;
+        },
+
+        setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+            state.error = action.payload.error;
+        },
+
+        setTodolistNotificationShowingAC(state, action: PayloadAction<{ isShowedTodolistNotification: boolean }>) {
+            state.isShowedTodolistNotification = action.payload.isShowedTodolistNotification;
+        },
+
+        setTaskNotificationShowingAC(state, action: PayloadAction<{ isShowedTaskNotification: boolean }>) {
+            state.isShowedTaskNotification = action.payload.isShowedTaskNotification;
+        },
+    },
+    extraReducers: builder => {
+        builder.addCase(initializeAppTC.fulfilled, (state) => {
+            state.isInitialized = true;
+        });
+        builder.addCase(initializeAppTC.rejected, (state) => {
+            state.isInitialized = false;
+        });
+    }
+});
+
+export const appReducer = slice.reducer;
+
+export const {
+    setAppStatusAC,
+    setAppErrorAC,
+    setTodolistNotificationShowingAC,
+    setTaskNotificationShowingAC,
+} = slice.actions;
 
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
