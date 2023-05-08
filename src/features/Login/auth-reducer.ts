@@ -5,49 +5,51 @@ import {AxiosError} from 'axios';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
+// thunks
 export const logInTC = createAsyncThunk<undefined, LoginParamType, {
     rejectValue: { errors: string[]; fieldsErrors?: FieldErrorType[] }
-}>('auth/login', async (param, thunkAPI) => {
-    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
+}>('auth/login', async (param, {dispatch, rejectWithValue}) => {
+    dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
         const res = await authAPI.logIn(param);
 
         if (res.data.resultCode === ResultCode.OK) {
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
+            dispatch(setAppStatusAC({status: 'succeeded'}));
             return;
         } else {
-            handleServerAppError(res.data, thunkAPI.dispatch);
-            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
+            handleServerAppError(res.data, dispatch);
+            return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
         }
     } catch (e) {
         const error = e as AxiosError;
-        handleServerNetworkError(error.message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined});
+        handleServerNetworkError(error.message, dispatch);
+        return rejectWithValue({errors: [error.message], fieldsErrors: undefined});
     }
 });
 
-export const logOutTC = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
+export const logOutTC = createAsyncThunk('auth/logout', async (_, {dispatch, rejectWithValue}) => {
+    dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
         const res = await authAPI.logOut();
 
         if (res.data.resultCode === ResultCode.OK) {
-            thunkAPI.dispatch(clearTasksAndTodolists());
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
+            dispatch(clearTasksAndTodolists());
+            dispatch(setAppStatusAC({status: 'succeeded'}));
             return;
         } else {
-            handleServerAppError(res.data, thunkAPI.dispatch);
-            return thunkAPI.rejectWithValue({});
+            handleServerAppError(res.data, dispatch);
+            return rejectWithValue({});
         }
     } catch (e) {
         const error = e as AxiosError;
-        handleServerNetworkError(error.message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue({});
+        handleServerNetworkError(error.message, dispatch);
+        return rejectWithValue({});
     }
 });
 
+// slice
 const slice = createSlice({
     name: 'auth',
     initialState: {
