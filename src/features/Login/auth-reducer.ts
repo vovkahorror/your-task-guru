@@ -1,16 +1,18 @@
 import {Dispatch} from 'redux';
 import {setAppStatusAC} from '../../app/app-reducer';
-import {authAPI, LoginType, ResultCode} from '../../api/todolists-api';
+import {authAPI, FieldErrorType, LoginParamType, ResultCode} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {AxiosError, isAxiosError} from 'axios';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
-export const logInTC = createAsyncThunk('auth/login', async (data: LoginType, thunkAPI) => {
+export const logInTC = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamType, {
+    rejectValue: { errors: string[]; fieldsErrors?: FieldErrorType[] }
+}>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
-        const res = await authAPI.logIn(data);
+        const res = await authAPI.logIn(param);
 
         if (res.data.resultCode === ResultCode.OK) {
             thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));

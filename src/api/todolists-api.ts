@@ -13,7 +13,7 @@ export const authAPI = {
     me() {
         return instance.get<ResponseType<UserType>>('auth/me');
     },
-    logIn(data: LoginType) {
+    logIn(data: LoginParamType) {
         return instance.post<ResponseType<{ userId: number }>>('auth/login', data);
     },
     logOut() {
@@ -55,7 +55,7 @@ export type UserType = {
     login: string;
 }
 
-export type LoginType = {
+export type LoginParamType = {
     email: string;
     password: string;
     rememberMe?: boolean;
