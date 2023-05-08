@@ -1,10 +1,9 @@
 import {Dispatch} from 'redux';
 import {authAPI, ResultCode} from '../api/todolists-api';
-import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
+import {handleServerNetworkError} from '../utils/error-utils';
 import {isAxiosError} from 'axios';
 import {setIsLoggedInAC} from '../features/Login/auth-reducer';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Location} from '@remix-run/router';
 
 const initialState = {
     status: 'idle' as RequestStatusType,
@@ -51,22 +50,15 @@ export const {
 } = slice.actions;
 
 // thunks
-export const initializeAppTC = (location: Location) => async (dispatch: Dispatch) => {
+export const initializeAppTC = () => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
         const res = await authAPI.me();
-
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setIsLoggedInAC({isLoggedIn: true}));
-            dispatch(setAppStatusAC({status: 'succeeded'}));
-        } else {
-            if (location.pathname !== '/login') {
-                handleServerAppError(res.data, dispatch);
-            } else {
-                dispatch(setAppStatusAC({status: 'succeeded'}));
-            }
         }
+        dispatch(setAppStatusAC({status: 'succeeded'}));
     } catch (e) {
         if (isAxiosError(e)) {
             handleServerNetworkError(e.message, dispatch);

@@ -69,10 +69,15 @@ export type TodolistType = {
     order: number;
 }
 
+export type FieldErrorType = {
+    field: string;
+    error: string;
+}
+
 export type ResponseType<D = {}> = {
     resultCode: ResultCode;
     messages: Array<string>;
-    fieldsErrors: Array<{field: string, error: string}>;
+    fieldsErrors: Array<FieldErrorType>;
     data: D;
 }
 
