@@ -2,7 +2,7 @@ import {Dispatch} from 'redux';
 import {setAppStatusAC} from '../../app/app-reducer';
 import {authAPI, LoginType, ResultCode} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {isAxiosError} from 'axios';
+import {AxiosError, isAxiosError} from 'axios';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
@@ -17,13 +17,12 @@ export const logInTC = createAsyncThunk('auth/login', async (data: LoginType, th
             return {isLoggedIn: true};
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch);
-            return {isLoggedIn: false};
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
         }
     } catch (e) {
-        if (isAxiosError(e)) {
-            handleServerNetworkError(e.message, thunkAPI.dispatch);
-        }
-        return {isLoggedIn: false};
+        const error = e as AxiosError;
+        handleServerNetworkError(error.message, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined});
     }
 });
 

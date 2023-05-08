@@ -128,25 +128,6 @@ export const tasksReducer = slice.reducer;
 export const {addTaskAC, changeTaskEntityStatusAC, updateTaskAC} = slice.actions;
 
 //thunks
-/*export const removeTaskTC_ = (id: string, todolistId: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}));
-    dispatch(changeTaskEntityStatusAC({todolistId, id, status: 'loading'}));
-
-    todolistsApi.deleteTask(todolistId, id)
-        .then(res => {
-            if (res.data.resultCode === ResultCode.OK) {
-                dispatch(removeTaskAC({id, todolistId}));
-                dispatch(setAppStatusAC({status: 'succeeded'}));
-            } else {
-                handleServerAppError(res.data, dispatch);
-            }
-        })
-        .catch((e: AxiosError) => {
-            handleServerNetworkError(e.message, dispatch);
-            dispatch(changeTaskEntityStatusAC({todolistId, id, status: 'failed'}));
-        });
-};*/
-
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}));
 

@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useFormik} from 'formik';
+import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import {logInTC} from './auth-reducer';
 import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
@@ -46,8 +46,8 @@ export const Login = () => {
 
             return errors;
         },
-        onSubmit: (values) => {
-            dispatch(logInTC(values));
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const res = await dispatch(logInTC(values));
             formik.resetForm();
         },
     });
@@ -90,3 +90,9 @@ export const Login = () => {
         </Grid>
     </Grid>;
 };
+
+type FormValuesType = {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+}

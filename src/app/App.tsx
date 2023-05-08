@@ -4,7 +4,7 @@ import ButtonAppBar from './ButtonAppBar';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import Container from '@mui/material/Container';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,9 +14,10 @@ import {initializeAppTC} from './app-reducer';
 function App() {
     const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized);
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     useEffect(() => {
-        dispatch(initializeAppTC());
+        dispatch(initializeAppTC(location));
     }, []);
 
     if (!isInitialized) {

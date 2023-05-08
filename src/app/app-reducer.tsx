@@ -4,6 +4,7 @@ import {handleServerAppError, handleServerNetworkError} from '../utils/error-uti
 import {isAxiosError} from 'axios';
 import {setIsLoggedInAC} from '../features/Login/auth-reducer';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Location} from '@remix-run/router';
 
 const initialState = {
     status: 'idle' as RequestStatusType,
@@ -32,7 +33,7 @@ const slice = createSlice({
         setTodolistNotificationShowingAC(state, action: PayloadAction<{ isShowedTodolistNotification: boolean }>) {
             state.isShowedTodolistNotification = action.payload.isShowedTodolistNotification;
         },
-        
+
         setTaskNotificationShowingAC(state, action: PayloadAction<{ isShowedTaskNotification: boolean }>) {
             state.isShowedTaskNotification = action.payload.isShowedTaskNotification;
         },
@@ -50,7 +51,7 @@ export const {
 } = slice.actions;
 
 // thunks
-export const initializeAppTC = () => async (dispatch: Dispatch) => {
+export const initializeAppTC = (location: Location) => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}));
 
     try {
@@ -60,7 +61,11 @@ export const initializeAppTC = () => async (dispatch: Dispatch) => {
             dispatch(setIsLoggedInAC({isLoggedIn: true}));
             dispatch(setAppStatusAC({status: 'succeeded'}));
         } else {
-            handleServerAppError(res.data, dispatch);
+            if (location.pathname !== '/login') {
+                handleServerAppError(res.data, dispatch);
+            } else {
+                dispatch(setAppStatusAC({status: 'succeeded'}));
+            }
         }
     } catch (e) {
         if (isAxiosError(e)) {
