@@ -12,8 +12,7 @@ import {
 import {
     addTodolistAC,
     changeFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC,
+    changeTodolistTitleAC, FilterValuesType, removeTodolistTC,
     todolistsReducer,
 } from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
@@ -123,7 +122,7 @@ function App() {
     }
 
     function removeTodolist(id: string) {
-        const action = removeTodolistAC({todolistId: id});
+        const action = removeTodolistTC.fulfilled({todolistId: id},  'requestId', id);
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }
