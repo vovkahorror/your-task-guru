@@ -22,10 +22,10 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     const onClickHandler = () => dispatch(removeTaskTC({taskId: task.id, todolistId}));
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-        dispatch(updateTaskTC(todolistId, task.id, {status: newStatusValue}));
+        dispatch(updateTaskTC({todolistId, taskId: task.id, domainModel: {status: newStatusValue}}));
     };
     const onTitleChangeHandler = (newValue: string) => {
-        dispatch(updateTaskTC(todolistId, task.id, {title: newValue}));
+        dispatch(updateTaskTC({todolistId, taskId: task.id, domainModel: {title: newValue}}));
     };
     const setTaskNotificationShowing = useCallback((isShowedTaskNotification: boolean) => {
         dispatch(setTaskNotificationShowingAC({isShowedTaskNotification}));

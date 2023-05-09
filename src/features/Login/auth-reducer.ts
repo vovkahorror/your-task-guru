@@ -16,7 +16,6 @@ export const logInTC = createAsyncThunk<undefined, LoginParamType, {
 
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setAppStatusAC({status: 'succeeded'}));
-            return;
         } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
@@ -37,15 +36,14 @@ export const logOutTC = createAsyncThunk('auth/logout', async (_, {dispatch, rej
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(clearTasksAndTodolists());
             dispatch(setAppStatusAC({status: 'succeeded'}));
-            return;
         } else {
             handleServerAppError(res.data, dispatch);
-            return rejectWithValue({});
+            return rejectWithValue(null);
         }
     } catch (e) {
         const error = e as AxiosError;
         handleServerNetworkError(error.message, dispatch);
-        return rejectWithValue({});
+        return rejectWithValue(null);
     }
 });
 
@@ -55,11 +53,13 @@ const slice = createSlice({
     initialState: {
         isLoggedIn: false,
     },
+
     reducers: {
         setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
         },
     },
+
     extraReducers: builder => {
         builder.addCase(logInTC.fulfilled, (state) => {
             state.isLoggedIn = true;

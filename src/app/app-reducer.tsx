@@ -30,6 +30,7 @@ const slice = createSlice({
         isShowedTodolistNotification: false,
         isShowedTaskNotification: false,
     },
+
     reducers: {
         setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
             state.status = action.payload.status;
@@ -47,6 +48,7 @@ const slice = createSlice({
             state.isShowedTaskNotification = action.payload.isShowedTaskNotification;
         },
     },
+
     extraReducers: builder => {
         builder.addCase(initializeAppTC.fulfilled, (state) => {
             state.isInitialized = true;

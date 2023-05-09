@@ -7,9 +7,7 @@ import ButtonAppBar from '../app/ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {
-    addTaskAC,
-    updateTaskAC,
-    tasksReducer, removeTaskTC,
+    tasksReducer, removeTaskTC, addTaskTC, updateTaskTC,
 } from '../features/TodolistsList/tasks-reducer';
 import {
     addTodolistAC,
@@ -107,7 +105,7 @@ function App() {
             priority: TaskPriorities.Low,
         };
 
-        dispatchToTasks(addTaskAC({task: newTask}));
+        dispatchToTasks(addTaskTC.fulfilled(newTask,  'requestId', {todolistId, title}));
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
@@ -115,11 +113,13 @@ function App() {
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(updateTaskAC({todolistId, taskId, model: {status}}));
+        const task = {todolistId, taskId, domainModel: {status}};
+        dispatchToTasks(updateTaskTC.fulfilled(task,  'requestId', task));
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC({todolistId, taskId, model: {title: newTitle}}));
+        const task = {todolistId, taskId, domainModel: {title: newTitle}};
+        dispatchToTasks(updateTaskTC.fulfilled(task,  'requestId', task));
     }
 
     function removeTodolist(id: string) {

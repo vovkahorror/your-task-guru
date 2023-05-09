@@ -1,5 +1,5 @@
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
-import {addTaskAC, removeTaskTC, tasksReducer, TasksStateType, updateTaskAC} from './tasks-reducer';
+import {addTaskTC, removeTaskTC, tasksReducer, TasksStateType, updateTaskTC} from './tasks-reducer';
 import {addTodolistAC, removeTodolistAC} from './todolists-reducer';
 import {v1} from 'uuid';
 
@@ -185,7 +185,7 @@ test('correct task should be added to correct array', () => {
         priority: TaskPriorities.Low,
     };
 
-    const action = addTaskAC({task: newTask});
+    const action = addTaskTC.fulfilled(newTask, 'requestId', {todolistId: newTask.todoListId, title: newTask.title});
 
     const endState = tasksReducer(startState, action);
 
@@ -197,7 +197,8 @@ test('correct task should be added to correct array', () => {
 });
 
 test('status of specified task should be changed', () => {
-    const action = updateTaskAC({todolistId: 'todolistId2', taskId: '2', model: {status: TaskStatuses.New}});
+    const task = {todolistId: 'todolistId2', taskId: '2', domainModel: {status: TaskStatuses.New}};
+    const action = updateTaskTC.fulfilled(task,  'requestId', task);
 
     const endState = tasksReducer(startState, action);
 
@@ -206,7 +207,8 @@ test('status of specified task should be changed', () => {
 });
 
 test('title of specified task should be changed', () => {
-    const action = updateTaskAC({todolistId: 'todolistId2', taskId: '2', model: {title: 'juice'}});
+    const task = {todolistId: 'todolistId2', taskId: '2', domainModel: {title: 'juice'}};
+    const action = updateTaskTC.fulfilled(task,  'requestId', task);
 
     const endState = tasksReducer(startState, action);
 

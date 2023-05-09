@@ -26,7 +26,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const dispatch = useAppDispatch();
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskTC(id, title));
+        dispatch(addTaskTC({todolistId: id, title}));
     }, [dispatch, id]);
 
     const removeTodolist = useCallback(() => {
