@@ -34,7 +34,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     }, [dispatch, id]);
 
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleTC(id, title));
+        dispatch(changeTodolistTitleTC({todolistId: id, title}));
     }, [dispatch, id]);
 
     const onAllClickHandler = useCallback(() => {

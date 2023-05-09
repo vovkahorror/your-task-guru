@@ -1,4 +1,4 @@
-import {addTodolistAC, removeTodolistTC, setTodolistsAC} from './todolists-reducer';
+import {addTodolistTC, removeTodolistTC, setTodolistsAC} from './todolists-reducer';
 import {
     ResultCode,
     TaskPriorities,
@@ -157,7 +157,7 @@ const slice = createSlice({
             });
         });
 
-        builder.addCase(addTodolistAC, (state, action) => {
+        builder.addCase(addTodolistTC.fulfilled, (state, action) => {
             state[action.payload.todolist.id] = [];
         });
 

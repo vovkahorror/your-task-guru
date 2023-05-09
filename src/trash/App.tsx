@@ -10,9 +10,10 @@ import {
     tasksReducer, removeTaskTC, addTaskTC, updateTaskTC,
 } from '../features/TodolistsList/tasks-reducer';
 import {
-    addTodolistAC,
-    changeFilterAC,
-    changeTodolistTitleAC, FilterValuesType, removeTodolistTC,
+    addTodolistTC,
+    changeFilterAC, changeTodolistTitleTC,
+    FilterValuesType,
+    removeTodolistTC,
     todolistsReducer,
 } from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
@@ -104,7 +105,7 @@ function App() {
             priority: TaskPriorities.Low,
         };
 
-        dispatchToTasks(addTaskTC.fulfilled(newTask,  'requestId', {todolistId, title}));
+        dispatchToTasks(addTaskTC.fulfilled(newTask, 'requestId', {todolistId, title}));
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
@@ -113,22 +114,22 @@ function App() {
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
         const task = {todolistId, taskId, domainModel: {status}};
-        dispatchToTasks(updateTaskTC.fulfilled(task,  'requestId', task));
+        dispatchToTasks(updateTaskTC.fulfilled(task, 'requestId', task));
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
         const task = {todolistId, taskId, domainModel: {title: newTitle}};
-        dispatchToTasks(updateTaskTC.fulfilled(task,  'requestId', task));
+        dispatchToTasks(updateTaskTC.fulfilled(task, 'requestId', task));
     }
 
     function removeTodolist(id: string) {
-        const action = removeTodolistTC.fulfilled({todolistId: id},  'requestId', id);
+        const action = removeTodolistTC.fulfilled({todolistId: id}, 'requestId', id);
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }
 
     function changeTodolistTitle(todolistId: string, title: string) {
-        dispatchToTodolists(changeTodolistTitleAC({todolistId, title}));
+        dispatchToTodolists(changeTodolistTitleTC.fulfilled({todolistId, title}, 'requestId', {todolistId, title}));
     }
 
     function addTodolist(title: string) {
@@ -139,7 +140,7 @@ function App() {
             order: 0,
         };
 
-        const action = addTodolistAC({todolist: newTodolist});
+        const action = addTodolistTC.fulfilled({todolist: newTodolist}, 'requestId', title);
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }

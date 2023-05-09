@@ -1,6 +1,6 @@
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {addTaskTC, removeTaskTC, tasksReducer, TasksStateType, updateTaskTC} from './tasks-reducer';
-import {addTodolistAC, removeTodolistTC} from './todolists-reducer';
+import {addTodolistTC, removeTodolistTC} from './todolists-reducer';
 import {v1} from 'uuid';
 
 let startState: TasksStateType;
@@ -224,7 +224,7 @@ test('new array should be added when new todolist is added', () => {
         order: 0,
     };
 
-    const action = addTodolistAC({todolist: newTodolist});
+    const action = addTodolistTC.fulfilled({todolist: newTodolist}, 'requestId',  newTodolist.title);
 
     const endState = tasksReducer(startState, action);
 
