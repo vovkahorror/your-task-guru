@@ -5,14 +5,15 @@ import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import Container from '@mui/material/Container';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {Login} from '../features/Login/Login';
+import {Login} from '../features/Auth/Login';
 import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {initializeAppTC} from './app-reducer';
+import {selectIsInitialized} from './selectors';
 
 function App() {
-    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized);
+    const isInitialized = useAppSelector(selectIsInitialized);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

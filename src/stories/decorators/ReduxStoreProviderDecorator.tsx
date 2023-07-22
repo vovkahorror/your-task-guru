@@ -7,7 +7,7 @@ import {todolistsReducer} from '../../features/TodolistsList/todolists-reducer';
 import {v1} from 'uuid';
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {appReducer} from '../../app/app-reducer';
-import {authReducer} from '../../features/Login/auth-reducer';
+import {authReducer} from '../../features/Auth/auth-reducer';
 import thunk from 'redux-thunk';
 import {configureStore} from '@reduxjs/toolkit';
 

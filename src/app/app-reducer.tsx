@@ -1,7 +1,7 @@
 import {authAPI, ResultCode} from '../api/todolists-api';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {isAxiosError} from 'axios';
-import {setIsLoggedInAC} from '../features/Login/auth-reducer';
+import {setIsLoggedInAC} from '../features/Auth/auth-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // thunks

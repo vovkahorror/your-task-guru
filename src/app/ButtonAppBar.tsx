@@ -10,7 +10,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {RequestStatusType} from './app-reducer';
 import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
-import {logOutTC} from '../features/Login/auth-reducer';
+import {logOutTC} from '../features/Auth/auth-reducer';
 
 export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>(state => state.app.status);
