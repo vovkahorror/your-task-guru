@@ -10,10 +10,10 @@ import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {initializeAppTC} from './app-reducer';
-import {selectIsInitialized} from './selectors';
+import {appSelectors} from '.';
 
 function App() {
-    const isInitialized = useAppSelector(selectIsInitialized);
+    const isInitialized = useAppSelector(appSelectors.selectIsInitialized);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
