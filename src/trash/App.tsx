@@ -7,7 +7,7 @@ import ButtonAppBar from '../app/ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {
-    tasksReducer, removeTaskTC, addTaskTC, updateTaskTC,
+    tasksReducer,
 } from '../features/TodolistsList/tasks-reducer';
 import {
     addTodolistTC,
@@ -17,6 +17,7 @@ import {
     todolistsReducer,
 } from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {addTaskTC, removeTaskTC, updateTaskTC} from '../features/TodolistsList/tasks-actions';
 
 function App() {
     const todolistId1 = v1();

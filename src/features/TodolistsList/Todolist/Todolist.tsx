@@ -4,13 +4,14 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
-import {addTaskTC, TaskDomainType} from '../tasks-reducer';
+import {TaskDomainType} from '../tasks-reducer';
 import {changeFilterAC, changeTodolistTitleTC, removeTodolistTC, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
 import {TaskStatuses} from '../../../api/todolists-api';
 import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
 import {setTodolistNotificationShowingAC} from '../../../app/app-reducer';
+import {addTaskTC} from '../tasks-actions';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;

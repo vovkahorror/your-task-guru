@@ -3,11 +3,13 @@ import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {removeTaskTC, TaskDomainType, updateTaskTC} from '../../tasks-reducer';
+import {TaskDomainType} from '../../tasks-reducer';
 import {TaskStatuses} from '../../../../api/todolists-api';
 import {useAppDispatch} from '../../../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../../utils/custom-hooks/useAppSelector';
 import {setTaskNotificationShowingAC} from '../../../../app/app-reducer';
+import {useActions} from '../../../../utils/custom-hooks/useActions';
+import {selectIsShowedTaskNotification, tasksActions} from '../..';
 
 export type TaskPropsType = {
     task: TaskDomainType;
@@ -16,16 +18,20 @@ export type TaskPropsType = {
 
 const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     const dispatch = useAppDispatch();
-    const isShowedTaskNotification = useAppSelector<boolean>(state => state.app.isShowedTaskNotification);
+    const isShowedTaskNotification = useAppSelector(selectIsShowedTaskNotification);
+    const {removeTaskTC, updateTaskTC} = useActions(tasksActions);
 
-    const removeTaskHandler = () => dispatch(removeTaskTC({taskId: task.id, todolistId}));
+    const removeTaskHandler = () => removeTaskTC({taskId: task.id, todolistId});
+
     const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-        dispatch(updateTaskTC({todolistId, taskId: task.id, domainModel: {status: newStatusValue}}));
+        updateTaskTC({todolistId, taskId: task.id, domainModel: {status: newStatusValue}});
     };
+
     const onTitleChangeHandler = (newValue: string) => {
-        dispatch(updateTaskTC({todolistId, taskId: task.id, domainModel: {title: newValue}}));
+       updateTaskTC({todolistId, taskId: task.id, domainModel: {title: newValue}});
     };
+
     const setTaskNotificationShowing = useCallback((isShowedTaskNotification: boolean) => {
         dispatch(setTaskNotificationShowingAC({isShowedTaskNotification}));
     }, [dispatch]);

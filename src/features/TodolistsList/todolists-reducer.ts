@@ -2,9 +2,9 @@ import {ResultCode, todolistsApi, TodolistType} from '../../api/todolists-api';
 import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {fetchTasksTC} from './tasks-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
+import {fetchTasksTC} from './tasks-actions';
 
 //thunks
 export const fetchTodolistsTC = createAsyncThunk('todolists/fetchTodolists', async (_, {dispatch}) => {
