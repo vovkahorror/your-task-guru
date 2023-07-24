@@ -10,14 +10,12 @@ import {
     tasksReducer,
 } from '../features/TodolistsList/tasks-reducer';
 import {
-    addTodolistTC,
-    changeFilterAC, changeTodolistTitleTC,
-    FilterValuesType,
-    removeTodolistTC,
+    changeFilterAC, FilterValuesType,
     todolistsReducer,
 } from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 import {addTaskTC, removeTaskTC, updateTaskTC} from '../features/TodolistsList/tasks-actions';
+import {addTodolistTC, changeTodolistTitleTC, removeTodolistTC} from '../features/TodolistsList/todolists-actions';
 
 function App() {
     const todolistId1 = v1();

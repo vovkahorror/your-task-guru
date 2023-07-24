@@ -1,9 +1,10 @@
-import {addTodolistTC, removeTodolistTC, setTodolistsAC} from './todolists-reducer';
+import {setTodolistsAC} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses, TaskType} from '../../api/todolists-api';
 import {RequestStatusType} from '../../app/app-reducer';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {addTaskTC, fetchTasksTC, removeTaskTC, updateTaskTC} from './tasks-actions';
+import {addTodolistTC, removeTodolistTC} from './todolists-actions';
 
 // slice
 const slice = createSlice({

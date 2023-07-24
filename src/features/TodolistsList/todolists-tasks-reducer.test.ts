@@ -1,6 +1,7 @@
-import {addTodolistTC, TodolistDomainType, todolistsReducer} from './todolists-reducer';
+import {TodolistDomainType, todolistsReducer} from './todolists-reducer';
 import {tasksReducer, TasksStateType} from './tasks-reducer';
 import {v1} from 'uuid';
+import {addTodolistTC} from './todolists-actions';
 
 test('ids should be equals', () => {
     const newTodolist = {

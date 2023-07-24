@@ -1,8 +1,8 @@
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {tasksReducer, TasksStateType} from './tasks-reducer';
-import {addTodolistTC, removeTodolistTC} from './todolists-reducer';
 import {v1} from 'uuid';
 import {addTaskTC, removeTaskTC, updateTaskTC} from './tasks-actions';
+import {addTodolistTC, removeTodolistTC} from './todolists-actions';
 
 let startState: TasksStateType;
 
