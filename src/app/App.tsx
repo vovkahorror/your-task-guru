@@ -9,15 +9,15 @@ import {Login} from '../features/Auth/Login';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {appActions, appSelectors} from '.';
-import {initializeAppTC} from './app-actions';
+import {initializeApp} from './app-actions';
 import {useActions} from '../utils/custom-hooks/useActions';
 
 function App() {
     const isInitialized = useAppSelector(appSelectors.selectIsInitialized);
-    const {initializeAppTC} = useActions(appActions);
+    const {initializeApp} = useActions(appActions);
 
     useEffect(() => {
-        initializeAppTC();
+        initializeApp();
     }, []);
 
     if (!isInitialized) {

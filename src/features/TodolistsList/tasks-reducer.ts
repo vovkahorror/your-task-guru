@@ -1,17 +1,17 @@
-import {setTodolistsAC} from './todolists-reducer';
+import {setTodolists} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses, TaskType} from '../../api/todolists-api';
 import {RequestStatusType} from '../../app/app-reducer';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
-import {addTaskTC, fetchTasksTC, removeTaskTC, updateTaskTC} from './tasks-actions';
-import {addTodolistTC, removeTodolistTC} from './todolists-actions';
+import {addTask, fetchTasks, removeTask, updateTask} from './tasks-actions';
+import {addTodolist, removeTodolist} from './todolists-actions';
 
 // slice
 export const slice = createSlice({
     name: 'tasks',
     initialState: {} as TasksStateType,
     reducers: {
-        changeTaskEntityStatusAC(state, action: PayloadAction<{
+        changeTaskEntityStatus(state, action: PayloadAction<{
             todolistId: string,
             taskId: string,
             status: RequestStatusType
@@ -25,17 +25,17 @@ export const slice = createSlice({
     },
 
     extraReducers: (builder) => {
-        builder.addCase(setTodolistsAC, (state, action) => {
+        builder.addCase(setTodolists, (state, action) => {
             action.payload.todolists.forEach(tl => {
                 state[tl.id] = [];
             });
         });
 
-        builder.addCase(addTodolistTC.fulfilled, (state, action) => {
+        builder.addCase(addTodolist.fulfilled, (state, action) => {
             state[action.payload.todolist.id] = [];
         });
 
-        builder.addCase(removeTodolistTC.fulfilled, (state, action) => {
+        builder.addCase(removeTodolist.fulfilled, (state, action) => {
             delete state[action.payload.todolistId];
         });
 
@@ -43,11 +43,11 @@ export const slice = createSlice({
             return {};
         });
 
-        builder.addCase(fetchTasksTC.fulfilled, (state, action) => {
+        builder.addCase(fetchTasks.fulfilled, (state, action) => {
             state[action.payload.todolistId] = action.payload.tasks.map(t => ({...t, entityStatus: 'idle'}));
         });
 
-        builder.addCase(removeTaskTC.fulfilled, (state, action) => {
+        builder.addCase(removeTask.fulfilled, (state, action) => {
             const tasks = state[action.payload.todolistId];
             const index = tasks.findIndex(t => t.id === action.payload.taskId);
             if (index > -1) {
@@ -55,14 +55,14 @@ export const slice = createSlice({
             }
         });
 
-        builder.addCase(addTaskTC.fulfilled, (state, action) => {
+        builder.addCase(addTask.fulfilled, (state, action) => {
             state[action.payload.todoListId].unshift({
                 ...action.payload,
                 entityStatus: 'idle',
             });
         });
 
-        builder.addCase(updateTaskTC.fulfilled, (state, action) => {
+        builder.addCase(updateTask.fulfilled, (state, action) => {
             const tasks = state[action.payload.todolistId];
             const index = tasks.findIndex(t => t.id === action.payload.taskId);
             if (index > -1) {
@@ -74,7 +74,7 @@ export const slice = createSlice({
 
 export const tasksReducer = slice.reducer;
 
-export const {changeTaskEntityStatusAC} = slice.actions;
+export const {changeTaskEntityStatus} = slice.actions;
 
 //types
 export type TaskDomainType = TaskType & {

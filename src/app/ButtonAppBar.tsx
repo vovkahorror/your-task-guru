@@ -9,15 +9,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from '@mui/material/LinearProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {RequestStatusType} from './app-reducer';
-import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
-import {logOutTC} from '../features/Auth/auth-reducer';
+import {useActions} from '../utils/custom-hooks/useActions';
+import {authActions} from '../features/Auth';
 
 export default function ButtonAppBar() {
+    const {logOut} = useActions(authActions);
     const status = useAppSelector<RequestStatusType>(state => state.app.status);
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn);
-    const dispatch = useAppDispatch();
 
-    const logOutHandler = () => dispatch(logOutTC());
+    const logOutHandler = () => logOut();
 
     return (
         <Box sx={{flexGrow: 1}}>

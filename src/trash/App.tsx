@@ -10,12 +10,12 @@ import {
     tasksReducer,
 } from '../features/TodolistsList/tasks-reducer';
 import {
-    changeFilterAC, FilterValuesType,
+    changeFilter, FilterValuesType,
     todolistsReducer,
 } from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
-import {addTaskTC, removeTaskTC, updateTaskTC} from '../features/TodolistsList/tasks-actions';
-import {addTodolistTC, changeTodolistTitleTC, removeTodolistTC} from '../features/TodolistsList/todolists-actions';
+import {addTask, removeTask, updateTask} from '../features/TodolistsList/tasks-actions';
+import {addTodolist, changeTodolistTitle, removeTodolist} from '../features/TodolistsList/todolists-actions';
 
 function App() {
     const todolistId1 = v1();
@@ -85,12 +85,12 @@ function App() {
         ],
     });
 
-    function removeTask(taskId: string, todolistId: string) {
+    function removeTaskHandler(taskId: string, todolistId: string) {
         const param = {taskId, todolistId};
-        dispatchToTasks(removeTaskTC.fulfilled(param, 'requestId', param));
+        dispatchToTasks(removeTask.fulfilled(param, 'requestId', param));
     }
 
-    function addTask(title: string, todolistId: string) {
+    function addTaskHandler(title: string, todolistId: string) {
         const newTask = {
             id: v1(),
             title: title,
@@ -104,34 +104,34 @@ function App() {
             priority: TaskPriorities.Low,
         };
 
-        dispatchToTasks(addTaskTC.fulfilled(newTask, 'requestId', {todolistId, title}));
+        dispatchToTasks(addTask.fulfilled(newTask, 'requestId', {todolistId, title}));
     }
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
-        dispatchToTodolists(changeFilterAC({value, todolistId}));
+    function changeFilterHandler(value: FilterValuesType, todolistId: string) {
+        dispatchToTodolists(changeFilter({value, todolistId}));
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
         const task = {todolistId, taskId, domainModel: {status}};
-        dispatchToTasks(updateTaskTC.fulfilled(task, 'requestId', task));
+        dispatchToTasks(updateTask.fulfilled(task, 'requestId', task));
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
         const task = {todolistId, taskId, domainModel: {title: newTitle}};
-        dispatchToTasks(updateTaskTC.fulfilled(task, 'requestId', task));
+        dispatchToTasks(updateTask.fulfilled(task, 'requestId', task));
     }
 
-    function removeTodolist(id: string) {
-        const action = removeTodolistTC.fulfilled({todolistId: id}, 'requestId', id);
+    function removeTodolistHandler(id: string) {
+        const action = removeTodolist.fulfilled({todolistId: id}, 'requestId', id);
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }
 
-    function changeTodolistTitle(todolistId: string, title: string) {
-        dispatchToTodolists(changeTodolistTitleTC.fulfilled({todolistId, title}, 'requestId', {todolistId, title}));
+    function changeTodolistTitleHandler(todolistId: string, title: string) {
+        dispatchToTodolists(changeTodolistTitle.fulfilled({todolistId, title}, 'requestId', {todolistId, title}));
     }
 
-    function addTodolist(title: string) {
+    function addTodolistHandler(title: string) {
         const newTodolist = {
             id: v1(),
             addedDate: '',
@@ -139,7 +139,7 @@ function App() {
             order: 0,
         };
 
-        const action = addTodolistTC.fulfilled({todolist: newTodolist}, 'requestId', title);
+        const action = addTodolist.fulfilled({todolist: newTodolist}, 'requestId', title);
         dispatchToTodolists(action);
         dispatchToTasks(action);
     }
@@ -151,7 +151,7 @@ function App() {
             <Container fixed>
 
                 <Grid container style={{padding: '40px 40px 40px 0px'}}>
-                    <AddItemForm addItem={addTodolist}/>
+                    <AddItemForm addItem={addTodolistHandler}/>
                 </Grid>
 
                 <Grid container spacing={3}>
@@ -173,14 +173,14 @@ function App() {
                                         todolistId={tl.id}
                                         title={tl.title}
                                         tasks={tasksForTodolist}
-                                        removeTask={removeTask}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
+                                        removeTask={removeTaskHandler}
+                                        changeFilter={changeFilterHandler}
+                                        addTask={addTaskHandler}
                                         changeTaskStatus={changeStatus}
                                         filter={tl.filter}
-                                        removeTodolist={removeTodolist}
+                                        removeTodolist={removeTodolistHandler}
                                         changeTaskTitle={changeTaskTitle}
-                                        changeTodolistTitle={changeTodolistTitle}
+                                        changeTodolistTitle={changeTodolistTitleHandler}
                                     />
                                 </Paper>
                             </Grid>

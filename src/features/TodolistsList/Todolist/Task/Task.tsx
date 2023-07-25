@@ -17,22 +17,24 @@ export type TaskPropsType = {
 
 const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     const isShowedTaskNotification = useAppSelector(selectIsShowedTaskNotification);
-    const {removeTaskTC, updateTaskTC} = useActions(tasksActions);
-    const {setTaskNotificationShowingAC} = useActions(appActions);
+    const {removeTask, updateTask} = useActions(tasksActions);
+    const {setTaskNotificationShowing} = useActions(appActions);
 
-    const removeTaskHandler = () => removeTaskTC({taskId: task.id, todolistId});
+    const removeTaskHandler = useCallback(() => {
+        removeTask({taskId: task.id, todolistId});
+    }, []);
 
-    const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const checkHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-        updateTaskTC({todolistId, taskId: task.id, domainModel: {status: newStatusValue}});
-    };
+        updateTask({todolistId, taskId: task.id, domainModel: {status: newStatusValue}});
+    }, []);
 
-    const onTitleChangeHandler = (newValue: string) => {
-       updateTaskTC({todolistId, taskId: task.id, domainModel: {title: newValue}});
-    };
+    const onTitleChangeHandler = useCallback((newValue: string) => {
+        updateTask({todolistId, taskId: task.id, domainModel: {title: newValue}});
+    }, []);
 
-    const setTaskNotificationShowing = useCallback((isShowedTaskNotification: boolean) => {
-       setTaskNotificationShowingAC({isShowedTaskNotification});
+    const setNotificationShowing = useCallback((isShowedTaskNotification: boolean) => {
+        setTaskNotificationShowing({isShowedTaskNotification});
     }, []);
 
     return (
@@ -42,7 +44,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
                           disabled={task.entityStatus === 'loading'}
                           isShowedNotification={isShowedTaskNotification}
-                          setNotificationShowing={setTaskNotificationShowing}/>
+                          setNotificationShowing={setNotificationShowing}/>
             <IconButton aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={removeTaskHandler}>
                 <DeleteIcon/>
             </IconButton>

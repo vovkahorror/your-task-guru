@@ -20,42 +20,42 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {id, title, filter, entityStatus} = todolist;
     let tasks = useAppSelector(selectTasks(id));
     const isShowedTodolistNotification = useAppSelector(selectIsShowedTodolistNotification);
-    const {addTaskTC} = useActions(tasksActions);
-    const {removeTodolistTC, changeTodolistTitleTC, changeFilterAC} = useActions(todolistsActions);
-    const {setTodolistNotificationShowingAC} = useActions(appActions);
+    const {addTask} = useActions(tasksActions);
+    const {removeTodolist, changeTodolistTitle, changeFilter} = useActions(todolistsActions);
+    const {setTodolistNotificationShowing} = useActions(appActions);
 
-    const addTask = useCallback((title: string) => {
-        addTaskTC({todolistId: id, title});
+    const addTaskHandler = useCallback((title: string) => {
+        addTask({todolistId: id, title});
     }, [id]);
 
-    const removeTodolist = useCallback(() => {
-        removeTodolistTC(id);
+    const removeTodolistHandler = useCallback(() => {
+        removeTodolist(id);
     }, [id]);
 
-    const changeTodolistTitle = useCallback((title: string) => {
-       changeTodolistTitleTC({todolistId: id, title});
+    const changeTodolistTitleHandler = useCallback((title: string) => {
+       changeTodolistTitle({todolistId: id, title});
     }, [id]);
 
     const onAllClickHandler = useCallback(() => {
         if (filter !== 'all') {
-            changeFilterAC({value: 'all', todolistId: id});
+            changeFilter({value: 'all', todolistId: id});
         }
     }, [filter, id]);
 
     const onActiveClickHandler = useCallback(() => {
         if (filter !== 'active') {
-            changeFilterAC({value: 'active', todolistId: id});
+            changeFilter({value: 'active', todolistId: id});
         }
     }, [filter, id]);
 
     const onCompletedClickHandler = useCallback(() => {
         if (filter !== 'completed') {
-            changeFilterAC({value: 'completed', todolistId: id});
+            changeFilter({value: 'completed', todolistId: id});
         }
     }, [filter, id]);
 
-    const setTodolistNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {
-       setTodolistNotificationShowingAC({isShowedTodolistNotification});
+    const setNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {
+       setTodolistNotificationShowing({isShowedTodolistNotification});
     }, []);
 
     if (filter === 'active') {
@@ -68,15 +68,15 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     return (
         <div>
             <h3>
-                <EditableSpan value={title} onChange={changeTodolistTitle} titleType={'To-Do list'}
+                <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
                               disabled={entityStatus === 'loading'}
                               isShowedNotification={isShowedTodolistNotification}
-                              setNotificationShowing={setTodolistNotificationShowing}/>
-                <IconButton aria-label="delete" disabled={entityStatus === 'loading'} onClick={removeTodolist}>
+                              setNotificationShowing={setNotificationShowing}/>
+                <IconButton aria-label="delete" disabled={entityStatus === 'loading'} onClick={removeTodolistHandler}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask} disabled={entityStatus === 'loading'}/>
+            <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
             <ul>
                 {
                     tasks.map(t => {

@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {initializeAppTC} from './app-actions';
+import {initializeApp} from './app-actions';
 
 // slice
 export const slice = createSlice({
@@ -13,28 +13,28 @@ export const slice = createSlice({
     },
 
     reducers: {
-        setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+        setAppStatus(state, action: PayloadAction<{ status: RequestStatusType }>) {
             state.status = action.payload.status;
         },
 
-        setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+        setAppError(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error;
         },
 
-        setTodolistNotificationShowingAC(state, action: PayloadAction<{ isShowedTodolistNotification: boolean }>) {
+        setTodolistNotificationShowing(state, action: PayloadAction<{ isShowedTodolistNotification: boolean }>) {
             state.isShowedTodolistNotification = action.payload.isShowedTodolistNotification;
         },
 
-        setTaskNotificationShowingAC(state, action: PayloadAction<{ isShowedTaskNotification: boolean }>) {
+        setTaskNotificationShowing(state, action: PayloadAction<{ isShowedTaskNotification: boolean }>) {
             state.isShowedTaskNotification = action.payload.isShowedTaskNotification;
         },
     },
 
     extraReducers: builder => {
-        builder.addCase(initializeAppTC.fulfilled, (state) => {
+        builder.addCase(initializeApp.fulfilled, (state) => {
             state.isInitialized = true;
         });
-        builder.addCase(initializeAppTC.rejected, (state) => {
+        builder.addCase(initializeApp.rejected, (state) => {
             state.isInitialized = false;
         });
     }
@@ -43,10 +43,10 @@ export const slice = createSlice({
 export const appReducer = slice.reducer;
 
 export const {
-    setAppStatusAC,
-    setAppErrorAC,
-    setTodolistNotificationShowingAC,
-    setTaskNotificationShowingAC,
+    setAppStatus,
+    setAppError,
+    setTodolistNotificationShowing,
+    setTaskNotificationShowing,
 } = slice.actions;
 
 //types
