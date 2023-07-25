@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/your-task-guru/static/css/main.4cbc84f9.css",
-    "main.js": "/your-task-guru/static/js/main.5ee974fa.js",
+    "main.js": "/your-task-guru/static/js/main.dc791e66.js",
     "index.html": "/your-task-guru/index.html",
     "main.4cbc84f9.css.map": "/your-task-guru/static/css/main.4cbc84f9.css.map",
-    "main.5ee974fa.js.map": "/your-task-guru/static/js/main.5ee974fa.js.map"
+    "main.dc791e66.js.map": "/your-task-guru/static/js/main.dc791e66.js.map"
   },
   "entrypoints": [
     "static/css/main.4cbc84f9.css",
-    "static/js/main.5ee974fa.js"
+    "static/js/main.dc791e66.js"
   ]
 }
