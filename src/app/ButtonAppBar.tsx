@@ -17,8 +17,6 @@ export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>(state => state.app.status);
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn);
 
-    const logOutHandler = () => logOut();
-
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position='static'>
@@ -35,7 +33,7 @@ export default function ButtonAppBar() {
                     <Typography variant='h6' component='div' sx={{flexGrow: 1}}>
                         TodoList
                     </Typography>
-                    {isLoggedIn && <Button color='inherit' onClick={logOutHandler}>Log out</Button>}
+                    {isLoggedIn && <Button color='inherit' onClick={logOut}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>

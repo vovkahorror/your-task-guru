@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
-import {TodolistDomainType} from '../todolists-reducer';
+import {FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
 import {TaskStatuses} from '../../../api/todolists-api';
 import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
@@ -36,21 +36,9 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
        changeTodolistTitle({todolistId: id, title});
     }, [id]);
 
-    const onAllClickHandler = useCallback(() => {
-        if (filter !== 'all') {
-            changeFilter({value: 'all', todolistId: id});
-        }
-    }, [filter, id]);
-
-    const onActiveClickHandler = useCallback(() => {
-        if (filter !== 'active') {
-            changeFilter({value: 'active', todolistId: id});
-        }
-    }, [filter, id]);
-
-    const onCompletedClickHandler = useCallback(() => {
-        if (filter !== 'completed') {
-            changeFilter({value: 'completed', todolistId: id});
+    const onFilterButtonClickHandler = useCallback((newFilter: FilterValuesType) => {
+        if (filter  !== newFilter) {
+            changeFilter({value: newFilter, todolistId: id});
         }
     }, [filter, id]);
 
@@ -63,6 +51,13 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     }
     if (filter === 'completed') {
         tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
+    }
+
+    const renderFilterButton = (filter: FilterValuesType, color: ColorType, text: string) => {
+        return (
+            <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color={color}
+                            onClick={() =>onFilterButtonClickHandler(filter)} title={text}/>
+        )
     }
 
     return (
@@ -91,20 +86,19 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                 }
             </ul>
             <div>
-                <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color="secondary"
-                                onClick={onAllClickHandler} title={'All'}/>
-                <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'contained'} color="success"
-                                onClick={onActiveClickHandler} title={'Active'}/>
-                <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'contained'} color="error"
-                                onClick={onCompletedClickHandler} title={'Completed'}/>
+                {renderFilterButton('all', 'secondary', 'All')}
+                {renderFilterButton('active', 'success', 'Active')}
+                {renderFilterButton('completed', 'error', 'Completed')}
             </div>
         </div>
     );
 });
 
+type ColorType = "error" | "inherit" | "primary" | "secondary" | "success" | "info" | "warning" | undefined;
+
 type ButtonWithMemoPropsType = {
     variant: 'text' | 'outlined' | 'contained';
-    color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+    color: ColorType;
     onClick: () => void;
     title: string;
 }
