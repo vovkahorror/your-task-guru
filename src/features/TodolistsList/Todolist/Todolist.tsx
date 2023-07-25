@@ -4,14 +4,13 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
-import {changeFilterAC, TodolistDomainType} from '../todolists-reducer';
+import {TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
 import {TaskStatuses} from '../../../api/todolists-api';
-import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
-import {setTodolistNotificationShowingAC} from '../../../app/app-reducer';
 import {selectIsShowedTodolistNotification, selectTasks, tasksActions, todolistsActions} from '..';
 import {useActions} from '../../../utils/custom-hooks/useActions';
+import {appActions} from '../../../app';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -22,8 +21,8 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     let tasks = useAppSelector(selectTasks(id));
     const isShowedTodolistNotification = useAppSelector(selectIsShowedTodolistNotification);
     const {addTaskTC} = useActions(tasksActions);
-    const {removeTodolistTC, changeTodolistTitleTC} = useActions(todolistsActions);
-    const dispatch = useAppDispatch();
+    const {removeTodolistTC, changeTodolistTitleTC, changeFilterAC} = useActions(todolistsActions);
+    const {setTodolistNotificationShowingAC} = useActions(appActions);
 
     const addTask = useCallback((title: string) => {
         addTaskTC({todolistId: id, title});
@@ -39,25 +38,25 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
 
     const onAllClickHandler = useCallback(() => {
         if (filter !== 'all') {
-            dispatch(changeFilterAC({value: 'all', todolistId: id}));
+            changeFilterAC({value: 'all', todolistId: id});
         }
-    }, [dispatch, filter, id]);
+    }, [filter, id]);
 
     const onActiveClickHandler = useCallback(() => {
         if (filter !== 'active') {
-            dispatch(changeFilterAC({value: 'active', todolistId: id}));
+            changeFilterAC({value: 'active', todolistId: id});
         }
-    }, [dispatch, filter, id]);
+    }, [filter, id]);
 
     const onCompletedClickHandler = useCallback(() => {
         if (filter !== 'completed') {
-            dispatch(changeFilterAC({value: 'completed', todolistId: id}));
+            changeFilterAC({value: 'completed', todolistId: id});
         }
-    }, [dispatch, filter, id]);
+    }, [filter, id]);
 
     const setTodolistNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {
-        dispatch(setTodolistNotificationShowingAC({isShowedTodolistNotification}));
-    }, [dispatch]);
+       setTodolistNotificationShowingAC({isShowedTodolistNotification});
+    }, []);
 
     if (filter === 'active') {
         tasks = tasks.filter(t => t.status === TaskStatuses.New);

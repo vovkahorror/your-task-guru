@@ -5,11 +5,10 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TaskDomainType} from '../../tasks-reducer';
 import {TaskStatuses} from '../../../../api/todolists-api';
-import {useAppDispatch} from '../../../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../../../utils/custom-hooks/useAppSelector';
-import {setTaskNotificationShowingAC} from '../../../../app/app-reducer';
 import {useActions} from '../../../../utils/custom-hooks/useActions';
 import {selectIsShowedTaskNotification, tasksActions} from '../..';
+import {appActions} from '../../../../app';
 
 export type TaskPropsType = {
     task: TaskDomainType;
@@ -17,9 +16,9 @@ export type TaskPropsType = {
 }
 
 const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
-    const dispatch = useAppDispatch();
     const isShowedTaskNotification = useAppSelector(selectIsShowedTaskNotification);
     const {removeTaskTC, updateTaskTC} = useActions(tasksActions);
+    const {setTaskNotificationShowingAC} = useActions(appActions);
 
     const removeTaskHandler = () => removeTaskTC({taskId: task.id, todolistId});
 
@@ -33,8 +32,8 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     };
 
     const setTaskNotificationShowing = useCallback((isShowedTaskNotification: boolean) => {
-        dispatch(setTaskNotificationShowingAC({isShowedTaskNotification}));
-    }, [dispatch]);
+       setTaskNotificationShowingAC({isShowedTaskNotification});
+    }, []);
 
     return (
         <li className={task.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>

@@ -7,7 +7,7 @@ import {addTaskTC, fetchTasksTC, removeTaskTC, updateTaskTC} from './tasks-actio
 import {addTodolistTC, removeTodolistTC} from './todolists-actions';
 
 // slice
-const slice = createSlice({
+export const slice = createSlice({
     name: 'tasks',
     initialState: {} as TasksStateType,
     reducers: {

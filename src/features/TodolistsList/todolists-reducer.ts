@@ -5,7 +5,7 @@ import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {addTodolistTC, changeTodolistTitleTC, removeTodolistTC} from './todolists-actions';
 
 // slice
-const slice = createSlice({
+export const slice = createSlice({
     name: 'todolists',
     initialState: [] as TodolistDomainType[],
     reducers: {

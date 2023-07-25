@@ -6,18 +6,18 @@ import Container from '@mui/material/Container';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from '../features/Auth/Login';
-import {useAppDispatch} from '../utils/custom-hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
-import {initializeAppTC} from './app-reducer';
-import {appSelectors} from '.';
+import {appActions, appSelectors} from '.';
+import {initializeAppTC} from './app-actions';
+import {useActions} from '../utils/custom-hooks/useActions';
 
 function App() {
     const isInitialized = useAppSelector(appSelectors.selectIsInitialized);
-    const dispatch = useAppDispatch();
+    const {initializeAppTC} = useActions(appActions);
 
     useEffect(() => {
-        dispatch(initializeAppTC());
+        initializeAppTC();
     }, []);
 
     if (!isInitialized) {
