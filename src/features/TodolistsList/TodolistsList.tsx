@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
 import {Grid} from '@mui/material';
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm';
@@ -12,18 +12,14 @@ import {selectTodolists, todolistsActions} from '.';
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
     const todolists = useAppSelector(selectTodolists);
-    const {fetchTodolistsTC, addTodolistTC} = useActions(todolistsActions);
+    const {fetchTodolists, addTodolist} = useActions(todolistsActions);
 
     useEffect(() => {
         if (!isLoggedIn) {
             return;
         }
 
-        fetchTodolistsTC();
-    }, []);
-
-    const addTodolist = useCallback((title: string) => {
-        addTodolistTC(title);
+        fetchTodolists();
     }, []);
 
     if (!isLoggedIn) {
