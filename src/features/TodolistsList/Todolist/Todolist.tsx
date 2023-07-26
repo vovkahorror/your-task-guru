@@ -11,6 +11,7 @@ import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
 import {selectIsShowedTodolistNotification, selectTasks, tasksActions, todolistsActions} from '..';
 import {useActions} from '../../../utils/custom-hooks/useActions';
 import {appActions} from '../../../app';
+import styles from './Todolist.module.scss';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -61,7 +62,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     }
 
     return (
-        <div>
+        <div className={styles.todolist}>
             <h3>
                 <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
                               disabled={entityStatus === 'loading'}
