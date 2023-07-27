@@ -1,6 +1,12 @@
 .todolist {
   max-width: 366px;
 
+  h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   * {
     word-break: break-word;
   }
