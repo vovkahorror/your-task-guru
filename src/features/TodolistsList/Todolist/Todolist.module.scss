@@ -1,10 +1,11 @@
 .todolist {
+  position: relative;
   max-width: 366px;
 
-  h3 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .deleteButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
 
   * {

@@ -12,6 +12,7 @@ import {selectIsShowedTodolistNotification, selectTasks, tasksActions, todolists
 import {useActions} from '../../../utils/custom-hooks/useActions';
 import {appActions} from '../../../app';
 import styles from './Todolist.module.scss';
+import {Grid, Paper} from '@mui/material';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -34,17 +35,17 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     }, [id]);
 
     const changeTodolistTitleHandler = useCallback((title: string) => {
-       changeTodolistTitle({todolistId: id, title});
+        changeTodolistTitle({todolistId: id, title});
     }, [id]);
 
     const onFilterButtonClickHandler = useCallback((newFilter: FilterValuesType) => {
-        if (filter  !== newFilter) {
+        if (filter !== newFilter) {
             changeFilter({value: newFilter, todolistId: id});
         }
     }, [filter, id]);
 
     const setNotificationShowing = useCallback((isShowedTodolistNotification: boolean) => {
-       setTodolistNotificationShowing({isShowedTodolistNotification});
+        setTodolistNotificationShowing({isShowedTodolistNotification});
     }, []);
 
     if (filter === 'active') {
@@ -57,45 +58,49 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const renderFilterButton = (filter: FilterValuesType, color: ColorType, text: string) => {
         return (
             <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color={color}
-                            onClick={() =>onFilterButtonClickHandler(filter)} title={text}/>
-        )
-    }
+                            onClick={() => onFilterButtonClickHandler(filter)} title={text}/>
+        );
+    };
 
     return (
-        <div className={styles.todolist}>
-            <h3>
-                <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
-                              disabled={entityStatus === 'loading'}
-                              isShowedNotification={isShowedTodolistNotification}
-                              setNotificationShowing={setNotificationShowing}/>
-                <IconButton aria-label="delete" disabled={entityStatus === 'loading'} onClick={removeTodolistHandler}>
-                    <DeleteIcon/>
-                </IconButton>
-            </h3>
-            <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
-            <ul>
-                {
-                    tasks.map(t => {
-                        return (
-                            <Task
-                                key={t.id}
-                                task={t}
-                                todolistId={id}
-                            />
-                        );
-                    })
-                }
-            </ul>
-            <div>
-                {renderFilterButton('all', 'secondary', 'All')}
-                {renderFilterButton('active', 'success', 'Active')}
-                {renderFilterButton('completed', 'error', 'Completed')}
-            </div>
-        </div>
+        <Grid item>
+            <Paper className={styles.todolist} elevation={5} style={{padding: '10px'}}>
+                <h3>
+                    <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
+                                  disabled={entityStatus === 'loading'}
+                                  isShowedNotification={isShowedTodolistNotification}
+                                  setNotificationShowing={setNotificationShowing}/>
+                    <IconButton className={styles.deleteButton} aria-label="delete"
+                                disabled={entityStatus === 'loading'} onClick={removeTodolistHandler}>
+                        <DeleteIcon/>
+                    </IconButton>
+                </h3>
+                <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
+                <ul>
+                    {
+                        tasks.map(t => {
+                            return (
+                                <Task
+                                    key={t.id}
+                                    task={t}
+                                    todolistId={id}
+                                />
+                            );
+                        })
+                    }
+                    {!tasks.length && <div>No tasks</div>}
+                </ul>
+                <div>
+                    {renderFilterButton('all', 'secondary', 'All')}
+                    {renderFilterButton('active', 'success', 'Active')}
+                    {renderFilterButton('completed', 'error', 'Completed')}
+                </div>
+            </Paper>
+        </Grid>
     );
 });
 
-type ColorType = "error" | "inherit" | "primary" | "secondary" | "success" | "info" | "warning" | undefined;
+type ColorType = 'error' | 'inherit' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | undefined;
 
 type ButtonWithMemoPropsType = {
     variant: 'text' | 'outlined' | 'contained';
