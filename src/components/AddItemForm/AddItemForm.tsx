@@ -11,10 +11,15 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
     const [title, setTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
 
-    const addItem = () => {
+    const addItem = async () => {
         if (title.trim() !== '') {
-            props.addItem(title);
-            setTitle('');
+            try {
+                await props.addItem(title);
+                setTitle('');
+            } catch (e) {
+                const error = e as Error;
+                setError(error.message);
+            }
         } else {
             setError('Title is required');
         }
@@ -39,7 +44,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
             id='outlined-basic'
-            label={error ? 'Title is required' : 'type out here...'}
+            label={error || 'type out here...'}
             variant='outlined'
             size='small'
             error={!!error}
