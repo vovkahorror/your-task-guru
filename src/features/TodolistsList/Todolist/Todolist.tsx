@@ -26,7 +26,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {removeTodolist, changeTodolistTitle, changeFilter} = useActions(todolistsActions);
     const {setTodolistNotificationShowing} = useActions(appActions);
 
-    const addTaskHandler = useCallback((title: string) => {
+    const addTaskHandler = useCallback(async (title: string) => {
         addTask({todolistId: id, title});
     }, [id]);
 
