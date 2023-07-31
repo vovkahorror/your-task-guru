@@ -34,11 +34,13 @@ export const removeTodolist = createAsyncThunk('todolists/removeTodolist', async
             return {todolistId};
         } else {
             handleServerAppError(res.data, dispatch);
+            dispatch(changeTodolistEntityStatus({todolistId, status: 'failed'}));
             return rejectWithValue(null);
         }
     } catch (e) {
         const error = e as AxiosError;
         handleServerNetworkError(error.message, dispatch);
+        dispatch(changeTodolistEntityStatus({todolistId, status: 'failed'}));
         return rejectWithValue(null);
     }
 });
@@ -78,6 +80,7 @@ export const changeTodolistTitle = createAsyncThunk('todolists/changeTodolistTit
             return {todolistId: param.todolistId, title: param.title};
         } else {
             handleServerAppError(res.data, dispatch);
+            dispatch(changeTodolistEntityStatus({todolistId: param.todolistId, status: 'failed'}));
             return rejectWithValue(null);
         }
     } catch (e) {
