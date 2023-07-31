@@ -66,12 +66,12 @@ export const addTask = createAsyncThunk<
             dispatch(setAppStatus({status: 'succeeded'}));
             return res.data.data.item;
         } else {
-            handleServerAppError(res.data, dispatch);
+            handleServerAppError(res.data, dispatch, false);
             return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
         }
     } catch (e) {
         const error = e as AxiosError;
-        handleServerNetworkError(error.message, dispatch);
+        handleServerNetworkError(error.message, dispatch, false);
         return rejectWithValue({errors: [error.message], fieldsErrors: undefined});
     }
 });
