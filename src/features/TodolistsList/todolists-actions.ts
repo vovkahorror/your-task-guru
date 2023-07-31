@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {setAppStatus} from '../../app/app-reducer';
-import {ResultCode, todolistsApi} from '../../api/todolists-api';
+import {FieldErrorType, ResultCode, todolistsApi, TodolistType} from '../../api/todolists-api';
 import {fetchTasks} from './tasks-actions';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
@@ -45,10 +45,9 @@ export const removeTodolist = createAsyncThunk('todolists/removeTodolist', async
     }
 });
 
-export const addTodolist = createAsyncThunk('todolists/addTodolist', async (title: string, {
-    dispatch,
-    rejectWithValue,
-}) => {
+export const addTodolist = createAsyncThunk<{todolist: TodolistType }, string, {
+    rejectValue: { errors: string[]; fieldsErrors?: FieldErrorType[] }
+}>('todolists/addTodolist', async (title, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await todolistsApi.createTodolist(title);
@@ -56,13 +55,13 @@ export const addTodolist = createAsyncThunk('todolists/addTodolist', async (titl
             dispatch(setAppStatus({status: 'succeeded'}));
             return {todolist: res.data.data.item};
         } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
+            handleServerAppError(res.data, dispatch, false);
+            return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
         }
     } catch (e) {
         const error = e as AxiosError;
-        handleServerNetworkError(error.message, dispatch);
-        return rejectWithValue(null);
+        handleServerNetworkError(error.message, dispatch, false);
+        return rejectWithValue({errors: [error.message], fieldsErrors: undefined});
     }
 });
 

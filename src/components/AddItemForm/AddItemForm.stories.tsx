@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...
 export const AddItemFormStory = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 AddItemFormStory.args = {
-    addItem: async () => action('Button clicked')
+    addItem: action('Button clicked')
 };
 
 const TemplateWithError: ComponentStory<typeof AddItemForm> = (args) => {
@@ -33,7 +33,7 @@ const TemplateWithError: ComponentStory<typeof AddItemForm> = (args) => {
 
     const addItem = () => {
         if (title.trim() !== "") {
-            args.addItem(title);
+            args.addItem(title, {setError, setTitle});
             setTitle("");
         } else {
             setError("Title is required");

@@ -2,7 +2,7 @@ import React, {FC, memo, useCallback} from 'react';
 import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {AddItemForm} from '../../../components/AddItemForm/AddItemForm';
+import {AddItemForm, AddItemFormSubmitHelpersType} from '../../../components/AddItemForm/AddItemForm';
 import Button from '@mui/material/Button';
 import {FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
@@ -27,13 +27,15 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
 
-    const addTaskHandler = useCallback(async (title: string) => {
+    const addTaskHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
         const thunk = tasksActions.addTask({todolistId: id, title});
         const resultAction = await dispatch(thunk);
 
         if (tasksActions.addTask.rejected.match(resultAction)) {
             const errorMessage = resultAction.payload?.errors[0] || 'Some error occurred';
-            throw new Error(errorMessage);
+            helpers.setError(errorMessage);
+        } else {
+            helpers.setTitle('');
         }
     }, [id]);
 

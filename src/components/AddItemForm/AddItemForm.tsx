@@ -2,24 +2,13 @@ import React, {ChangeEvent, FC, KeyboardEvent, memo, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-type AddItemFormPropsType = {
-    addItem: (title: string) => Promise<any>;
-    disabled?: boolean;
-}
-
 export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) => {
     const [title, setTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
 
-    const addItemHandler = async () => {
+    const addItemHandler = () => {
         if (title.trim() !== '') {
-            try {
-                await addItem(title);
-                setTitle('');
-            } catch (e) {
-                const error = e as Error;
-                setError(error.message);
-            }
+            addItem(title, {setError, setTitle});
         } else {
             setError('Title is required');
         }
@@ -44,7 +33,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
             id="outlined-basic"
-            label={'type out here...'}
+            label={'Title'}
             variant="outlined"
             size="small"
             error={!!error}
@@ -56,3 +45,13 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
                 onClick={addItemHandler}>+</Button>
     </div>;
 });
+
+export type AddItemFormSubmitHelpersType = {
+    setError: (error: string) => void;
+    setTitle: (title: string) => void;
+}
+
+type AddItemFormPropsType = {
+    addItem: (title: string, helpers: AddItemFormSubmitHelpersType) => void;
+    disabled?: boolean;
+}
