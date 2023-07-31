@@ -23,7 +23,7 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    const addTask = (title: string) => {
+    const addTask = async (title: string) => {
         props.addTask(title, props.todolistId);
     };
 

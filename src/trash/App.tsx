@@ -131,7 +131,7 @@ function App() {
         dispatchToTodolists(changeTodolistTitle.fulfilled({todolistId, title}, 'requestId', {todolistId, title}));
     }
 
-    function addTodolistHandler(title: string) {
+    async function addTodolistHandler(title: string) {
         const newTodolist = {
             id: v1(),
             addedDate: '',

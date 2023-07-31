@@ -13,6 +13,7 @@ import {useActions} from '../../../utils/custom-hooks/useActions';
 import {appActions} from '../../../app';
 import styles from './Todolist.module.scss';
 import {Grid, Paper} from '@mui/material';
+import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -22,12 +23,18 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {id, title, filter, entityStatus} = todolist;
     let tasks = useAppSelector(selectTasks(id));
     const isShowedTodolistNotification = useAppSelector(selectIsShowedTodolistNotification);
-    const {addTask} = useActions(tasksActions);
     const {removeTodolist, changeTodolistTitle, changeFilter} = useActions(todolistsActions);
     const {setTodolistNotificationShowing} = useActions(appActions);
+    const dispatch = useAppDispatch();
 
     const addTaskHandler = useCallback(async (title: string) => {
-        addTask({todolistId: id, title});
+        const thunk = tasksActions.addTask({todolistId: id, title});
+        const resultAction = await dispatch(thunk);
+
+        if (tasksActions.addTask.rejected.match(resultAction)) {
+            const errorMessage = resultAction.payload?.errors[0] || 'Some error occurred';
+            throw new Error(errorMessage);
+        }
     }, [id]);
 
     const removeTodolistHandler = useCallback(() => {

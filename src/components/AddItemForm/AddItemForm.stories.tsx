@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...
 export const AddItemFormStory = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 AddItemFormStory.args = {
-    addItem: action('Button clicked')
+    addItem: async () => action('Button clicked')
 };
 
 const TemplateWithError: ComponentStory<typeof AddItemForm> = (args) => {
@@ -48,7 +48,7 @@ const TemplateWithError: ComponentStory<typeof AddItemForm> = (args) => {
         if (error) {
             setError(null);
         }
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             addItem();
         }
     }
@@ -57,7 +57,7 @@ const TemplateWithError: ComponentStory<typeof AddItemForm> = (args) => {
         <TextField
             value={title}
             onChange={onChangeHandler}
-            onKeyPress={onKeyPressHandler}
+            onKeyDown={onKeyPressHandler}
             id="outlined-basic"
             label={error ? "Title is required" : "type out here..."}
             variant="outlined"

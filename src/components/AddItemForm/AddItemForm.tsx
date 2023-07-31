@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
-    addItem: (title: string) => void;
+    addItem: (title: string) => Promise<any>;
     disabled?: boolean;
 }
 
@@ -15,10 +15,8 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
         if (title.trim() !== '') {
             try {
                 await addItem(title);
-                debugger
                 setTitle('');
             } catch (e) {
-                debugger
                 const error = e as Error;
                 setError(error.message);
             }
@@ -45,15 +43,15 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
             value={title}
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
-            id='outlined-basic'
-            label={error || 'type out here...'}
-            variant='outlined'
-            size='small'
+            id="outlined-basic"
+            label={'type out here...'}
+            variant="outlined"
+            size="small"
             error={!!error}
+            helperText={error}
             disabled={disabled}
         />
-
-        <Button variant='contained' disabled={disabled}
+        <Button variant="contained" disabled={disabled}
                 style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
                 onClick={addItemHandler}>+</Button>
     </div>;
