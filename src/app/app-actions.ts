@@ -1,11 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {authAPI, ResultCode} from '../api/todolists-api';
 import {setIsLoggedIn} from '../features/Auth/auth-reducer';
-import {isAxiosError} from 'axios';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {setAppStatus} from './app-reducer';
 
-export const initializeApp = createAsyncThunk('app/initializeApp', async (_, {dispatch}) => {
+export const initializeApp = createAsyncThunk('app/initializeApp', async (_, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.me();
@@ -14,8 +13,6 @@ export const initializeApp = createAsyncThunk('app/initializeApp', async (_, {di
         }
         dispatch(setAppStatus({status: 'succeeded'}));
     } catch (e) {
-        if (isAxiosError(e)) {
-            handleServerNetworkError(e.message, dispatch);
-        }
+        return handleServerNetworkError(e, dispatch, rejectWithValue);
     }
 });

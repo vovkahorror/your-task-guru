@@ -28,8 +28,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const dispatch = useAppDispatch();
 
     const addTaskHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
-        const thunk = tasksActions.addTask({todolistId: id, title});
-        const resultAction = await dispatch(thunk);
+        const resultAction = await dispatch(tasksActions.addTask({todolistId: id, title}));
 
         if (tasksActions.addTask.rejected.match(resultAction)) {
             const errorMessage = resultAction.payload?.errors[0] || 'Some error occurred';

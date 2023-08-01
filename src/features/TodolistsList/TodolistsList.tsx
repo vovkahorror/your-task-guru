@@ -16,8 +16,7 @@ export const TodolistsList = () => {
     const dispatch = useAppDispatch();
 
     const addTodolistHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
-        const thunk = todolistsActions.addTodolist(title);
-        const resultAction = await dispatch(thunk);
+        const resultAction = await dispatch(todolistsActions.addTodolist(title));
 
         if (todolistsActions.addTodolist.rejected.match(resultAction)) {
             const errorMessage = resultAction.payload?.errors[0] || 'Some error occurred';

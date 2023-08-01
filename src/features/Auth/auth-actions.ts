@@ -2,7 +2,6 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {authAPI, FieldErrorType, LoginParamType, ResultCode} from '../../api/todolists-api';
 import {setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {AxiosError} from 'axios';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 
 export const logIn = createAsyncThunk<undefined, LoginParamType, {
@@ -20,9 +19,7 @@ export const logIn = createAsyncThunk<undefined, LoginParamType, {
             return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
         }
     } catch (e) {
-        const error = e as AxiosError;
-        handleServerNetworkError(error.message, dispatch);
-        return rejectWithValue({errors: [error.message], fieldsErrors: undefined});
+        return handleServerNetworkError(e, dispatch, rejectWithValue);
     }
 });
 
@@ -40,8 +37,6 @@ export const logOut = createAsyncThunk('auth/logout', async (_, {dispatch, rejec
             return rejectWithValue(null);
         }
     } catch (e) {
-        const error = e as AxiosError;
-        handleServerNetworkError(error.message, dispatch);
-        return rejectWithValue(null);
+        return handleServerNetworkError(e, dispatch, rejectWithValue);
     }
 });
