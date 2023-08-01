@@ -5,11 +5,11 @@ import {combineReducers} from 'redux';
 import {tasksReducer} from '../../features/TodolistsList';
 import {todolistsReducer} from '../../features/TodolistsList';
 import {v1} from 'uuid';
-import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 import {appReducer} from '../../app';
 import {authReducer} from '../../features/Auth';
 import thunk from 'redux-thunk';
 import {configureStore} from '@reduxjs/toolkit';
+import {TaskPriorities, TaskStatuses} from '../../api/types';
 
 const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,

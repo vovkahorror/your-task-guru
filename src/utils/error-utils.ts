@@ -1,8 +1,8 @@
 import {setAppError, setAppStatus} from '../app/app-reducer';
 import {Dispatch} from 'redux';
-import {ResponseType} from '../api/todolists-api';
 import {AxiosError} from 'axios';
 import {RejectValueType} from '../app/store';
+import {ResponseType} from '../api/types';
 
 // generic function
 export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch, rejectWithValue: (value: RejectValueType) => any, showError = true) => {

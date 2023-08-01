@@ -1,9 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {setAppStatus} from '../../app/app-reducer';
-import {ResultCode, TaskType, todolistsApi, UpdateTaskModelType} from '../../api/todolists-api';
+import {todolistsApi} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {AppRootStateType, ThunkErrorType} from '../../app/store';
 import {changeTaskEntityStatus, UpdateDomainTaskModelType} from './tasks-reducer';
+import {ResultCode, TaskType, UpdateTaskModelType} from '../../api/types';
 
 export const fetchTasks = createAsyncThunk<{
     tasks: TaskType[], todolistId: string

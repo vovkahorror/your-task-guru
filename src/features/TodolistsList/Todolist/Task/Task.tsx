@@ -4,11 +4,11 @@ import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TaskDomainType} from '../../tasks-reducer';
-import {TaskStatuses} from '../../../../api/todolists-api';
 import {useAppSelector} from '../../../../utils/custom-hooks/useAppSelector';
 import {useActions} from '../../../../utils/custom-hooks/useActions';
 import {selectIsShowedTaskNotification, tasksActions} from '../..';
 import {appActions} from '../../../../app';
+import {TaskStatuses} from '../../../../api/types';
 
 export type TaskPropsType = {
     task: TaskDomainType;

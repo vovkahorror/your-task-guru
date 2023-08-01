@@ -1,8 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {authAPI, ResultCode} from '../api/todolists-api';
+import {authAPI} from '../api/todolists-api';
 import {setIsLoggedIn} from '../features/Auth/auth-reducer';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {setAppStatus} from './app-reducer';
+import {ResultCode} from '../api/types';
 
 export const initializeApp = createAsyncThunk('app/initializeApp', async (_, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}));

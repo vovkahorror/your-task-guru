@@ -5,7 +5,8 @@ import thunk from 'redux-thunk';
 import {appReducer} from '.';
 import {authReducer} from '../features/Auth';
 import {configureStore} from '@reduxjs/toolkit';
-import {FieldErrorType} from '../api/todolists-api';
+
+import {FieldErrorType} from '../api/types';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,

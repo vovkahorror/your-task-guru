@@ -8,9 +8,9 @@ import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {tasksReducer, todolistsReducer} from '../features/TodolistsList';
 import {changeFilter, FilterValuesType} from '../features/TodolistsList/todolists-reducer';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 import {addTask, removeTask, updateTask} from '../features/TodolistsList/tasks-actions';
 import {addTodolist, changeTodolistTitle, removeTodolist} from '../features/TodolistsList/todolists-actions';
+import {TaskPriorities, TaskStatuses} from '../api/types';
 
 function App() {
     const todolistId1 = v1();

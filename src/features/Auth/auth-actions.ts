@@ -1,9 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {authAPI, LoginParamType, ResultCode} from '../../api/todolists-api';
+import {authAPI} from '../../api/todolists-api';
 import {setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {ThunkErrorType} from '../../app/store';
+import {LoginParamType, ResultCode} from '../../api/types';
 
 export const logIn = createAsyncThunk<undefined, LoginParamType, ThunkErrorType>('auth/login', async (param, {
     dispatch,

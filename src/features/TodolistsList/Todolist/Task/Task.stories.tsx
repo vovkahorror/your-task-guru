@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {action} from '@storybook/addon-actions';
 import {ReduxStoreProviderDecorator} from '../../../../stories/decorators/ReduxStoreProviderDecorator';
-import {TaskPriorities, TaskStatuses} from '../../../../api/todolists-api';
 import {BrowserRouterDecorator} from '../../../../stories/decorators/BrowserRouterDecorator';
+import {TaskPriorities, TaskStatuses} from '../../../../api/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

@@ -6,7 +6,6 @@ import {AddItemForm, AddItemFormSubmitHelpersType} from '../../../components/Add
 import Button from '@mui/material/Button';
 import {FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import Task from './Task/Task';
-import {TaskStatuses} from '../../../api/todolists-api';
 import {useAppSelector} from '../../../utils/custom-hooks/useAppSelector';
 import {selectIsShowedTodolistNotification, selectTasks, tasksActions, todolistsActions} from '..';
 import {useActions} from '../../../utils/custom-hooks/useActions';
@@ -14,6 +13,7 @@ import {appActions} from '../../../app';
 import styles from './Todolist.module.scss';
 import {Grid, Paper} from '@mui/material';
 import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
+import {TaskStatuses} from '../../../api/types';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
