@@ -9,7 +9,6 @@ import {Login} from '../features/Auth/Login';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {appActions, appSelectors} from '.';
-import {initializeApp} from './app-actions';
 import {useActions} from '../utils/custom-hooks/useActions';
 
 function App() {

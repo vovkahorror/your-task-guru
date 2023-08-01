@@ -44,7 +44,7 @@ export const slice = createSlice({
         });
 
         builder.addCase(fetchTasks.fulfilled, (state, action) => {
-            state[action.payload.todolistId] = action.payload.tasks.map((t: TaskType) => ({
+            state[action.payload.todolistId] = action.payload.tasks.map(t => ({
                 ...t,
                 entityStatus: 'idle',
             }));

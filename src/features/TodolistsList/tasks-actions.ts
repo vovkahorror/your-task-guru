@@ -5,7 +5,10 @@ import {handleServerAppError, handleServerNetworkError} from '../../utils/error-
 import {AppRootStateType, ThunkErrorType} from '../../app/store';
 import {changeTaskEntityStatus, UpdateDomainTaskModelType} from './tasks-reducer';
 
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (todolistId: string, {
+export const fetchTasks = createAsyncThunk<{
+    tasks: TaskType[], todolistId: string
+}, string, ThunkErrorType>
+('tasks/fetchTasks', async (todolistId, {
     dispatch,
     rejectWithValue,
 }) => {
@@ -19,10 +22,9 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (todolistId
     }
 });
 
-export const removeTask = createAsyncThunk('tasks/removeTask', async (param: {
-    taskId: string,
-    todolistId: string
-}, {dispatch, rejectWithValue}) => {
+export const removeTask = createAsyncThunk<{ taskId: string, todolistId: string }, {
+    taskId: string, todolistId: string
+}, ThunkErrorType>('tasks/removeTask', async (param, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}));
     dispatch(changeTaskEntityStatus({
         todolistId: param.todolistId,
@@ -57,23 +59,23 @@ export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: s
             dispatch(setAppStatus({status: 'succeeded'}));
             return res.data.data.item;
         } else {
-            return handleServerAppError(res.data, dispatch, rejectWithValue,false);
+            return handleServerAppError(res.data, dispatch, rejectWithValue, false);
         }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue, false);
     }
 });
 
-export const updateTask = createAsyncThunk('tasks/updateTask', async (param: {
-    todolistId: string,
-    taskId: string,
-    domainModel: UpdateDomainTaskModelType
-}, {dispatch, getState, rejectWithValue}) => {
+export const updateTask = createAsyncThunk<{
+    todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType
+}, {
+    todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType
+}, ThunkErrorType>('tasks/updateTask', async (param, {dispatch, getState, rejectWithValue}) => {
     const state = getState() as AppRootStateType;
     const task = state.tasks[param.todolistId].find(t => t.id === param.taskId);
 
     if (!task) {
-        return rejectWithValue('task not found in the state');
+        return rejectWithValue({errors: ['task not found in the state'], fieldsErrors: undefined});
     }
 
     dispatch(setAppStatus({status: 'loading'}));
