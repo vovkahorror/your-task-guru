@@ -5,7 +5,7 @@ import {handleServerAppError, handleServerNetworkError} from '../../utils/error-
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {ThunkErrorType} from '../../app/store';
 
-export const logIn = createAsyncThunk<null, LoginParamType, ThunkErrorType>('auth/login', async (param, {
+export const logIn = createAsyncThunk<undefined, LoginParamType, ThunkErrorType>('auth/login', async (param, {
     dispatch,
     rejectWithValue,
 }) => {
