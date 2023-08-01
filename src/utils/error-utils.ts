@@ -1,13 +1,11 @@
 import {setAppError, setAppStatus} from '../app/app-reducer';
 import {Dispatch} from 'redux';
-import {FieldErrorType, ResponseType} from '../api/todolists-api';
+import {ResponseType} from '../api/todolists-api';
 import {AxiosError} from 'axios';
+import {RejectValueType} from '../app/store';
 
 // generic function
-export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch, rejectWithValue: (value: {
-    errors: string[];
-    fieldsErrors?: FieldErrorType[]
-}) => any, showError = true) => {
+export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch, rejectWithValue: (value: RejectValueType) => any, showError = true) => {
     if (showError) {
         dispatch(setAppError({error: data.messages.length ? data.messages[0] : 'Some error occurred'}));
     }
@@ -16,10 +14,7 @@ export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatc
     return rejectWithValue({errors: data.messages, fieldsErrors: data.fieldsErrors});
 };
 
-export const handleServerNetworkError = (e: unknown, dispatch: Dispatch, rejectWithValue: (value: {
-    errors: string[];
-    fieldsErrors?: FieldErrorType[]
-}) => any, showError = true) => {
+export const handleServerNetworkError = (e: unknown, dispatch: Dispatch, rejectWithValue: (value: RejectValueType) => any, showError = true) => {
     const error = e as AxiosError;
 
     if (showError) {

@@ -1,9 +1,9 @@
-import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
-import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
+import {tasksReducer} from '../features/TodolistsList';
+import {todolistsReducer} from '../features/TodolistsList';
 import {combineReducers} from 'redux';
 import thunk from 'redux-thunk';
-import {appReducer} from './app-reducer';
-import {authReducer} from '../features/Auth/auth-reducer';
+import {appReducer} from '.';
+import {authReducer} from '../features/Auth';
 import {configureStore} from '@reduxjs/toolkit';
 import {FieldErrorType} from '../api/todolists-api';
 
@@ -18,13 +18,18 @@ export type RootReducerType = typeof rootReducer;
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk)
-})
+    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk),
+});
 
 export type AppRootStateType = ReturnType<RootReducerType>
 
+export type RejectValueType = {
+    errors: string[];
+    fieldsErrors?: FieldErrorType[];
+}
+
 export type ThunkErrorType = {
-    rejectValue: { errors: string[]; fieldsErrors?: FieldErrorType[] }
+    rejectValue: RejectValueType;
 }
 
 // @ts-ignore

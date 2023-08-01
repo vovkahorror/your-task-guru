@@ -1,9 +1,7 @@
-import {
-    changeFilter, FilterValuesType, TodolistDomainType,
-    todolistsReducer,
-} from './todolists-reducer';
+import {changeFilter, FilterValuesType, TodolistDomainType} from './todolists-reducer';
 import {v1} from 'uuid';
 import {addTodolist, changeTodolistTitle, removeTodolist} from './todolists-actions';
+import {todolistsReducer} from '.';
 
 let todolistId1: string;
 let todolistId2: string;
@@ -44,7 +42,7 @@ test('correct todolist should be added', () => {
 
 test('correct todolist should change its name', () => {
     let newTodolistTitle = 'New Todolist';
-    const param= {
+    const param = {
         todolistId: todolistId2,
         title: newTodolistTitle,
     };

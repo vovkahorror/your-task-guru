@@ -17,11 +17,17 @@ const todolistsActions = {
     ...todolistsSlice.actions,
 };
 
+const tasksReducer = tasksSlice.reducer;
+
+const todolistsReducer = todolistsSlice.reducer;
+
 export {
+    tasksReducer,
+    todolistsReducer,
     tasksActions,
     todolistsActions,
     selectIsShowedTaskNotification,
     selectIsShowedTodolistNotification,
     selectTodolists,
-    selectTasks,
+    selectTasks
 };

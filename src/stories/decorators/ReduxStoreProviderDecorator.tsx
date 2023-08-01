@@ -2,12 +2,12 @@ import React, {ReactNode} from 'react';
 import {AppRootStateType, RootReducerType} from '../../app/store';
 import {Provider} from 'react-redux';
 import {combineReducers} from 'redux';
-import {tasksReducer} from '../../features/TodolistsList/tasks-reducer';
-import {todolistsReducer} from '../../features/TodolistsList/todolists-reducer';
+import {tasksReducer} from '../../features/TodolistsList';
+import {todolistsReducer} from '../../features/TodolistsList';
 import {v1} from 'uuid';
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
-import {appReducer} from '../../app/app-reducer';
-import {authReducer} from '../../features/Auth/auth-reducer';
+import {appReducer} from '../../app';
+import {authReducer} from '../../features/Auth';
 import thunk from 'redux-thunk';
 import {configureStore} from '@reduxjs/toolkit';
 

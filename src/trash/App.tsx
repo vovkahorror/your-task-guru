@@ -6,13 +6,8 @@ import {AddItemForm} from '../components/AddItemForm/AddItemForm';
 import ButtonAppBar from '../app/ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
-import {
-    tasksReducer,
-} from '../features/TodolistsList/tasks-reducer';
-import {
-    changeFilter, FilterValuesType,
-    todolistsReducer,
-} from '../features/TodolistsList/todolists-reducer';
+import {tasksReducer, todolistsReducer} from '../features/TodolistsList';
+import {changeFilter, FilterValuesType} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 import {addTask, removeTask, updateTask} from '../features/TodolistsList/tasks-actions';
 import {addTodolist, changeTodolistTitle, removeTodolist} from '../features/TodolistsList/todolists-actions';
