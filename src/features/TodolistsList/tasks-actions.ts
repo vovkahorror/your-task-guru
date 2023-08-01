@@ -102,6 +102,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (param: {
             dispatch(setAppStatus({status: 'succeeded'}));
             return param;
         } else {
+            dispatch(changeTaskEntityStatus({todolistId: param.todolistId, taskId: param.taskId, status: 'failed'}));
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
         }
