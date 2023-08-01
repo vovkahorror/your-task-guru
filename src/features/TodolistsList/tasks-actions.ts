@@ -36,8 +36,7 @@ export const removeTask = createAsyncThunk('tasks/removeTask', async (param: {
             dispatch(setAppStatus({status: 'succeeded'}));
             return {taskId: param.taskId, todolistId: param.todolistId};
         } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
     } catch (e) {
         dispatch(changeTaskEntityStatus({
@@ -58,8 +57,7 @@ export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: s
             dispatch(setAppStatus({status: 'succeeded'}));
             return res.data.data.item;
         } else {
-            handleServerAppError(res.data, dispatch, false);
-            return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
+            return handleServerAppError(res.data, dispatch, rejectWithValue,false);
         }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue, false);
@@ -103,8 +101,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (param: {
             return param;
         } else {
             dispatch(changeTaskEntityStatus({todolistId: param.todolistId, taskId: param.taskId, status: 'failed'}));
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
     } catch (e) {
         dispatch(changeTaskEntityStatus({todolistId: param.todolistId, taskId: param.taskId, status: 'failed'}));

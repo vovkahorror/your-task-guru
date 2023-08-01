@@ -32,9 +32,8 @@ export const removeTodolist = createAsyncThunk('todolists/removeTodolist', async
             dispatch(setAppStatus({status: 'succeeded'}));
             return {todolistId};
         } else {
-            handleServerAppError(res.data, dispatch);
             dispatch(changeTodolistEntityStatus({todolistId, status: 'failed'}));
-            return rejectWithValue(null);
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
     } catch (e) {
         dispatch(changeTodolistEntityStatus({todolistId, status: 'failed'}));
@@ -51,8 +50,7 @@ export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, 
             dispatch(setAppStatus({status: 'succeeded'}));
             return {todolist: res.data.data.item};
         } else {
-            handleServerAppError(res.data, dispatch, false);
-            return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
+            return handleServerAppError(res.data, dispatch, rejectWithValue, false);
         }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue, false);
@@ -72,9 +70,8 @@ export const changeTodolistTitle = createAsyncThunk('todolists/changeTodolistTit
             dispatch(changeTodolistEntityStatus({todolistId: param.todolistId, status: 'succeeded'}));
             return {todolistId: param.todolistId, title: param.title};
         } else {
-            handleServerAppError(res.data, dispatch);
             dispatch(changeTodolistEntityStatus({todolistId: param.todolistId, status: 'failed'}));
-            return rejectWithValue(null);
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
     } catch (e) {
         dispatch(changeTodolistEntityStatus({todolistId: param.todolistId, status: 'failed'}));

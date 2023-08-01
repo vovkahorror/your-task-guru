@@ -15,8 +15,7 @@ export const logIn = createAsyncThunk<undefined, LoginParamType, {
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setAppStatus({status: 'succeeded'}));
         } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue);
@@ -33,8 +32,7 @@ export const logOut = createAsyncThunk('auth/logout', async (_, {dispatch, rejec
             dispatch(clearTasksAndTodolists());
             dispatch(setAppStatus({status: 'succeeded'}));
         } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue);

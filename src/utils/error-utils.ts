@@ -4,11 +4,16 @@ import {FieldErrorType, ResponseType} from '../api/todolists-api';
 import {AxiosError} from 'axios';
 
 // generic function
-export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch, showError = true) => {
+export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch, rejectWithValue: (value: {
+    errors: string[];
+    fieldsErrors?: FieldErrorType[]
+}) => any, showError = true) => {
     if (showError) {
         dispatch(setAppError({error: data.messages.length ? data.messages[0] : 'Some error occurred'}));
     }
+
     dispatch(setAppStatus({status: 'failed'}));
+    return rejectWithValue({errors: data.messages, fieldsErrors: data.fieldsErrors});
 };
 
 export const handleServerNetworkError = (e: unknown, dispatch: Dispatch, rejectWithValue: (value: {
@@ -20,7 +25,7 @@ export const handleServerNetworkError = (e: unknown, dispatch: Dispatch, rejectW
     if (showError) {
         dispatch(setAppError({error: error.message || 'Some error occurred'}));
     }
-debugger
+
     dispatch(setAppStatus({status: 'failed'}));
     return rejectWithValue({errors: [error.message], fieldsErrors: undefined});
 };
