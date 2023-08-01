@@ -20,7 +20,9 @@ export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists', async
     }
 });
 
-export const removeTodolist = createAsyncThunk('todolists/removeTodolist', async (todolistId: string, {
+export const removeTodolist = createAsyncThunk<{
+    todolistId: string
+}, string, ThunkErrorType>('todolists/removeTodolist', async (todolistId, {
     dispatch,
     rejectWithValue,
 }) => {
@@ -57,10 +59,9 @@ export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, 
     }
 });
 
-export const changeTodolistTitle = createAsyncThunk('todolists/changeTodolistTitle', async (param: {
-    todolistId: string,
-    title: string
-}, {dispatch, rejectWithValue}) => {
+export const changeTodolistTitle = createAsyncThunk<{ todolistId: string, title: string }, {
+    todolistId: string, title: string
+}, ThunkErrorType>('todolists/changeTodolistTitle', async (param, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}));
     dispatch(changeTodolistEntityStatus({todolistId: param.todolistId, status: 'loading'}));
     try {
