@@ -25,25 +25,23 @@ export const slice = createSlice({
     },
 
     extraReducers: (builder) => {
-        builder.addCase(clearTasksAndTodolists, () => {
-            return [];
-        });
-
-        builder.addCase(removeTodolist.fulfilled, (state, action) => {
-            const index = state.findIndex(tl => tl.id === action.payload.todolistId);
-            if (index > -1) {
-                state.splice(index, 1);
-            }
-        })
-
-        builder.addCase(addTodolist.fulfilled, (state, action) => {
-            state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
-        })
-
-        builder.addCase(changeTodolistTitle.fulfilled, (state, action) => {
-            const index = state.findIndex(tl => tl.id === action.payload.todolistId);
-            state[index].title = action.payload.title;
-        })
+        builder
+            .addCase(clearTasksAndTodolists, () => {
+                return [];
+            })
+            .addCase(removeTodolist.fulfilled, (state, action) => {
+                const index = state.findIndex(tl => tl.id === action.payload.todolistId);
+                if (index > -1) {
+                    state.splice(index, 1);
+                }
+            })
+            .addCase(addTodolist.fulfilled, (state, action) => {
+                state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
+            })
+            .addCase(changeTodolistTitle.fulfilled, (state, action) => {
+                const index = state.findIndex(tl => tl.id === action.payload.todolistId);
+                state[index].title = action.payload.title;
+            });
     },
 });
 
