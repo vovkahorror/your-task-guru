@@ -15,12 +15,13 @@ export const slice = createSlice({
     },
 
     extraReducers: builder => {
-        builder.addCase(logIn.fulfilled, (state) => {
-            state.isLoggedIn = true;
-        });
-        builder.addCase(logOut.fulfilled, (state) => {
-            state.isLoggedIn = false;
-        });
+        builder
+            .addCase(logIn.fulfilled, (state) => {
+                state.isLoggedIn = true;
+            })
+            .addCase(logOut.fulfilled, (state) => {
+                state.isLoggedIn = false;
+            });
     },
 });
 

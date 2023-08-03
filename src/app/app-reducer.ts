@@ -31,13 +31,14 @@ export const slice = createSlice({
     },
 
     extraReducers: builder => {
-        builder.addCase(initializeApp.fulfilled, (state) => {
-            state.isInitialized = true;
-        });
-        builder.addCase(initializeApp.rejected, (state) => {
-            state.isInitialized = false;
-        });
-    }
+        builder
+            .addCase(initializeApp.fulfilled, (state) => {
+                state.isInitialized = true;
+            })
+            .addCase(initializeApp.rejected, (state) => {
+                state.isInitialized = false;
+            });
+    },
 });
 
 export const {
