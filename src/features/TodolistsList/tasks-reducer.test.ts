@@ -1,4 +1,3 @@
-
 import {TasksStateType} from './tasks-reducer';
 import {v1} from 'uuid';
 import {addTask, removeTask, updateTask} from './tasks-actions';
