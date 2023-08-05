@@ -19,7 +19,7 @@ export default function ButtonAppBar() {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position='static'>
+            <AppBar position='static' sx={{backgroundColor: '#281600'}}>
                 <Toolbar>
                     <IconButton
                         size='large'
@@ -31,7 +31,7 @@ export default function ButtonAppBar() {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant='h6' component='div' sx={{flexGrow: 1}}>
-                        TodoList
+                        Your Task Guru
                     </Typography>
                     {isLoggedIn && <Button color='inherit' onClick={logOut}>Log out</Button>}
                 </Toolbar>
