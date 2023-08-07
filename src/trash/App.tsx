@@ -3,7 +3,7 @@ import './App.scss';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from '../components/AddItemForm/AddItemForm';
-import ButtonAppBar from '../app/ButtonAppBar';
+import ButtonAppBar from '../features/ButtonAppBar/ButtonAppBar';
 import {Container, Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {tasksReducer, todolistsReducer} from '../features/TodolistsList';

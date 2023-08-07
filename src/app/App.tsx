@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.scss';
-import ButtonAppBar from './ButtonAppBar';
+import ButtonAppBar from '../features/ButtonAppBar/ButtonAppBar';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import Container from '@mui/material/Container';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
