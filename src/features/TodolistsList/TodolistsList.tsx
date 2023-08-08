@@ -40,11 +40,11 @@ export const TodolistsList = () => {
 
     return (
         <>
-            <Grid container justifyContent={'center'} style={{padding: '40px 40px 40px 0px'}}>
+            <Grid container justifyContent={'center'} padding={'40px'}>
                 <AddItemForm addItem={addTodolistHandler}/>
             </Grid>
 
-            <Grid container spacing={5} justifyContent={'center'}>
+            <Grid container spacing={10} justifyContent={'center'}>
                 {todolists.map(tl => {
                     return (
                         <Todolist key={tl.id}

@@ -7,6 +7,15 @@
   padding: 40px 20px;
   font-family: Caveat, sans-serif;
   font-size: 22px;
+  font-weight: 700;
+
+  .topTape {
+    position: absolute;
+    top: -18px;
+    left: -32px;
+    width: 100px;
+    transform: rotate(-20deg);
+  }
 
   .title {
     font-size: 32px;
@@ -21,6 +30,14 @@
 
   .list {
     list-style-type: none;
+  }
+
+  .bottomTape {
+    @extend .topTape;
+    top: unset;
+    left: unset;
+    bottom: -18px;
+    right: -32px;
   }
 
   * {

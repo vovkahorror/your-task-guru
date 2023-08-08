@@ -14,6 +14,7 @@ import styles from './Todolist.module.scss';
 import {Grid, Paper} from '@mui/material';
 import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
 import {TaskStatuses} from '../../../api/types';
+import tapeImage from '../../../assets/images/tape.png';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -73,6 +74,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     return (
         <Grid item>
             <Paper className={styles.todolist} elevation={5} sx={{backgroundColor: '#FDF001'}}>
+                <img className={styles.topTape} src={tapeImage} alt=""/>
                 <h3 className={styles.title}>
                     <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
                                   disabled={entityStatus === 'loading'}
@@ -103,6 +105,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                     {renderFilterButton('active', 'success', 'Active')}
                     {renderFilterButton('completed', 'error', 'Completed')}
                 </div>
+                <img className={styles.bottomTape} src={tapeImage} alt=""/>
             </Paper>
         </Grid>
     );

@@ -28,7 +28,7 @@ function App() {
     return (
         <div className="App">
             <ButtonAppBar/>
-            <Container fixed>
+            <Container maxWidth={false}>
                 <Routes>
                     <Route path={'/'} element={<TodolistsList/>}/>
                     <Route path={'/login'} element={<Login/>}/>
