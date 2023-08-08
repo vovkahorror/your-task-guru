@@ -1,0 +1,12 @@
+.task {
+  display: flex;
+  align-items: center;
+
+  .deleteButton {
+    margin-left: 10px;
+  }
+}
+
+.isDone {
+  text-decoration: line-through;
+}

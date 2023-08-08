@@ -9,6 +9,7 @@ import {action} from '@storybook/addon-actions';
 import {ReduxStoreProviderDecorator} from '../../../../stories/decorators/ReduxStoreProviderDecorator';
 import {BrowserRouterDecorator} from '../../../../stories/decorators/BrowserRouterDecorator';
 import {TaskPriorities, TaskStatuses} from '../../../../api/types';
+import styles from './Task.module.scss';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -51,7 +52,7 @@ const TemplateWork: ComponentStory<typeof Task> = (args) => {
     const setTaskNotificationShowing = (isShowedTaskNotification: boolean) => {}
 
     return (
-        <li className={task.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>
+        <li className={`${styles.task} ${task.status === TaskStatuses.Completed ? styles.isDone : ''}`}>
             <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed}
                       onChange={onChangeHandler}/>
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}

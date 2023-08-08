@@ -8,21 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import {FilterValuesType} from '../features/TodolistsList/todolists-reducer';
 import {TaskStatuses, TaskType} from '../api/types';
 
-type PropsType = {
-    todolistId: string
-    title: string
-    tasks: Array<TaskType>
-    removeTask: (taskId: string, todolistId: string) => void
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
-    removeTodolist: (id: string) => void
-    changeTodolistTitle: (id: string, newTitle: string) => void
-    filter: FilterValuesType
-    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
-}
-
-export function Todolist(props: PropsType) {
+export function Todolist(props: TodolistPropsType) {
     const addTask = async (title: string) => {
         props.addTask(title, props.todolistId);
     };
@@ -85,4 +71,17 @@ export function Todolist(props: PropsType) {
     </div>;
 }
 
+type TodolistPropsType = {
+    todolistId: string
+    title: string
+    tasks: Array<TaskType>
+    removeTask: (taskId: string, todolistId: string) => void
+    changeFilter: (value: FilterValuesType, todolistId: string) => void
+    addTask: (title: string, todolistId: string) => void
+    changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
+    removeTodolist: (id: string) => void
+    changeTodolistTitle: (id: string, newTitle: string) => void
+    filter: FilterValuesType
+    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
+}
 

@@ -9,6 +9,7 @@ import {useActions} from '../../../../utils/custom-hooks/useActions';
 import {selectIsShowedTaskNotification, tasksActions} from '../..';
 import {appActions} from '../../../../app';
 import {TaskStatuses} from '../../../../api/types';
+import styles from './Task.module.scss';
 
 export type TaskPropsType = {
     task: TaskDomainType;
@@ -38,14 +39,14 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     }, []);
 
     return (
-        <li className={task.status === TaskStatuses.Completed ? 'is-done' : 'not-is-done'}>
-            <Checkbox color={'primary'} checked={task.status === TaskStatuses.Completed}
+        <li className={`${styles.task} ${task.status === TaskStatuses.Completed ? styles.isDone : ''}`}>
+            <Checkbox color={'default'} checked={task.status === TaskStatuses.Completed}
                       disabled={task.entityStatus === 'loading'} onChange={checkHandler}/>
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
                           disabled={task.entityStatus === 'loading'}
                           isShowedNotification={isShowedTaskNotification}
                           setNotificationShowing={setNotificationShowing}/>
-            <IconButton aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={removeTaskHandler}>
+            <IconButton className={styles.deleteButton} aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={removeTaskHandler}>
                 <DeleteIcon/>
             </IconButton>
         </li>

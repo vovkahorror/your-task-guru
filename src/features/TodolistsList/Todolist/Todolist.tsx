@@ -72,8 +72,8 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
 
     return (
         <Grid item>
-            <Paper className={styles.todolist} elevation={5} style={{padding: '10px'}}>
-                <h3>
+            <Paper className={styles.todolist} elevation={5} sx={{backgroundColor: '#FDF001'}}>
+                <h3 className={styles.title}>
                     <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
                                   disabled={entityStatus === 'loading'}
                                   isShowedNotification={isShowedTodolistNotification}
@@ -84,7 +84,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                     </IconButton>
                 </h3>
                 <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
-                <ul>
+                <ul className={styles.list}>
                     {
                         tasks.map(t => {
                             return (
