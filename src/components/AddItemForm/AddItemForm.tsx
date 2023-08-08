@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC, KeyboardEvent, memo, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import styles from './AddItemForm.module.scss';
 
 export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) => {
@@ -43,7 +44,9 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
             />
             <Button variant="contained" color={'success'} disabled={disabled}
                     className={styles.button}
-                    onClick={addItemHandler}>+</Button>
+                    onClick={addItemHandler}>
+                <AddRoundedIcon/>
+            </Button>
         </div>
     );
 });

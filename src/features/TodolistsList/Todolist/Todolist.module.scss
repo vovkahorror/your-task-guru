@@ -4,6 +4,7 @@
   flex-direction: column;
   gap: 20px;
   max-width: 400px;
+  min-width: 360px;
   padding: 40px 20px;
   font-family: Caveat, sans-serif;
   font-size: 22px;
@@ -29,7 +30,14 @@
   }
 
   .list {
+    margin: 10px 0;
     list-style-type: none;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
   }
 
   .bottomTape {

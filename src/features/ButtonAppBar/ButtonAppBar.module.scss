@@ -1,8 +1,19 @@
-.logoWrapper {
-  display: flex;
-  align-items: flex-end;
+.appBar {
+  background-image: url('../../assets/images/wood-texture.jpg');
 
-  .logo {
-    width: 80px;
+  .logoWrapper {
+    display: flex;
+    align-items: flex-end;
+
+    .logo {
+      width: 80px;
+    }
+  }
+
+  .linearProgress {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
   }
 }

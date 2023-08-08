@@ -66,10 +66,10 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
-    const renderFilterButton = (filter: FilterValuesType, color: ColorType, text: string) => {
+    const renderFilterButton = (buttonFilter: FilterValuesType, text: string) => {
         return (
-            <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'} color={color}
-                            onClick={() => onFilterButtonClickHandler(filter)} title={text}/>
+            <ButtonWithMemo variant={filter === buttonFilter ? 'contained' : 'outlined'} color={'success'}
+                            onClick={() => onFilterButtonClickHandler(buttonFilter)} title={text}/>
         );
     };
 
@@ -104,15 +104,19 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                     }
                     {!tasks.length && <div>No tasks</div>}
                 </ul>
-                <div>
-                    {renderFilterButton('all', 'secondary', 'All')}
-                    {renderFilterButton('active', 'success', 'Active')}
-                    {renderFilterButton('completed', 'error', 'Completed')}
+                <div className={styles.buttons}>
+                    {renderFilterButton('all', 'All')}
+                    {renderFilterButton('active', 'Active')}
+                    {renderFilterButton('completed', 'Completed')}
                 </div>
                 <img className={styles.bottomTape} src={tapeImage} alt=""/>
             </Paper>
         </Grid>
     );
+});
+
+const ButtonWithMemo: FC<ButtonWithMemoPropsType> = memo(({variant, color, onClick, title}) => {
+    return <Button variant={variant} color={color} onClick={onClick}>{title}</Button>;
 });
 
 type ColorType = 'error' | 'inherit' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | undefined;
@@ -123,7 +127,3 @@ type ButtonWithMemoPropsType = {
     onClick: () => void;
     title: string;
 }
-
-const ButtonWithMemo: FC<ButtonWithMemoPropsType> = memo(({variant, color, onClick, title}) => {
-    return <Button variant={variant} color={color} onClick={onClick}>{title}</Button>;
-});
