@@ -15,6 +15,8 @@ import {Grid, Paper} from '@mui/material';
 import {useAppDispatch} from '../../../utils/custom-hooks/useAppDispatch';
 import {TaskStatuses} from '../../../api/types';
 import tapeImage from '../../../assets/images/tape.png';
+import paperTextureImage from '../../../assets/images/paper-texture.jpg';
+import Box from '@mui/material/Box';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -73,7 +75,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
 
     return (
         <Grid item>
-            <Paper className={styles.todolist} elevation={5} sx={{backgroundColor: '#FDF001'}}>
+            <Paper className={styles.todolist} elevation={5} sx={{backgroundImage: `url(${paperTextureImage})`}}>
                 <img className={styles.topTape} src={tapeImage} alt=""/>
                 <h3 className={styles.title}>
                     <EditableSpan value={title} onChange={changeTodolistTitleHandler} titleType={'To-Do list'}
@@ -85,7 +87,9 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                         <DeleteIcon/>
                     </IconButton>
                 </h3>
-                <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
+                <Box alignSelf={'center'}>
+                    <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
+                </Box>
                 <ul className={styles.list}>
                     {
                         tasks.map(t => {

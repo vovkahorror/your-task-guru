@@ -8,6 +8,7 @@ import {authSelectors} from '../Auth';
 import {useActions} from '../../utils/custom-hooks/useActions';
 import {selectTodolists, todolistsActions} from '.';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
+import styles from './TodolistsList.module.scss';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
@@ -40,7 +41,7 @@ export const TodolistsList = () => {
 
     return (
         <>
-            <Grid container justifyContent={'center'} padding={'40px'}>
+            <Grid className={styles.addTodolist} container justifyContent={'center'} padding={'40px'} marginBottom={'20px'}>
                 <AddItemForm addItem={addTodolistHandler}/>
             </Grid>
 

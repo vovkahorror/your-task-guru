@@ -11,6 +11,7 @@ import {useActions} from '../../utils/custom-hooks/useActions';
 import {authActions} from '../Auth';
 import logo from '../../assets/images/logo-light.png';
 import styles from './ButtonAppBar.module.scss';
+import woodTextureImage from '../../assets/images/wood-texture.jpg';
 
 export default function ButtonAppBar() {
     const {logOut} = useActions(authActions);
@@ -19,7 +20,7 @@ export default function ButtonAppBar() {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="static" sx={{backgroundColor: '#281600'}}>
+            <AppBar position="static" sx={{backgroundImage: `url(${woodTextureImage})`}}>
                 <Toolbar>
                     <Typography className={styles.logoWrapper} marginRight={'10px'}
                                 variant="h6" component="div">
