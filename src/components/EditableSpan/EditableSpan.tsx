@@ -39,7 +39,7 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     };
 
     return editMode
-        ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
+        ? <TextField value={title} variant="standard" onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
         : <Tooltip title={`You can change the title of the ${props.titleType} by double-clicking`}
                    placement={'bottom-start'} open={openTooltip} onOpen={setOpenTooltipHandler} arrow followCursor>
             <span onDoubleClick={activateEditMode}>{props.value}</span>

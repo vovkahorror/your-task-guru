@@ -10,9 +10,10 @@ import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
-import {Navigate} from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
 import {authSelectors} from '.';
 import {logIn} from './auth-actions';
+import styles from './Login.module.scss';
 
 type FormikErrorType = {
     email?: string;
@@ -65,21 +66,20 @@ export const Login = () => {
         return <Navigate to={'/'}/>;
     }
 
-    return <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'}>
+    return <Grid container className={styles.container}>
+        <Grid item className={styles.item}>
             <form onSubmit={formik.handleSubmit}>
-                <FormControl>
-                    <FormLabel>
-                        <p>To log in get registered <a href={'https://social-network.samuraijs.com/'}
-                                                       target={'_blank'}>here</a></p>
-                        <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
+                <FormControl className={styles.formControl}>
+                    <FormLabel className={styles.formLabel}>
+                        <p>You can <NavLink to={'/register'}>create your personal account</NavLink>, or if you just want
+                            to test the possibilities of our social network, use your demo account details to login:</p>
+                        <p>Email: <span className={styles.demoData}>free@samuraijs.com</span></p>
+                        <p>Password: <span className={styles.demoData}>free</span></p>
                     </FormLabel>
                     <FormGroup>
                         <TextField
                             label={`${(formik.touched.email && formik.errors.email) ? formik.errors.email : 'Email'}`}
-                            type="email" margin="normal"
+                            type="email" margin="normal" color={'secondary'}
                             error={!!(formik.touched.email && formik.errors.email)}
                             {...formik.getFieldProps('email')}/>
                         <TextField
@@ -87,9 +87,9 @@ export const Login = () => {
                             type="password" margin="normal"
                             error={!!(formik.touched.password && formik.errors.password)}
                             {...formik.getFieldProps('password')}/>
-                        <FormControlLabel label={'Remember me'}
-                                          control={<Checkbox checked={formik.values.rememberMe}
-                                                             {...formik.getFieldProps('rememberMe')}/>}/>
+                        <FormControlLabel label={'Remember me'} control={
+                            <Checkbox checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>
+                        }/>
                         <Button type={'submit'} variant={'contained'} color={'primary'}>
                             Log in
                         </Button>

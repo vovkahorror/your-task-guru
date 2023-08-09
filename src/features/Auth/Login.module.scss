@@ -1,0 +1,33 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+
+  .item {
+    justify-content: center;
+    max-width: 400px;
+
+    .formControl {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      color: #ffffff;
+
+      .formLabel {
+        font-size: 18px;
+        color: #ffffff;
+        line-height: 26px;
+      }
+
+      a {
+        color: #5A94FF;
+        text-decoration: none;
+      }
+
+      .demoData {
+        font-weight: 700;
+        text-decoration: underline;
+      }
+    }
+  }
+}
