@@ -15,12 +15,6 @@ import {authSelectors} from '.';
 import {logIn} from './auth-actions';
 import styles from './Login.module.scss';
 
-type FormikErrorType = {
-    email?: string;
-    password?: string;
-    rememberMe?: boolean;
-}
-
 export const Login = () => {
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
@@ -76,10 +70,10 @@ export const Login = () => {
                         <p>Email: <span className={styles.demoData}>free@samuraijs.com</span></p>
                         <p>Password: <span className={styles.demoData}>free</span></p>
                     </FormLabel>
-                    <FormGroup>
+                    <FormGroup className={styles.formGroup}>
                         <TextField
                             label={`${(formik.touched.email && formik.errors.email) ? formik.errors.email : 'Email'}`}
-                            type="email" margin="normal" color={'secondary'}
+                            type="email" margin="normal"
                             error={!!(formik.touched.email && formik.errors.email)}
                             {...formik.getFieldProps('email')}/>
                         <TextField
@@ -94,6 +88,9 @@ export const Login = () => {
                             Log in
                         </Button>
                     </FormGroup>
+                    <FormLabel className={styles.formLabel}>
+                        <p className={styles.signUp}>Don't have an account? <NavLink to={'/register'}>Sign up</NavLink></p>
+                    </FormLabel>
                 </FormControl>
             </form>
         </Grid>
@@ -104,4 +101,10 @@ type FormValuesType = {
     email: string;
     password: string;
     rememberMe: boolean;
+}
+
+type FormikErrorType = {
+    email?: string;
+    password?: string;
+    rememberMe?: boolean;
 }

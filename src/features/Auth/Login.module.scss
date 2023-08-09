@@ -7,7 +7,8 @@
     justify-content: center;
     max-width: 400px;
 
-    .formControl {
+    .formControl,
+    .formGroup {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -17,10 +18,14 @@
         font-size: 18px;
         color: #ffffff;
         line-height: 26px;
+
+        .signUp {
+          text-align: center;
+        }
       }
 
       a {
-        color: #5A94FF;
+        color: #5a94ff;
         text-decoration: none;
       }
 
@@ -28,6 +33,10 @@
         font-weight: 700;
         text-decoration: underline;
       }
+    }
+
+    .formGroup {
+      gap: 10px;
     }
   }
 }
