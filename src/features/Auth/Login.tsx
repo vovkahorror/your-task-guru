@@ -36,8 +36,8 @@ export const Login = () => {
 
             if (!values.password) {
                 errors.password = 'Password is required';
-            } else if (values.password.length < 6) {
-                errors.password = 'The length must be more than six characters';
+            } else if (values.password.length < 4) {
+                errors.password = 'The length must be more than four characters';
             }
 
             return errors;
