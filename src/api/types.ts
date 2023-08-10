@@ -4,7 +4,7 @@ export type UserType = {
     login: string;
 }
 
-export type LoginParamType = {
+export type LoginParamsType = {
     email: string;
     password: string;
     rememberMe?: boolean;
@@ -77,4 +77,18 @@ export type GetTaskResponse = {
     items: TaskType[];
     totalCount: number;
     error: string;
+}
+
+export type RegisterParamsType = {
+    login: string;
+    email: string;
+    password: string;
+    acceptOffer: boolean
+}
+
+export type RegisterResponseType = {
+    Extra: {
+        email: string;
+        password: string;
+    }
 }

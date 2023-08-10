@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     GetTaskResponse,
-    LoginParamType,
+    LoginParamsType,
     ResponseType,
     TaskType,
     TodolistType,
@@ -18,11 +18,11 @@ const instance = axios.create({
 });
 
 //api
-export const authAPI = {
+export const authApi = {
     me() {
         return instance.get<ResponseType<UserType>>('auth/me');
     },
-    logIn(data: LoginParamType) {
+    logIn(data: LoginParamsType) {
         return instance.post<ResponseType<{ userId: number }>>('auth/login', data);
     },
     logOut() {
