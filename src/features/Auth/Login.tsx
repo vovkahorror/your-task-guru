@@ -70,6 +70,7 @@ export const Login = () => {
                         <p>Email: <span className={styles.demoData}>free@samuraijs.com</span></p>
                         <p>Password: <span className={styles.demoData}>free</span></p>
                     </FormLabel>
+                    <h2 className={styles.title}>Sign In</h2>
                     <FormGroup className={styles.formGroup}>
                         <TextField
                             label={`${(formik.touched.email && formik.errors.email) ? formik.errors.email : 'Email'}`}

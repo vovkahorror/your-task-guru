@@ -90,5 +90,9 @@ export type RegisterResponseType = {
     Extra: {
         email: string;
         password: string;
-    }
+    };
+    Response: [
+        {k: string, v: boolean},
+        {k: string, v: [{message: string}]}
+    ]
 }

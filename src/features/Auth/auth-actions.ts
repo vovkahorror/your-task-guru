@@ -1,11 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {authApi} from '../../api/todolists-api';
-import {setAppStatus} from '../../app/app-reducer';
+import {setAppError, setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {ThunkErrorType} from '../../app/store';
-import {LoginParamsType, RegisterParamsType, ResultCode} from '../../api/types';
-import {registerApi} from '../../api/registration-api';
+import {LoginParamsType, RegisterParamsType, RegisterResponseType, ResultCode} from '../../api/types';
+import {registerApi} from '../../api/register-api';
 
 export const logIn = createAsyncThunk<undefined, LoginParamsType, ThunkErrorType>('auth/login', async (param, {
     dispatch,
@@ -43,7 +43,7 @@ export const logOut = createAsyncThunk('auth/logout', async (_, {dispatch, rejec
     }
 });
 
-export const register = createAsyncThunk<undefined, RegisterParamsType, ThunkErrorType>('auth/register', async (param, {
+export const register = createAsyncThunk<RegisterResponseType, RegisterParamsType, ThunkErrorType>('auth/register', async (param, {
     dispatch, rejectWithValue,
 }) => {
     const {login, email, password, acceptOffer} = param;
@@ -51,7 +51,15 @@ export const register = createAsyncThunk<undefined, RegisterParamsType, ThunkErr
 
     try {
         const res = await registerApi.register(login, email, password, acceptOffer);
-        dispatch(setAppStatus({status: 'succeeded'}));
+
+        if (res.Response[1]?.v[0].message) {
+            dispatch(setAppError({error: res.Response[1]?.v[0].message}));
+            dispatch(setAppStatus({status: 'failed'}));
+            return rejectWithValue({errors: [res.Response[1]?.v[0].message], fieldsErrors: undefined});
+        } else {
+            dispatch(setAppStatus({status: 'succeeded'}))
+            return res;
+        }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue);
     }

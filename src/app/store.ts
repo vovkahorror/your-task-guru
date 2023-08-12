@@ -1,11 +1,9 @@
-import {tasksReducer} from '../features/TodolistsList';
-import {todolistsReducer} from '../features/TodolistsList';
+import {tasksReducer, todolistsReducer} from '../features/TodolistsList';
 import {combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import {appReducer} from '.';
 import {authReducer} from '../features/Auth';
 import {configureStore} from '@reduxjs/toolkit';
-
 import {FieldErrorType} from '../api/types';
 
 const rootReducer = combineReducers({

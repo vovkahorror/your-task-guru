@@ -9,10 +9,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
-import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
-import {Navigate, NavLink} from 'react-router-dom';
-import {authSelectors} from '.';
-import {logIn, register} from './auth-actions';
+import {NavLink} from 'react-router-dom';
+import {register} from './auth-actions';
 import styles from './Login.module.scss';
 import {RegisterParamsType} from '../../api/types';
 
@@ -55,16 +53,8 @@ export const Register = () => {
             return errors;
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            const action = await dispatch(register(values));
-
-            if (logIn.rejected.match(action)) {
-                if (action.payload?.fieldsErrors?.length) {
-                    const error = action.payload?.fieldsErrors[0];
-                    formikHelpers.setFieldError(error.field, error.error);
-                }
-            } else {
-                formik.resetForm();
-            }
+                await dispatch(register(values));
+                // formik.resetForm();
         },
     });
 
@@ -72,32 +62,43 @@ export const Register = () => {
         <Grid item className={styles.item}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl className={styles.formControl}>
-                    <FormLabel className={styles.formLabel}>
-                        <p>You can <NavLink to={'/register'}>create your personal account</NavLink>, or if you just want
-                            to test the possibilities of our social network, use your demo account details to login:</p>
-                        <p>Email: <span className={styles.demoData}>free@samuraijs.com</span></p>
-                        <p>Password: <span className={styles.demoData}>free</span></p>
-                    </FormLabel>
+                    <h2 className={styles.title}>Sign Up</h2>
                     <FormGroup className={styles.formGroup}>
+                        <TextField
+                            label={`${(formik.touched.login && formik.errors.login) ? formik.errors.login : 'Login'}`}
+                            type="text" margin="normal"
+                            error={!!(formik.touched.login && formik.errors.login)}
+                            autoComplete={'new-password'}
+                            {...formik.getFieldProps('login')}/>
                         <TextField
                             label={`${(formik.touched.email && formik.errors.email) ? formik.errors.email : 'Email'}`}
                             type="email" margin="normal"
                             error={!!(formik.touched.email && formik.errors.email)}
+                            autoComplete={'new-password'}
                             {...formik.getFieldProps('email')}/>
                         <TextField
                             label={`${(formik.touched.password && formik.errors.password) ? formik.errors.password : 'Password'}`}
                             type="password" margin="normal"
                             error={!!(formik.touched.password && formik.errors.password)}
+                            autoComplete={'new-password'}
                             {...formik.getFieldProps('password')}/>
-                        <FormControlLabel label={'Remember me'} control={
-                            <Checkbox checked={formik.values.acceptOffer} {...formik.getFieldProps('rememberMe')}/>
+                        <TextField
+                            label={`${(formik.touched.confirmPassword && formik.errors.confirmPassword) ? formik.errors.confirmPassword : 'Confirm password'}`}
+                            type="password" margin="normal"
+                            error={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
+                            autoComplete={'new-password'}
+                            {...formik.getFieldProps('confirmPassword')}/>
+                        <FormControlLabel label={'I consent to the processing of my personal data'} control={
+                            <Checkbox checked={formik.values.acceptOffer} {...formik.getFieldProps('acceptOffer')}/>
                         }/>
-                        <Button type={'submit'} variant={'contained'} color={'primary'}>
-                            Log in
+                        <Button type={'submit'} variant={'contained'} color={'primary'}
+                                disabled={!formik.isValid || !formik.dirty || !formik.values.acceptOffer}>
+                            Register
                         </Button>
                     </FormGroup>
                     <FormLabel className={styles.formLabel}>
-                        <p className={styles.signUp}>Don't have an account? <NavLink to={'/register'}>Sign up</NavLink></p>
+                        <p className={styles.signUp}>Already have an account? <NavLink to={'/login'}>Sign in</NavLink>
+                        </p>
                     </FormLabel>
                 </FormControl>
             </form>

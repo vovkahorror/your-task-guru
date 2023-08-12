@@ -10,6 +10,7 @@ import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {appActions, appSelectors} from '.';
 import {useActions} from '../utils/custom-hooks/useActions';
 import {WithDarkTheme} from '../common/hoc/WithDarkTheme';
+import {Register} from '../features/Auth/Register';
 
 function App() {
     const isInitialized = useAppSelector(appSelectors.selectIsInitialized);
@@ -33,6 +34,7 @@ function App() {
                 <Routes>
                     <Route path={'/'} element={<TodolistsList/>}/>
                     <Route path={'/login'} element={WithDarkTheme(<Login/>)}/>
+                    <Route path={'/register'} element={WithDarkTheme(<Register/>)}/>
                     <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
                     <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>
