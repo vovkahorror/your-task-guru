@@ -9,13 +9,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {register} from './auth-actions';
 import styles from './Login.module.scss';
 import {RegisterParamsType} from '../../api/types';
 
 export const Register = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -53,8 +54,14 @@ export const Register = () => {
             return errors;
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            try {
                 await dispatch(register(values));
-                // formik.resetForm();
+                formik.resetForm();
+                navigate('/login')
+            } catch (e) {
+
+            }
+
         },
     });
 
