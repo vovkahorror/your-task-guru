@@ -54,14 +54,12 @@ export const Register = () => {
             return errors;
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            try {
-                await dispatch(register(values));
+            const action = await dispatch(register(values));
+
+            if (register.fulfilled.match(action)) {
                 formik.resetForm();
-                navigate('/login')
-            } catch (e) {
-
+                navigate('/login');
             }
-
         },
     });
 
