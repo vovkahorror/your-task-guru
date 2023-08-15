@@ -15,16 +15,19 @@ import {authSelectors} from '.';
 import {logIn} from './auth-actions';
 import styles from './Auth.module.scss';
 import {TextWithCopyToClipboard} from '../../components/CopyToClipboardButton/TextWithCopyToClipboard';
+import {Box} from '@mui/material';
 
 export const Login = () => {
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
+    const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl);
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             rememberMe: false,
+            captcha: '',
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
@@ -65,7 +68,7 @@ export const Login = () => {
         <Grid item className={styles.item}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl className={styles.formControl}>
-                    <FormLabel className={styles.formLabel}>
+                    <FormLabel className={`${styles.formLabel} ${styles.infoCard}`}>
                         <p>You can <NavLink to={'/register'}>create your personal account</NavLink>, or if you just want
                             to test the possibilities of our application, use your demo account details to log in:</p>
                         <p>Email: <span className={styles.demoData}>
@@ -91,12 +94,21 @@ export const Login = () => {
                         <FormControlLabel label={'Remember me'} control={
                             <Checkbox checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>
                         }/>
+                        <Box display={captchaUrl ? 'flex' : 'none'} flexDirection={'column'} alignItems={'center'}>
+                            <img src={captchaUrl as string} alt="captcha"/>
+                            <TextField
+                                label={`${(formik.touched.captcha && formik.errors.captcha) ? formik.errors.captcha : 'Captcha'}`}
+                                type="text" margin="normal"
+                                error={!!(formik.touched.captcha && formik.errors.captcha)} autoFocus
+                                {...formik.getFieldProps('captcha')}/>
+                        </Box>
                         <Button type={'submit'} variant={'contained'} color={'primary'}>
                             Log in
                         </Button>
                     </FormGroup>
                     <FormLabel className={styles.formLabel}>
-                        <p className={styles.signUp}>Don't have an account? <NavLink to={'/register'}>Sign up</NavLink></p>
+                        <p className={styles.signUp}>Don't have an account? <NavLink to={'/register'}>Sign up</NavLink>
+                        </p>
                     </FormLabel>
                 </FormControl>
             </form>
@@ -108,10 +120,12 @@ type FormValuesType = {
     email: string;
     password: string;
     rememberMe: boolean;
+    captcha: string;
 }
 
 type FormikErrorType = {
     email?: string;
     password?: string;
     rememberMe?: boolean;
+    captcha?: string;
 }

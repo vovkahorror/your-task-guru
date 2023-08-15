@@ -1,11 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {authApi} from '../../api/todolists-api';
+import {authApi, securityApi} from '../../api/todolists-api';
 import {setAppError, setAppMessage, setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {ThunkErrorType} from '../../app/store';
 import {LoginParamsType, RegisterParamsType, RegisterResponseType, ResultCode} from '../../api/types';
 import {registerApi} from '../../api/register-api';
+import {setCaptchaUrl} from './auth-reducer';
 
 export const logIn = createAsyncThunk<undefined, LoginParamsType, ThunkErrorType>('auth/login', async (param, {
     dispatch,
@@ -18,6 +19,10 @@ export const logIn = createAsyncThunk<undefined, LoginParamsType, ThunkErrorType
 
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setAppStatus({status: 'succeeded'}));
+            dispatch(setCaptchaUrl({captchaUrl: null}));
+        } else if (res.data.resultCode === ResultCode.Captcha) {
+            dispatch(getCaptchaUrl());
+            return handleServerAppError(res.data, dispatch, rejectWithValue, false);
         } else {
             return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
@@ -57,11 +62,16 @@ export const register = createAsyncThunk<RegisterResponseType, RegisterParamsTyp
             dispatch(setAppStatus({status: 'failed'}));
             return rejectWithValue({errors: [res.Response[1]?.v[0].message], fieldsErrors: undefined});
         } else {
-            dispatch(setAppMessage({message: `We have sent a confirmation email to ${email}`}))
-            dispatch(setAppStatus({status: 'succeeded'}))
+            dispatch(setAppMessage({message: `We have sent a confirmation email to ${email}`}));
+            dispatch(setAppStatus({status: 'succeeded'}));
             return res;
         }
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue);
     }
+});
+
+export const getCaptchaUrl = createAsyncThunk('auth/getCaptchaUrl', async (_, {dispatch}) => {
+    const response = await securityApi.getCaptchaUrl();
+    dispatch(setCaptchaUrl({captchaUrl: response.data.url}));
 });

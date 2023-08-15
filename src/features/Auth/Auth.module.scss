@@ -14,6 +14,13 @@
       gap: 20px;
       color: #ffffff;
 
+      .infoCard {
+        margin-bottom: 40px;
+        padding: 10px;
+        border: 2px solid #ffffff;
+        border-radius: 10px;
+      }
+
       .formLabel {
         font-size: 18px;
         color: #ffffff;
@@ -22,16 +29,16 @@
         .signUp {
           text-align: center;
         }
-      }
 
-      a {
-        color: #5a94ff;
-        text-decoration: none;
-      }
+        a {
+          color: #5a94ff;
+          text-decoration: none;
+        }
 
-      .demoData {
-        font-weight: 700;
-        text-decoration: underline;
+        .demoData {
+          font-weight: 700;
+          text-decoration: underline;
+        }
       }
     }
 
