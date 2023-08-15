@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 
 export const TextWithCopyToClipboard: FC<TextWithCopyToClipboardPropsType> = ({text}) => {
     const [open, setOpen] = useState(false);
+
     const handleClick = () => {
         setOpen(true);
         navigator.clipboard.writeText(text);
