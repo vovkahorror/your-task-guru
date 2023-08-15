@@ -12,16 +12,14 @@ export const TextWithCopyToClipboard: FC<TextWithCopyToClipboardPropsType> = ({t
     };
 
     return (
-        <>
-            <Tooltip title={'Copied'} open={open} placement={'bottom'} followCursor>
+        <Tooltip title={'Copied'} open={open} placement={'bottom'} followCursor>
                 <span>
                     {text}
                     <IconButton onClick={handleClick}>
                         <ContentCopyIcon/>
                     </IconButton>
                 </span>
-            </Tooltip>
-        </>
+        </Tooltip>
     );
 };
 
