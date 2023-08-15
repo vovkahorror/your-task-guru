@@ -19,6 +19,16 @@
         padding: 10px;
         border: 2px solid #ffffff;
         border-radius: 10px;
+
+        @media (max-width: 768px) {
+          margin-bottom: 30px;
+        }
+
+        p {
+          @media (max-width: 768px) {
+            font-size: 16px;
+          }
+        }
       }
 
       .formLabel {

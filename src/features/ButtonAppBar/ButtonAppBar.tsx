@@ -25,7 +25,7 @@ export default function ButtonAppBar() {
                                 variant="h6" component="div">
                         <img className={styles.logo} src={logo} alt='logo'/>
                     </Typography>
-                    <Typography fontFamily={'Monster Reading'} fontSize={'36px'} flexGrow={1} marginBottom={'-14px'} variant="h6" component="div">
+                    <Typography className={styles.title} variant="h6" component="div">
                         Your Task Guru
                     </Typography>
                     {isLoggedIn && <Button color="inherit" onClick={logOut}>Log out</Button>}

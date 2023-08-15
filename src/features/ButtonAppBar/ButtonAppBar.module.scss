@@ -7,6 +7,21 @@
 
     .logo {
       width: 80px;
+
+      @media (max-width: 768px) {
+        width: 60px;
+      }
+    }
+  }
+
+  .title {
+    flex-grow: 1;
+    margin-bottom: -14px;
+    font-family: 'Monster Reading', sans-serif;
+    font-size: 36px;
+
+    @media (max-width: 768px) {
+      font-size: 30px;
     }
   }
 
