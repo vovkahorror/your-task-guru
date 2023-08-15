@@ -7,12 +7,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {FormikHelpers, useFormik} from 'formik';
+import {useFormik} from 'formik';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import {NavLink, useNavigate} from 'react-router-dom';
 import {register} from './auth-actions';
-import styles from './Login.module.scss';
-import {RegisterParamsType} from '../../api/types';
+import styles from './Auth.module.scss';
 
 export const Register = () => {
     const dispatch = useAppDispatch();
@@ -53,7 +52,7 @@ export const Register = () => {
 
             return errors;
         },
-        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+        onSubmit: async (values) => {
             const action = await dispatch(register(values));
 
             if (register.fulfilled.match(action)) {
@@ -110,10 +109,6 @@ export const Register = () => {
         </Grid>
     </Grid>;
 };
-
-type FormValuesType = RegisterParamsType & {
-    confirmPassword: string;
-}
 
 type FormikErrorType = {
     login?: string;

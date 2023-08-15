@@ -13,7 +13,8 @@ import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
 import {Navigate, NavLink} from 'react-router-dom';
 import {authSelectors} from '.';
 import {logIn} from './auth-actions';
-import styles from './Login.module.scss';
+import styles from './Auth.module.scss';
+import {TextWithCopyToClipboard} from '../../components/CopyToClipboardButton/TextWithCopyToClipboard';
 
 export const Login = () => {
     const dispatch = useAppDispatch();
@@ -66,10 +67,15 @@ export const Login = () => {
                 <FormControl className={styles.formControl}>
                     <FormLabel className={styles.formLabel}>
                         <p>You can <NavLink to={'/register'}>create your personal account</NavLink>, or if you just want
-                            to test the possibilities of our social network, use your demo account details to login:</p>
-                        <p>Email: <span className={styles.demoData}>free@samuraijs.com</span></p>
-                        <p>Password: <span className={styles.demoData}>free</span></p>
+                            to test the possibilities of our application, use your demo account details to log in:</p>
+                        <p>Email: <span className={styles.demoData}>
+                            <TextWithCopyToClipboard text={'free@samuraijs.com'}/>
+                        </span></p>
+                        <p>Password: <span className={styles.demoData}>
+                            <TextWithCopyToClipboard text={'free'}/>
+                            </span></p>
                     </FormLabel>
+
                     <h2 className={styles.title}>Sign In</h2>
                     <FormGroup className={styles.formGroup}>
                         <TextField
