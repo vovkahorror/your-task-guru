@@ -6,6 +6,7 @@ export const slice = createSlice({
     name: 'app',
     initialState: {
         status: 'idle' as RequestStatusType,
+        message: null as string | null,
         error: null as string | null,
         isInitialized: false,
         isShowedTodolistNotification: false,
@@ -15,6 +16,10 @@ export const slice = createSlice({
     reducers: {
         setAppStatus(state, action: PayloadAction<{ status: RequestStatusType }>) {
             state.status = action.payload.status;
+        },
+
+        setAppMessage(state, action: PayloadAction<{ message: string | null }>) {
+            state.message = action.payload.message;
         },
 
         setAppError(state, action: PayloadAction<{ error: string | null }>) {
@@ -43,6 +48,7 @@ export const slice = createSlice({
 
 export const {
     setAppStatus,
+    setAppMessage,
     setAppError,
     setTodolistNotificationShowing,
     setTaskNotificationShowing,

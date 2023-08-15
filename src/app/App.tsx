@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import ButtonAppBar from '../features/ButtonAppBar/ButtonAppBar';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import Container from '@mui/material/Container';
-import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
+import {AlertSnackbar} from '../components/ErrorSnackbar/AlertSnackbar';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from '../features/Auth/Login';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -39,7 +39,7 @@ function App() {
                     <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>
             </Container>
-            <ErrorSnackbar/>
+            <AlertSnackbar/>
         </div>
     );
 }

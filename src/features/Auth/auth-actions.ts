@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {authApi} from '../../api/todolists-api';
-import {setAppError, setAppStatus} from '../../app/app-reducer';
+import {setAppError, setAppMessage, setAppStatus} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {clearTasksAndTodolists} from '../../common/actions/common.actions';
 import {ThunkErrorType} from '../../app/store';
@@ -57,6 +57,7 @@ export const register = createAsyncThunk<RegisterResponseType, RegisterParamsTyp
             dispatch(setAppStatus({status: 'failed'}));
             return rejectWithValue({errors: [res.Response[1]?.v[0].message], fieldsErrors: undefined});
         } else {
+            dispatch(setAppMessage({message: `We have sent a confirmation email to ${email}`}))
             dispatch(setAppStatus({status: 'succeeded'}))
             return res;
         }
