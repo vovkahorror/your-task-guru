@@ -94,7 +94,7 @@ export const Login = () => {
                         <FormControlLabel label={'Remember me'} control={
                             <Checkbox checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>
                         }/>
-                        <Box display={captchaUrl ? 'flex' : 'none'} flexDirection={'column'} alignItems={'center'}>
+                        <Box display={captchaUrl ? 'flex' : 'none'} className={styles.captchaWrapper}>
                             <img src={captchaUrl as string} alt="captcha"/>
                             <TextField
                                 label={`${(formik.touched.captcha && formik.errors.captcha) ? formik.errors.captcha : 'Captcha'}`}

@@ -22,7 +22,7 @@ export const logIn = createAsyncThunk<undefined, LoginParamsType, ThunkErrorType
             dispatch(setCaptchaUrl({captchaUrl: null}));
         } else if (res.data.resultCode === ResultCode.Captcha) {
             dispatch(getCaptchaUrl());
-            return handleServerAppError(res.data, dispatch, rejectWithValue, false);
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
         } else {
             return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
