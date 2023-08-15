@@ -52,6 +52,16 @@
       .captchaWrapper {
         flex-direction: column;
         align-items: center;
+
+        .captchaImageBlock {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          button {
+            transition: 0.3s;
+          }
+        }
       }
     }
   }

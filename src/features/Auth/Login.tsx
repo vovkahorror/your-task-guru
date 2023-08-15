@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -12,15 +12,18 @@ import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
 import {Navigate, NavLink} from 'react-router-dom';
 import {authSelectors} from '.';
-import {logIn} from './auth-actions';
+import {getCaptchaUrl, logIn} from './auth-actions';
 import styles from './Auth.module.scss';
 import {TextWithCopyToClipboard} from '../../components/CopyToClipboardButton/TextWithCopyToClipboard';
 import {Box} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import {Cached} from '@mui/icons-material';
 
 export const Login = () => {
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
     const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl);
+    const [captchaRotation, setCaptchaRotation] = useState(0);
 
     const formik = useFormik({
         initialValues: {
@@ -60,6 +63,12 @@ export const Login = () => {
         },
     });
 
+    const reloadCaptcha = () => {
+        setCaptchaRotation(captchaRotation - 180);
+        formik.setFieldValue('captcha', '');
+        dispatch(getCaptchaUrl());
+    };
+
     if (isLoggedIn) {
         return <Navigate to={'/'}/>;
     }
@@ -94,14 +103,22 @@ export const Login = () => {
                         <FormControlLabel label={'Remember me'} control={
                             <Checkbox checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>
                         }/>
+
                         <Box display={captchaUrl ? 'flex' : 'none'} className={styles.captchaWrapper}>
-                            <img src={captchaUrl as string} alt="captcha"/>
+                            <Box className={styles.captchaImageBlock}>
+                                <img src={captchaUrl as string} alt="captcha"/>
+                                <IconButton onClick={reloadCaptcha}
+                                            style={{transform: `rotate(${captchaRotation}deg)`}}>
+                                    <Cached fontSize={'large'}/>
+                                </IconButton>
+                            </Box>
                             <TextField
                                 label={`${(formik.touched.captcha && formik.errors.captcha) ? formik.errors.captcha : 'Captcha'}`}
                                 type="text" margin="normal"
                                 error={!!(formik.touched.captcha && formik.errors.captcha)} autoFocus
                                 {...formik.getFieldProps('captcha')}/>
                         </Box>
+
                         <Button type={'submit'} variant={'contained'} color={'primary'}>
                             Log in
                         </Button>
