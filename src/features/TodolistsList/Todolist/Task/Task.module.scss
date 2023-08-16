@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
 
+  @media (max-width: 768px) {
+    margin: 10px 0;
+  }
+
   .deleteButton {
     margin-left: 10px;
   }

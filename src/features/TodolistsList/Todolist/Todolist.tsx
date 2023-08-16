@@ -74,7 +74,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     };
 
     return (
-        <Grid item>
+        <Grid item className={styles.todolistWrapper}>
             <Paper className={styles.todolist} elevation={5} sx={{backgroundImage: `url(${paperTextureImage})`}}>
                 <img className={styles.topTape} src={tapeImage} alt=""/>
                 <h3 className={styles.title}>
@@ -116,7 +116,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
 });
 
 const ButtonWithMemo: FC<ButtonWithMemoPropsType> = memo(({variant, color, onClick, title}) => {
-    return <Button variant={variant} color={color} onClick={onClick}>{title}</Button>;
+    return <Button className={styles.filterButton} variant={variant} color={color} onClick={onClick}>{title}</Button>;
 });
 
 type ColorType = 'error' | 'inherit' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | undefined;

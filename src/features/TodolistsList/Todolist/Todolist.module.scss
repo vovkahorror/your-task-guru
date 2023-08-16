@@ -1,54 +1,75 @@
-.todolist {
-  position: relative;
+.todolistWrapper {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 400px;
-  min-width: 360px;
-  padding: 40px 20px;
-  font-family: Caveat, sans-serif;
-  font-size: 22px;
-  font-weight: 700;
+  justify-content: center;
 
-  .topTape {
-    position: absolute;
-    top: -18px;
-    left: -32px;
-    width: 100px;
-    transform: rotate(-20deg);
+  @media (max-width: 768px) {
+    max-width: 90%;
   }
 
-  .title {
-    font-size: 32px;
-    text-align: center;
-  }
-
-  .deleteButton {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
-
-  .list {
-    margin: 10px 0;
-    list-style-type: none;
-  }
-
-  .buttons {
+  .todolist {
+    position: relative;
     display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
+    flex-direction: column;
+    gap: 20px;
+    max-width: 400px;
+    min-width: 360px;
+    padding: 40px 20px;
+    font-family: Caveat, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
 
-  .bottomTape {
-    @extend .topTape;
-    top: unset;
-    left: unset;
-    bottom: -18px;
-    right: -32px;
-  }
+    @media (max-width: 768px) {
+      max-width: 90%;
+      min-width: unset;
+    }
 
-  * {
-    word-break: break-word;
+    .topTape {
+      position: absolute;
+      top: -18px;
+      left: -32px;
+      width: 100px;
+      transform: rotate(-20deg);
+    }
+
+    .title {
+      font-size: 32px;
+      text-align: center;
+    }
+
+    .deleteButton {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    .list {
+      margin: 10px 0;
+      list-style-type: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+
+      .filterButton {
+        @media (max-width: 768px) {
+          padding: 5px;
+          text-transform: none;
+        }
+      }
+    }
+
+    .bottomTape {
+      @extend .topTape;
+      top: unset;
+      left: unset;
+      bottom: -18px;
+      right: -32px;
+    }
+
+    * {
+      word-break: break-word;
+    }
   }
 }

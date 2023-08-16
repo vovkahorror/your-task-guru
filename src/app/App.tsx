@@ -28,7 +28,7 @@ function App() {
     }
 
     return (
-        <div className="App">
+        <div>
             <ButtonAppBar/>
             <Container maxWidth={false}>
                 <Routes>

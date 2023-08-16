@@ -25,7 +25,7 @@ export const TodolistsList = () => {
         } else {
             helpers.setTitle('');
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -41,11 +41,12 @@ export const TodolistsList = () => {
 
     return (
         <>
-            <Grid className={styles.addTodolist} container justifyContent={'center'} padding={'40px'} marginBottom={'20px'}>
+            <Grid className={styles.addTodolist} container justifyContent={'center'} padding={'40px'}
+                  marginBottom={'20px'}>
                 <AddItemForm addItem={addTodolistHandler}/>
             </Grid>
 
-            <Grid container spacing={10} justifyContent={'center'}>
+            <Grid container className={styles.gridContainer} spacing={10}>
                 {todolists.map(tl => {
                     return (
                         <Todolist key={tl.id}

@@ -25,10 +25,10 @@ export default function ButtonAppBar() {
                                 variant="h6" component="div">
                         <img className={styles.logo} src={logo} alt='logo'/>
                     </Typography>
-                    <Typography className={styles.title} variant="h6" component="div">
+                    <Typography className={styles.title} flexGrow={1} variant="h6" component="div">
                         Your Task Guru
                     </Typography>
-                    {isLoggedIn && <Button color="inherit" onClick={logOut}>Log out</Button>}
+                    {isLoggedIn && <Button className={styles.logOutButton} color="inherit" onClick={logOut}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress color={'success'} className={styles.linearProgress}/>}
             </AppBar>
