@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC, memo, useCallback, useState} from 'react';
 import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,6 +17,7 @@ import {TaskStatuses} from '../../../api/types';
 import tapeImage from '../../../assets/images/tape.png';
 import paperTextureImage from '../../../assets/images/paper-texture.jpg';
 import Box from '@mui/material/Box';
+import {DeleteDialog} from '../../../components/DeleteDialog/DeleteDialog';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
@@ -29,6 +30,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {removeTodolist, changeTodolistTitle, changeFilter} = useActions(todolistsActions);
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
+    const [openDialog, setOpenDialog] = useState(false);
 
     const addTaskHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
         const resultAction = await dispatch(tasksActions.addTask({todolistId: id, title}));
@@ -66,6 +68,14 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
+    const handleClickOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = useCallback(() => {
+        setOpenDialog(false);
+    }, []);
+
     const renderFilterButton = (buttonFilter: FilterValuesType, text: string) => {
         return (
             <ButtonWithMemo variant={filter === buttonFilter ? 'contained' : 'outlined'} color={'success'}
@@ -83,9 +93,13 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                                   isShowedNotification={isShowedTodolistNotification}
                                   setNotificationShowing={setNotificationShowing}/>
                     <IconButton className={styles.deleteButton} aria-label="delete"
-                                disabled={entityStatus === 'loading'} onClick={removeTodolistHandler}>
+                                disabled={entityStatus === 'loading'} onClick={handleClickOpenDialog}>
                         <DeleteIcon/>
                     </IconButton>
+                    <DeleteDialog title={'Are you sure you want to delete this ToDo list?'}
+                                  openDialog={openDialog}
+                                  handleCloseDialog={handleCloseDialog}
+                                  deleteHandler={removeTodolistHandler}/>
                 </h3>
                 <Box alignSelf={'center'}>
                     <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>

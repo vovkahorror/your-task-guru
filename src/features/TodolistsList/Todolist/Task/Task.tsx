@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, memo, useCallback} from 'react';
+import React, {ChangeEvent, FC, memo, useCallback, useState} from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +10,7 @@ import {selectIsShowedTaskNotification, tasksActions} from '../..';
 import {appActions} from '../../../../app';
 import {TaskStatuses} from '../../../../api/types';
 import styles from './Task.module.scss';
+import {DeleteDialog} from '../../../../components/DeleteDialog/DeleteDialog';
 
 export type TaskPropsType = {
     task: TaskDomainType;
@@ -20,6 +21,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     const isShowedTaskNotification = useAppSelector(selectIsShowedTaskNotification);
     const {removeTask, updateTask} = useActions(tasksActions);
     const {setTaskNotificationShowing} = useActions(appActions);
+    const [openDialog, setOpenDialog] = useState(false);
 
     const removeTaskHandler = useCallback(() => {
         removeTask({taskId: task.id, todolistId});
@@ -38,6 +40,14 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
         setTaskNotificationShowing({isShowedTaskNotification});
     }, []);
 
+    const handleClickOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = useCallback(() => {
+        setOpenDialog(false);
+    }, []);
+
     return (
         <li className={`${styles.task} ${task.status === TaskStatuses.Completed ? styles.isDone : ''}`}>
             <Checkbox color={'default'} checked={task.status === TaskStatuses.Completed}
@@ -46,9 +56,13 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
                           disabled={task.entityStatus === 'loading'}
                           isShowedNotification={isShowedTaskNotification}
                           setNotificationShowing={setNotificationShowing}/>
-            <IconButton className={styles.deleteButton} aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={removeTaskHandler}>
+            <IconButton className={styles.deleteButton} aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={handleClickOpenDialog}>
                 <DeleteIcon/>
             </IconButton>
+            <DeleteDialog title={'Are you sure you want to delete this task?'}
+                          openDialog={openDialog}
+                          handleCloseDialog={handleCloseDialog}
+                          deleteHandler={removeTaskHandler}/>
         </li>
     );
 });
