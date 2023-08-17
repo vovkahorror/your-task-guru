@@ -96,7 +96,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                                 disabled={entityStatus === 'loading'} onClick={handleClickOpenDialog}>
                         <DeleteIcon/>
                     </IconButton>
-                    <DeleteDialog title={'Are you sure you want to delete this ToDo list?'}
+                    <DeleteDialog title={'Are you sure you want to delete this To-Do list?'}
                                   openDialog={openDialog}
                                   handleCloseDialog={handleCloseDialog}
                                   deleteHandler={removeTodolistHandler}/>
