@@ -11,6 +11,7 @@ import {appActions} from '../../../../app';
 import {TaskStatuses} from '../../../../api/types';
 import styles from './Task.module.scss';
 import {DeleteDialog} from '../../../../components/DeleteDialog/DeleteDialog';
+import {toFormatDate, toFormatTime} from '../../../../utils/date-utils';
 
 export type TaskPropsType = {
     task: TaskDomainType;
@@ -22,6 +23,9 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     const {removeTask, updateTask} = useActions(tasksActions);
     const {setTaskNotificationShowing} = useActions(appActions);
     const [openDialog, setOpenDialog] = useState(false);
+
+    const date = toFormatDate(task.addedDate);
+    const time = toFormatTime(task.addedDate);
 
     const removeTaskHandler = useCallback(() => {
         removeTask({taskId: task.id, todolistId});

@@ -29,11 +29,28 @@
       left: -32px;
       width: 100px;
       transform: rotate(-20deg);
+      order: 1;
     }
 
     .title {
       font-size: 32px;
       text-align: center;
+    }
+
+    .dateWrapper {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      font-size: 18px;
+      color: #4f4f4f;
+      order: -1;
+
+      span {
+        white-space: nowrap;
+      }
     }
 
     .deleteButton {

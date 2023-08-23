@@ -18,19 +18,23 @@ import tapeImage from '../../../assets/images/tape.png';
 import paperTextureImage from '../../../assets/images/paper-texture.jpg';
 import Box from '@mui/material/Box';
 import {DeleteDialog} from '../../../components/DeleteDialog/DeleteDialog';
+import {toFormatDate, toFormatTime} from '../../../utils/date-utils';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
 }
 
 export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
-    const {id, title, filter, entityStatus} = todolist;
+    const {id, title, addedDate, filter, entityStatus} = todolist;
     let tasks = useAppSelector(selectTasks(id));
     const isShowedTodolistNotification = useAppSelector(selectIsShowedTodolistNotification);
     const {removeTodolist, changeTodolistTitle, changeFilter} = useActions(todolistsActions);
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
     const [openDialog, setOpenDialog] = useState(false);
+
+    const date = toFormatDate(addedDate);
+    const time = toFormatTime(addedDate);
 
     const addTaskHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
         const resultAction = await dispatch(tasksActions.addTask({todolistId: id, title}));
@@ -101,6 +105,10 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                                   handleCloseDialog={handleCloseDialog}
                                   deleteHandler={removeTodolistHandler}/>
                 </h3>
+                <Box className={styles.dateWrapper}>
+                    <span>{date}</span>
+                    <span>{time}</span>
+                </Box>
                 <Box alignSelf={'center'}>
                     <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
                 </Box>
