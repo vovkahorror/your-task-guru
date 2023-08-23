@@ -12,6 +12,7 @@ import {TaskStatuses} from '../../../../api/types';
 import styles from './Task.module.scss';
 import {DeleteDialog} from '../../../../components/DeleteDialog/DeleteDialog';
 import {toFormatDate, toFormatTime} from '../../../../utils/date-utils';
+import Box from '@mui/material/Box';
 
 export type TaskPropsType = {
     task: TaskDomainType;
@@ -67,6 +68,10 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
                           openDialog={openDialog}
                           handleCloseDialog={handleCloseDialog}
                           deleteHandler={removeTaskHandler}/>
+            <Box className={styles.dateWrapper}>
+                <span>{date}</span>
+                <span>{time}</span>
+            </Box>
         </li>
     );
 });
