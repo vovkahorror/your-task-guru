@@ -55,7 +55,7 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
 
     return (
         <li className={`${styles.task} ${task.status === TaskStatuses.Completed ? styles.isDone : ''}`}>
-            <Checkbox color={'default'} checked={task.status === TaskStatuses.Completed}
+            <Checkbox color={'default'} checked={task.status === TaskStatuses.Completed} name={`${task.status}-${task.title}`}
                       disabled={task.entityStatus === 'loading'} onChange={checkHandler}/>
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
                           disabled={task.entityStatus === 'loading'}
