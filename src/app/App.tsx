@@ -17,7 +17,9 @@ function App() {
     const {initializeApp} = useActions(appActions);
 
     useEffect(() => {
-        initializeApp();
+        if (!isInitialized) {
+            initializeApp();
+        }
     }, []);
 
     if (!isInitialized) {
