@@ -9,6 +9,8 @@ import {useActions} from '../../utils/custom-hooks/useActions';
 import {selectTodolists, todolistsActions} from '.';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import styles from './TodolistsList.module.scss';
+import {v1} from 'uuid';
+import {DragDropContext, Droppable} from '@hello-pangea/dnd';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
@@ -46,15 +48,27 @@ export const TodolistsList = () => {
                 <AddItemForm addItem={addTodolistHandler}/>
             </Grid>
 
-            <Grid container className={styles.gridContainer} spacing={10}>
-                {todolists.map(tl => {
-                    return (
-                        <Todolist key={tl.id}
-                                  todolist={tl}
-                        />
-                    );
-                })}
-            </Grid>
+            <DragDropContext onDragEnd={() => {
+            }}>
+                <Droppable droppableId={v1()}>
+                    {(provided) =>
+                        <Grid ref={provided.innerRef}
+                              container
+                              className={styles.gridContainer}
+                              spacing={10}
+                              {...provided.droppableProps}>
+                            {todolists.map(tl => {
+                                return (
+                                    <Todolist key={tl.id}
+                                              todolist={tl}
+                                    />
+                                );
+                            })}
+                            {provided.placeholder}
+                        </Grid>
+                    }
+                </Droppable>
+            </DragDropContext>
         </>
     );
 };
