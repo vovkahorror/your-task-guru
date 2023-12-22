@@ -9,14 +9,26 @@ import {useActions} from '../../utils/custom-hooks/useActions';
 import {selectTodolists, todolistsActions} from '.';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import styles from './TodolistsList.module.scss';
-import {v1} from 'uuid';
-import {DragDropContext, Droppable} from '@hello-pangea/dnd';
+import {closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
+import {
+    horizontalListSortingStrategy, rectSortingStrategy,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
     const todolists = useAppSelector(selectTodolists);
     const {fetchTodolists} = useActions(todolistsActions);
     const dispatch = useAppDispatch();
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        }),
+    );
 
     const addTodolistHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
         const resultAction = await dispatch(todolistsActions.addTodolist(title));
@@ -48,27 +60,41 @@ export const TodolistsList = () => {
                 <AddItemForm addItem={addTodolistHandler}/>
             </Grid>
 
-            <DragDropContext onDragEnd={() => {
-            }}>
-                <Droppable droppableId={v1()}>
-                    {(provided) =>
-                        <Grid ref={provided.innerRef}
-                              container
-                              className={styles.gridContainer}
-                              spacing={10}
-                              {...provided.droppableProps}>
-                            {todolists.map(tl => {
-                                return (
-                                    <Todolist key={tl.id}
-                                              todolist={tl}
-                                    />
-                                );
-                            })}
-                            {provided.placeholder}
-                        </Grid>
-                    }
-                </Droppable>
-            </DragDropContext>
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={() => {
+                }}
+            >
+                <SortableContext
+                    items={todolists}
+                    strategy={rectSortingStrategy}
+                >
+                    <Grid container
+                          className={styles.gridContainer}
+                          spacing={10}>
+                        {todolists.map(tl => {
+                            return (
+                                <Todolist key={tl.id}
+                                          todolist={tl}
+                                />
+                            );
+                        })}
+                    </Grid>
+                </SortableContext>
+            </DndContext>
+
+            {/*<Grid container
+                  className={styles.gridContainer}
+                  spacing={10}>
+                {todolists.map(tl => {
+                    return (
+                        <Todolist key={tl.id}
+                                  todolist={tl}
+                        />
+                    );
+                })}
+            </Grid>*/}
         </>
     );
 };
