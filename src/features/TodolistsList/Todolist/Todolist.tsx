@@ -43,7 +43,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         transition,
     } = useSortable({id});
 
-    const style = {
+    const todolistWrapperStyle = {
         transform: CSS.Transform.toString(transform),
         transition,
     };
@@ -103,7 +103,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     };
 
     return (
-        <Grid item className={styles.todolistWrapper} ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <Grid item className={styles.todolistWrapper} ref={setNodeRef} style={todolistWrapperStyle} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
                 <img className={styles.topTape} src={tapeImage} alt=""/>
