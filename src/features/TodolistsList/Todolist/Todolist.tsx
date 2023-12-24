@@ -27,7 +27,14 @@ export type TodolistPropsType = {
 }
 
 export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
-    const {id, title, addedDate, filter, entityStatus, order} = todolist;
+    const {
+        id,
+        title,
+        addedDate,
+        filter,
+        entityStatus,
+        order,
+    } = todolist;
     let tasks = useAppSelector(selectTasks(id));
     const isShowedTodolistNotification = useAppSelector(selectIsShowedTodolistNotification);
     const {removeTodolist, changeTodolistTitle, changeFilter} = useActions(todolistsActions);
@@ -103,7 +110,8 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     };
 
     return (
-        <Grid item className={styles.todolistWrapper} ref={setNodeRef} style={todolistWrapperStyle} {...attributes} {...listeners}>
+        <Grid item className={styles.todolistWrapper} ref={setNodeRef}
+              style={todolistWrapperStyle} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
                 <img className={styles.topTape} src={tapeImage} alt=""/>
