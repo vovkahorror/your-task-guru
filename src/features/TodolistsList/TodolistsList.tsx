@@ -80,6 +80,7 @@ export const TodolistsList = () => {
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
+                autoScroll={false}
             >
                 <SortableContext
                     items={todolists}
