@@ -33,7 +33,6 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         addedDate,
         filter,
         entityStatus,
-        order,
     } = todolist;
     let tasks = useAppSelector(selectTasks(id));
     const isShowedTodolistNotification = useAppSelector(selectIsShowedTodolistNotification);
