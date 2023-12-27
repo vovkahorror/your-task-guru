@@ -3,7 +3,7 @@ import {ReactNode} from 'react';
 import {ThemeProvider} from '@emotion/react';
 import React from 'react';
 
-export const WithDarkTheme = (component: ReactNode) => {
+export const withDarkTheme = (component: ReactNode) => {
     const darkTheme = createTheme({
         palette: {
             mode: 'dark',

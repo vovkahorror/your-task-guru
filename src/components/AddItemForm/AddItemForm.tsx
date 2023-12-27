@@ -30,7 +30,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
     };
 
     return (
-        <div className={styles.addItemForm}>
+        <div className={styles.addItemForm} data-no-dnd={true}>
             <TextField
                 value={title}
                 onChange={onChangeHandler}

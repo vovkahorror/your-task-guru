@@ -54,14 +54,17 @@ const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     }, []);
 
     return (
-        <li className={`${styles.task} ${task.status === TaskStatuses.Completed ? styles.isDone : ''}`}>
-            <Checkbox color={'default'} checked={task.status === TaskStatuses.Completed} name={`${task.status}-${task.title}`}
+        <li className={`${styles.task} ${task.status === TaskStatuses.Completed ? styles.isDone : ''}`}
+            data-no-dnd={true}>
+            <Checkbox color={'default'} checked={task.status === TaskStatuses.Completed}
+                      name={`${task.status}-${task.title}`}
                       disabled={task.entityStatus === 'loading'} onChange={checkHandler}/>
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} titleType={'task'}
                           disabled={task.entityStatus === 'loading'}
                           isShowedNotification={isShowedTaskNotification}
                           setNotificationShowing={setNotificationShowing}/>
-            <IconButton className={styles.deleteButton} aria-label="delete" disabled={task.entityStatus === 'loading'} onClick={handleClickOpenDialog}>
+            <IconButton className={styles.deleteButton} aria-label="delete" disabled={task.entityStatus === 'loading'}
+                        onClick={handleClickOpenDialog}>
                 <DeleteIcon/>
             </IconButton>
             <DeleteDialog title={'Are you sure you want to delete this task?'}

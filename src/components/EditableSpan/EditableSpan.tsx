@@ -1,7 +1,8 @@
-import React, {ChangeEvent, memo, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import {TitleNotificationTextType} from '../../app/app-reducer';
+import styles from './EditableSpan.module.scss';
 
 type EditableSpanPropsType = {
     value: string;
@@ -30,6 +31,11 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     };
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            activateViewMode();
+        }
+    };
     const setOpenTooltipHandler = () => {
         if (!props.isShowedNotification) {
             props.setNotificationShowing(true);
@@ -38,10 +44,16 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
         }
     };
 
-    return editMode
-        ? <TextField value={title} variant="standard" onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
-        : <Tooltip title={`You can change the title of the ${props.titleType} by double-clicking`}
-                   placement={'bottom-start'} open={openTooltip} onOpen={setOpenTooltipHandler} arrow followCursor>
-            <span onDoubleClick={activateEditMode}>{props.value}</span>
-        </Tooltip>;
+    return (
+        <div data-no-dnd={true}>
+            {editMode
+                ? <TextField size={'small'} value={title} color={'success'} variant="standard"
+                             onChange={changeTitle} onKeyDown={onKeyDownHandler} autoFocus onBlur={activateViewMode}/>
+                : <Tooltip title={`You can change the title of the ${props.titleType} by double-clicking`}
+                           placement={'bottom-start'} open={openTooltip} onOpen={setOpenTooltipHandler} arrow
+                           followCursor>
+                    <span className={styles.title} onDoubleClick={activateEditMode}>{props.value}</span>
+                </Tooltip>}
+        </div>
+    );
 });

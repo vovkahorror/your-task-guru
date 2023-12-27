@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {useAppSelector} from '../utils/custom-hooks/useAppSelector';
 import {appActions, appSelectors} from '.';
 import {useActions} from '../utils/custom-hooks/useActions';
-import {WithDarkTheme} from '../common/hoc/WithDarkTheme';
+import {withDarkTheme} from '../common/hoc/withDarkTheme';
 import {Register} from '../features/Auth/Register';
 
 function App() {
@@ -33,8 +33,8 @@ function App() {
             <Container maxWidth={false}>
                 <Routes>
                     <Route path={'/'} element={<TodolistsList/>}/>
-                    <Route path={'/login'} element={WithDarkTheme(<Login/>)}/>
-                    <Route path={'/register'} element={WithDarkTheme(<Register/>)}/>
+                    <Route path={'/login'} element={withDarkTheme(<Login/>)}/>
+                    <Route path={'/register'} element={withDarkTheme(<Register/>)}/>
                     <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
                     <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>

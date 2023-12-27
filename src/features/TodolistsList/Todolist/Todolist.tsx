@@ -47,10 +47,11 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         setNodeRef,
         transform,
         transition,
+        active
     } = useSortable({id});
 
     const todolistWrapperStyle = {
-        transform: CSS.Transform.toString(transform),
+        transform: CSS.Translate.toString(transform),
         transition,
     };
 
@@ -111,7 +112,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     return (
         <Grid item className={styles.todolistWrapper} ref={setNodeRef}
               style={todolistWrapperStyle} {...attributes} {...listeners}>
-            <Paper className={styles.todolist} elevation={5}
+            <Paper className={`${styles.todolist} ${active ? styles.grabbing : ''}`} elevation={5}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
                 <img className={styles.topTape} src={tapeImage} alt=""/>
                 <h3 className={styles.title}>
@@ -120,7 +121,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                                   isShowedNotification={isShowedTodolistNotification}
                                   setNotificationShowing={setNotificationShowing}/>
                     <IconButton className={styles.deleteButton} aria-label="delete"
-                                disabled={entityStatus === 'loading'} onClick={handleClickOpenDialog}>
+                                disabled={entityStatus === 'loading'} onClick={handleClickOpenDialog} data-no-dnd={true}>
                         <DeleteIcon/>
                     </IconButton>
                     <DeleteDialog title={'Are you sure you want to delete this To-Do list?'}
@@ -149,7 +150,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                     }
                     {!tasks.length && <div>No tasks</div>}
                 </ul>
-                <div className={styles.buttons}>
+                <div className={styles.buttons} data-no-dnd={true}>
                     {renderFilterButton('all', 'All')}
                     {renderFilterButton('active', 'Active')}
                     {renderFilterButton('completed', 'Completed')}

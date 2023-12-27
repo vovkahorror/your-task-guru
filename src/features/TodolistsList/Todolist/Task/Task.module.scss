@@ -3,9 +3,12 @@
   display: flex;
   align-items: center;
   margin: 16px 0;
+  width: max-content;
+  max-width: 100%;
 
   @media (max-width: 768px) {
     margin: 22px 0;
+    width: unset;
   }
 
   .deleteButton {
@@ -20,6 +23,7 @@
     gap: 10px;
     font-size: 14px;
     color: #4f4f4f;
+    white-space: nowrap;
   }
 }
 

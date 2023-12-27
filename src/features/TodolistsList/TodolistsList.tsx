@@ -11,7 +11,7 @@ import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import styles from './TodolistsList.module.scss';
 import {closestCenter, DndContext, DragEndEvent, KeyboardSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from '@dnd-kit/sortable';
-import {SmartPointerSensor} from '../../common/custom-classes/SmartPointerSensor';
+import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
@@ -20,7 +20,7 @@ export const TodolistsList = () => {
     const dispatch = useAppDispatch();
 
     const sensors = useSensors(
-        useSensor(SmartPointerSensor),
+        useSensor(SmartMouseSensor),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
@@ -81,7 +81,7 @@ export const TodolistsList = () => {
                 >
                     <Grid container
                           className={styles.gridContainer}
-                          spacing={10}>
+                          gap={10}>
                         {todolists.map(tl => {
                             return (
                                 <Todolist key={tl.id}
@@ -92,18 +92,6 @@ export const TodolistsList = () => {
                     </Grid>
                 </SortableContext>
             </DndContext>
-
-            {/*<Grid container
-                  className={styles.gridContainer}
-                  spacing={10}>
-                {todolists.map(tl => {
-                    return (
-                        <Todolist key={tl.id}
-                                  todolist={tl}
-                        />
-                    );
-                })}
-            </Grid>*/}
         </>
     );
 };

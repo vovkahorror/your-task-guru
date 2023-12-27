@@ -9,6 +9,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = memo(({title, openDialog,
             onClose={handleCloseDialog}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            data-no-dnd={true}
         >
             <DialogTitle>
                 {title}
