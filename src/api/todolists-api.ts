@@ -8,6 +8,7 @@ import {
     UpdateTaskModelType,
     UserType,
 } from './types';
+import {UniqueIdentifier} from '@dnd-kit/core';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -43,7 +44,7 @@ export const todolistsApi = {
     updateTodolist(todolistId: string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title});
     },
-    reorderTodolist(todolistId: string, putAfterItemId: string) {
+    reorderTodolist(todolistId: UniqueIdentifier, putAfterItemId?: UniqueIdentifier | null) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/reorder`, {putAfterItemId});
     },
     getTasks(todolistId: string) {

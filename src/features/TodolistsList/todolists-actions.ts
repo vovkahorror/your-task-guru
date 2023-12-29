@@ -3,9 +3,10 @@ import {setAppStatus} from '../../app/app-reducer';
 import {todolistsApi} from '../../api/todolists-api';
 import {fetchTasks} from './tasks-actions';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {changeTodolistEntityStatus, setTodolists} from './todolists-reducer';
-import {ThunkErrorType} from '../../app/store';
+import {changeTodolistEntityStatus, setTodolists, TodolistDomainType} from './todolists-reducer';
+import {AppRootStateType, ThunkErrorType} from '../../app/store';
 import {ResultCode, TodolistType} from '../../api/types';
+import {UniqueIdentifier} from '@dnd-kit/core';
 
 export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists', async (_, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}));
@@ -77,6 +78,35 @@ export const changeTodolistTitle = createAsyncThunk<{ todolistId: string, title:
         }
     } catch (e) {
         dispatch(changeTodolistEntityStatus({todolistId: param.todolistId, status: 'failed'}));
+        return handleServerNetworkError(e, dispatch, rejectWithValue);
+    }
+});
+
+export const reorderTodolist = createAsyncThunk<{
+    todolistId: UniqueIdentifier,
+    putAfterItemId: UniqueIdentifier | null
+}, {
+    todolistId: UniqueIdentifier, overTodolistId?: UniqueIdentifier | null
+}, ThunkErrorType>('todolists/reorderTodolist', async (param, {dispatch, rejectWithValue, getState}) => {
+    dispatch(setAppStatus({status: 'loading'}));
+
+    const state = getState() as AppRootStateType;
+    const todolist = state.todolists.find(tl => tl.id === param.todolistId) as TodolistDomainType;
+    const overTodolist = state.todolists.find(tl => tl.id === param.overTodolistId) as TodolistDomainType;
+    const indexOfTodolist = state.todolists.indexOf(todolist);
+    const indexOfOverTodolist = state.todolists.indexOf(overTodolist);
+    const indexOfPutAfterTodolist = indexOfTodolist > indexOfOverTodolist ? indexOfOverTodolist - 1 : indexOfOverTodolist;
+    const putAfterTodolistId = state.todolists[indexOfPutAfterTodolist]?.id;
+
+    try {
+        const res = await todolistsApi.reorderTodolist(param.todolistId, putAfterTodolistId);
+        if (res.data.resultCode === ResultCode.OK) {
+            dispatch(setAppStatus({status: 'succeeded'}));
+            return {todolistId: param.todolistId, putAfterItemId: param.overTodolistId};
+        } else {
+            return handleServerAppError(res.data, dispatch, rejectWithValue);
+        }
+    } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue);
     }
 });

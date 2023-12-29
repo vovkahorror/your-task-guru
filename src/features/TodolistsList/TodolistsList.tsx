@@ -16,7 +16,7 @@ import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
     const todolists = useAppSelector(selectTodolists);
-    const {fetchTodolists} = useActions(todolistsActions);
+    const {fetchTodolists, reorderTodolist} = useActions(todolistsActions);
     const dispatch = useAppDispatch();
 
     const sensors = useSensors(
@@ -41,6 +41,8 @@ export const TodolistsList = () => {
         const {active, over} = event;
 
         if (active.id !== over?.id) {
+            reorderTodolist({todolistId: active.id, overTodolistId: over?.id});
+
             /*setItems((items) => {
                 const oldIndex = items.indexOf(active.id);
                 const newIndex = items.indexOf(over.id);
