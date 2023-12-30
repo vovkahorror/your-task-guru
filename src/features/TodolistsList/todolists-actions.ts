@@ -84,28 +84,32 @@ export const changeTodolistTitle = createAsyncThunk<{ todolistId: string, title:
 
 export const reorderTodolist = createAsyncThunk<{
     todolistId: UniqueIdentifier,
-    putAfterItemId: UniqueIdentifier | null
+    overTodolistId: UniqueIdentifier | null
 }, {
     todolistId: UniqueIdentifier, overTodolistId?: UniqueIdentifier | null
 }, ThunkErrorType>('todolists/reorderTodolist', async (param, {dispatch, rejectWithValue, getState}) => {
     dispatch(setAppStatus({status: 'loading'}));
 
+    const findTodolistById = (todolists: TodolistDomainType[], id?: UniqueIdentifier | null): TodolistDomainType => {
+        return todolists.find(tl => tl.id === id) as TodolistDomainType;
+    };
+
     const state = getState() as AppRootStateType;
-    const todolist = state.todolists.find(tl => tl.id === param.todolistId) as TodolistDomainType;
-    const overTodolist = state.todolists.find(tl => tl.id === param.overTodolistId) as TodolistDomainType;
-    const indexOfTodolist = state.todolists.indexOf(todolist);
-    const indexOfOverTodolist = state.todolists.indexOf(overTodolist);
-    const indexOfPutAfterTodolist = indexOfTodolist > indexOfOverTodolist ? indexOfOverTodolist - 1 : indexOfOverTodolist;
-    const putAfterTodolistId = state.todolists[indexOfPutAfterTodolist]?.id;
+    const sourceTodolist = findTodolistById(state.todolists, param.todolistId);
+    const overTodolist = findTodolistById(state.todolists, param.overTodolistId);
+    const sourceTodolistIndex = state.todolists.indexOf(sourceTodolist);
+    const overTodolistIndex = state.todolists.indexOf(overTodolist);
+    const putAfterTodolistIndex = sourceTodolistIndex > overTodolistIndex ? overTodolistIndex - 1 : overTodolistIndex;
+    const putAfterTodolistId = state.todolists[putAfterTodolistIndex]?.id;
 
     try {
         const res = await todolistsApi.reorderTodolist(param.todolistId, putAfterTodolistId);
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setAppStatus({status: 'succeeded'}));
             return {todolistId: param.todolistId, putAfterItemId: param.overTodolistId};
-        } else {
-            return handleServerAppError(res.data, dispatch, rejectWithValue);
         }
+
+        return handleServerAppError(res.data, dispatch, rejectWithValue);
     } catch (e) {
         return handleServerNetworkError(e, dispatch, rejectWithValue);
     }
