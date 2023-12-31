@@ -84,13 +84,13 @@ export const changeTodolistTitle = createAsyncThunk<{ todolistId: string, title:
 
 export const reorderTodolist = createAsyncThunk<{
     todolistId: UniqueIdentifier,
-    overTodolistId: UniqueIdentifier | null
+    overTodolistId: UniqueIdentifier
 }, {
-    todolistId: UniqueIdentifier, overTodolistId?: UniqueIdentifier | null
+    todolistId: UniqueIdentifier, overTodolistId?: UniqueIdentifier
 }, ThunkErrorType>('todolists/reorderTodolist', async (param, {dispatch, rejectWithValue, getState}) => {
     dispatch(setAppStatus({status: 'loading'}));
 
-    const findTodolistById = (todolists: TodolistDomainType[], id?: UniqueIdentifier | null): TodolistDomainType => {
+    const findTodolistById = (todolists: TodolistDomainType[], id?: UniqueIdentifier): TodolistDomainType => {
         return todolists.find(tl => tl.id === id) as TodolistDomainType;
     };
 
@@ -106,7 +106,7 @@ export const reorderTodolist = createAsyncThunk<{
         const res = await todolistsApi.reorderTodolist(param.todolistId, putAfterTodolistId);
         if (res.data.resultCode === ResultCode.OK) {
             dispatch(setAppStatus({status: 'succeeded'}));
-            return {todolistId: param.todolistId, putAfterItemId: param.overTodolistId};
+            return {todolistId: param.todolistId, overTodolistId: param.overTodolistId};
         }
 
         return handleServerAppError(res.data, dispatch, rejectWithValue);

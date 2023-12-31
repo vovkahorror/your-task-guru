@@ -44,7 +44,7 @@ export const todolistsApi = {
     updateTodolist(todolistId: string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title});
     },
-    reorderTodolist(todolistId: UniqueIdentifier, putAfterItemId?: UniqueIdentifier | null) {
+    reorderTodolist(todolistId: UniqueIdentifier, putAfterItemId?: UniqueIdentifier) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/reorder`, {putAfterItemId});
     },
     getTasks(todolistId: string) {

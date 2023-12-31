@@ -42,13 +42,6 @@ export const TodolistsList = () => {
 
         if (active.id !== over?.id) {
             reorderTodolist({todolistId: active.id, overTodolistId: over?.id});
-
-            /*setItems((items) => {
-                const oldIndex = items.indexOf(active.id);
-                const newIndex = items.indexOf(over.id);
-
-                return arrayMove(items, oldIndex, newIndex);
-            });*/
         }
     }
 
