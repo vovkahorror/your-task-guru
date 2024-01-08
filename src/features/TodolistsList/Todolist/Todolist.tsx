@@ -47,8 +47,10 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         setNodeRef,
         transform,
         transition,
-        active
-    } = useSortable({id});
+        active,
+    } = useSortable({
+        id, animateLayoutChanges: () => false,
+    });
 
     const todolistWrapperStyle = {
         transform: CSS.Translate.toString(transform),
@@ -121,7 +123,8 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
                                   isShowedNotification={isShowedTodolistNotification}
                                   setNotificationShowing={setNotificationShowing}/>
                     <IconButton className={styles.deleteButton} aria-label="delete"
-                                disabled={entityStatus === 'loading'} onClick={handleClickOpenDialog} data-no-dnd={true}>
+                                disabled={entityStatus === 'loading'} onClick={handleClickOpenDialog}
+                                data-no-dnd={true}>
                         <DeleteIcon/>
                     </IconButton>
                     <DeleteDialog title={'Are you sure you want to delete this To-Do list?'}
