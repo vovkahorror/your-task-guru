@@ -12,7 +12,7 @@ export class SmartMouseSensor extends MouseSensor {
     ];
 }
 
-function shouldHandleEvent(element: HTMLElement | null) {
+export function shouldHandleEvent(element: HTMLElement | null) {
     let cur = element;
 
     while (cur) {

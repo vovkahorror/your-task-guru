@@ -12,6 +12,7 @@ import styles from './TodolistsList.module.scss';
 import {closestCenter, DndContext, DragEndEvent, KeyboardSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
+import {SmartTouchSensor} from '../../common/custom-sensors/SmartTouchSensor';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
@@ -21,6 +22,7 @@ export const TodolistsList = () => {
 
     const sensors = useSensors(
         useSensor(SmartMouseSensor),
+        useSensor(SmartTouchSensor),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
