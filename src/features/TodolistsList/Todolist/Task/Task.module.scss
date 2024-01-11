@@ -2,13 +2,12 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin: 16px 0;
+  margin-bottom: 16px;
   width: max-content;
   max-width: 100%;
 
   @media (max-width: 768px) {
-    margin: 22px 0;
-    width: unset;
+    margin-bottom: 20px;
   }
 
   .deleteButton {

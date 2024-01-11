@@ -28,6 +28,8 @@ export const TodolistsList = () => {
         }),
     );
 
+    const isMobile = () => window.innerWidth <= 768;
+
     const addTodolistHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
         const resultAction = await dispatch(todolistsActions.addTodolist(title));
 
@@ -45,7 +47,7 @@ export const TodolistsList = () => {
         if (active.id !== over?.id) {
             reorderTodolist({todolistId: active.id, overTodolistId: over?.id});
         }
-    }
+    };
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -70,7 +72,7 @@ export const TodolistsList = () => {
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
-                autoScroll={false}
+                autoScroll={isMobile()}
             >
                 <SortableContext
                     items={todolists}
