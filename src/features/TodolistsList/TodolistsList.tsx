@@ -22,7 +22,12 @@ export const TodolistsList = () => {
 
     const sensors = useSensors(
         useSensor(SmartMouseSensor),
-        useSensor(SmartTouchSensor),
+        useSensor(SmartTouchSensor, {
+            activationConstraint: {
+                delay: 300,
+                tolerance: 8,
+            },
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
