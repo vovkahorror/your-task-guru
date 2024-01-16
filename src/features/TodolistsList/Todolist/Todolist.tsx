@@ -41,7 +41,6 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isMobile}) => {
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
     const [openDialog, setOpenDialog] = useState(false);
-    console.log(isMobile);
 
     const {
         isDragging,
@@ -115,7 +114,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isMobile}) => {
 
     return (
         <Grid item
-              className={`${styles.todolistWrapper} ${isDragging ? styles.grabbing : ''} ${(isDragging && isMobile) ? styles.scale : ''}`}
+              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''} ${(isDragging && isMobile) ? styles.mobile : ''}`}
               ref={setNodeRef} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5} style={todolistStyle}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
