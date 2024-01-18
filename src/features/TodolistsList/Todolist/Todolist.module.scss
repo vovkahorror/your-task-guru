@@ -96,9 +96,8 @@
 
 .dragging {
   cursor: grabbing;
-  transform: rotate(2deg);
 }
 
 .mobile {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(2deg);
 }
