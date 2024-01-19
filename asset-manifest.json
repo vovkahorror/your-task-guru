@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/your-task-guru/static/css/main.76edbb8d.css",
+    "main.css": "/your-task-guru/static/css/main.ed07d31c.css",
     "main.js": "/your-task-guru/static/js/main.fc6fa8a1.js",
     "static/media/logo-light.png": "/your-task-guru/static/media/logo-light.907bfb9c7ecb76139e09.png",
     "static/media/monsterreading-webfont.woff2": "/your-task-guru/static/media/monsterreading-webfont.7b867ba9808ab5023240.woff2",
@@ -9,11 +9,11 @@
     "static/media/wood-texture.jpg": "/your-task-guru/static/media/wood-texture.15dd43487107bd448ee7.jpg",
     "static/media/tape.png": "/your-task-guru/static/media/tape.1ac2cf139bf4e56b6b56.png",
     "index.html": "/your-task-guru/index.html",
-    "main.76edbb8d.css.map": "/your-task-guru/static/css/main.76edbb8d.css.map",
+    "main.ed07d31c.css.map": "/your-task-guru/static/css/main.ed07d31c.css.map",
     "main.fc6fa8a1.js.map": "/your-task-guru/static/js/main.fc6fa8a1.js.map"
   },
   "entrypoints": [
-    "static/css/main.76edbb8d.css",
+    "static/css/main.ed07d31c.css",
     "static/js/main.fc6fa8a1.js"
   ]
 }
