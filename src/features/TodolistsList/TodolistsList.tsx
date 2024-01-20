@@ -50,7 +50,7 @@ export const TodolistsList = () => {
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
 
-        if (active.id !== over?.id) {
+        if (over && (active.id !== over.id)) {
             reorderTodolist({todolistId: active.id, overTodolistId: over?.id});
         }
     };
@@ -91,7 +91,6 @@ export const TodolistsList = () => {
                             return (
                                 <Todolist key={tl.id}
                                           todolist={tl}
-                                          isMobile={isMobile}
                                 />
                             );
                         })}

@@ -3,7 +3,7 @@
   justify-content: center;
   align-self: flex-start;
   cursor: grab;
-  transition: 0.2s ease-in;
+  transition: 0.2s ease-out;
 
   @media (max-width: 768px) {
     max-width: 90%;
@@ -96,8 +96,5 @@
 
 .dragging {
   cursor: grabbing;
-}
-
-.mobile {
-  transform: scale(1.1) rotate(2deg);
+  transform: scale(1.05) rotate(2deg);
 }

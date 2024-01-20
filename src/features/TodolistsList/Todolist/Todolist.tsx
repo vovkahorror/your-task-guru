@@ -24,10 +24,9 @@ import {CSS} from '@dnd-kit/utilities';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
-    isMobile: boolean;
 }
 
-export const Todolist: FC<TodolistPropsType> = memo(({todolist, isMobile}) => {
+export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {
         id,
         title,
@@ -114,7 +113,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isMobile}) => {
 
     return (
         <Grid item
-              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''} ${(isDragging && isMobile) ? styles.mobile : ''}`}
+              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''}`}
               ref={setNodeRef} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5} style={todolistStyle}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
