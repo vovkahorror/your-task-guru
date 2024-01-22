@@ -14,6 +14,12 @@ import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from 
 import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
 import {SmartTouchSensor} from '../../common/custom-sensors/SmartTouchSensor';
 import {useScreenSize} from '../../utils/custom-hooks/useScreenSize';
+import {
+    restrictToFirstScrollableAncestor,
+    restrictToHorizontalAxis,
+    restrictToParentElement,
+    restrictToVerticalAxis, restrictToWindowEdges,
+} from '@dnd-kit/modifiers';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
@@ -79,6 +85,7 @@ export const TodolistsList = () => {
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
                 autoScroll={isMobile}
+                modifiers={[restrictToParentElement, restrictToWindowEdges]}
             >
                 <SortableContext
                     items={todolists}
