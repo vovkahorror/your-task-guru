@@ -5,3 +5,9 @@
 .gridContainer {
   justify-content: center;
 }
+
+.dragOverlay {
+  transition: 0.2s ease-out;
+  cursor: grabbing;
+  transform: scale(1.05) rotate(2deg);
+}

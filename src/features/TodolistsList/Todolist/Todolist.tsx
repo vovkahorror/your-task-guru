@@ -24,9 +24,10 @@ import {CSS} from '@dnd-kit/utilities';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
+    isActive?: boolean;
 }
 
-export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
+export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
     const {
         id,
         title,
@@ -48,9 +49,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
         setNodeRef,
         transform,
         transition,
-    } = useSortable({
-        id, animateLayoutChanges: () => false,
-    });
+    } = useSortable({id});
 
     const todolistStyle = {
         transform: CSS.Translate.toString(transform),
@@ -113,7 +112,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
 
     return (
         <Grid item
-              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''}`}
+              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''} ${isActive ? styles.active : ''}`}
               ref={setNodeRef} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5} style={todolistStyle}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
