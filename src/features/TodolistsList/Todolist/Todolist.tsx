@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useState} from 'react';
 import {EditableSpan} from '../../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -41,6 +41,7 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
     const [openDialog, setOpenDialog] = useState(false);
+    const [active, setActive] = useState(false);
 
     const {
         isDragging,
@@ -49,7 +50,10 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
         setNodeRef,
         transform,
         transition,
-    } = useSortable({id});
+    } = useSortable({
+        id,
+        animateLayoutChanges: () => false,
+    });
 
     const todolistStyle = {
         transform: CSS.Translate.toString(transform),
@@ -110,9 +114,16 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
         );
     };
 
+    useEffect(() => {
+        if (isActive) {
+            setActive(true);
+        }
+
+    }, [isActive]);
+
     return (
         <Grid item
-              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''} ${isActive ? styles.active : ''}`}
+              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''} ${active ? styles.active : ''}`}
               ref={setNodeRef} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5} style={todolistStyle}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>

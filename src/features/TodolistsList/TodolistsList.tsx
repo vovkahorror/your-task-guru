@@ -54,9 +54,9 @@ export const TodolistsList = () => {
         }
     }, []);
 
-    const handleDragStart = ({active}: DragStartEvent) => setActive(active)
+    const handleDragStart = ({active}: DragStartEvent) => setActive(active);
 
-    const handleDragCancel = () => setActive(null)
+    const handleDragCancel = () => setActive(null);
 
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
@@ -114,7 +114,7 @@ export const TodolistsList = () => {
                             );
                         })}
                     </Grid>
-                    <DragOverlay>
+                    <DragOverlay dropAnimation={null}>
                         {active && getActiveTodolist(active.id as string)}
                     </DragOverlay>
                 </SortableContext>
