@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useAppSelector} from '../../utils/custom-hooks/useAppSelector';
 import {Grid} from '@mui/material';
 import {AddItemForm, AddItemFormSubmitHelpersType} from '../../components/AddItemForm/AddItemForm';
@@ -9,26 +9,17 @@ import {useActions} from '../../utils/custom-hooks/useActions';
 import {selectTodolists, todolistsActions} from '.';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import styles from './TodolistsList.module.scss';
-import {
-    Active,
-    closestCenter,
-    DndContext,
-    DragEndEvent,
-    DragOverlay, DragStartEvent,
-    KeyboardSensor,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core';
+import {closestCenter, DndContext, DragEndEvent, KeyboardSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
 import {SmartTouchSensor} from '../../common/custom-sensors/SmartTouchSensor';
+import {restrictToParentElement} from '@dnd-kit/modifiers';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
     const todolists = useAppSelector(selectTodolists);
     const {fetchTodolists, reorderTodolist} = useActions(todolistsActions);
     const dispatch = useAppDispatch();
-    const [active, setActive] = useState<Active | null>(null);
 
     const sensors = useSensors(
         useSensor(SmartMouseSensor),
@@ -54,22 +45,11 @@ export const TodolistsList = () => {
         }
     }, []);
 
-    const handleDragStart = ({active}: DragStartEvent) => setActive(active);
-
-    const handleDragCancel = () => setActive(null);
-
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
 
         if (over && (active.id !== over.id)) {
             reorderTodolist({todolistId: active.id, overTodolistId: over?.id});
-        }
-    };
-
-    const getActiveTodolist = (todolistId: string) => {
-        const activeTodolist = todolists.find(tl => tl.id === todolistId);
-        if (activeTodolist) {
-            return <Todolist todolist={activeTodolist} isActive/>;
         }
     };
 
@@ -95,9 +75,8 @@ export const TodolistsList = () => {
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
-                onDragStart={handleDragStart}
-                onDragCancel={handleDragCancel}
                 onDragEnd={handleDragEnd}
+                modifiers={[restrictToParentElement]}
             >
                 <SortableContext
                     items={todolists}
@@ -114,9 +93,6 @@ export const TodolistsList = () => {
                             );
                         })}
                     </Grid>
-                    <DragOverlay dropAnimation={null}>
-                        {active && getActiveTodolist(active.id as string)}
-                    </DragOverlay>
                 </SortableContext>
             </DndContext>
         </>

@@ -3,9 +3,10 @@
   justify-content: center;
   align-self: flex-start;
   cursor: grab;
+  transition: 0.2s ease-out;
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    max-width: 90%;
   }
 
   .todolist {
@@ -94,11 +95,6 @@
 }
 
 .dragging {
-  visibility: hidden;
-}
-
-.active {
-  transition: 0.2s ease-out;
   cursor: grabbing;
   transform: scale(1.05) rotate(2deg);
 }

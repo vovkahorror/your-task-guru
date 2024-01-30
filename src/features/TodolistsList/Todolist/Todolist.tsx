@@ -24,10 +24,9 @@ import {CSS} from '@dnd-kit/utilities';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
-    isActive?: boolean;
 }
 
-export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
+export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {
         id,
         title,
@@ -41,7 +40,6 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
     const [openDialog, setOpenDialog] = useState(false);
-    const [active, setActive] = useState(false);
 
     const {
         isDragging,
@@ -114,16 +112,9 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist, isActive}) => {
         );
     };
 
-    useEffect(() => {
-        if (isActive) {
-            setActive(true);
-        }
-
-    }, [isActive]);
-
     return (
         <Grid item
-              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''} ${active ? styles.active : ''}`}
+              className={`${styles.todolistWrapper} ${isDragging ? styles.dragging : ''}`}
               ref={setNodeRef} {...attributes} {...listeners}>
             <Paper className={styles.todolist} elevation={5} style={todolistStyle}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
