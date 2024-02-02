@@ -9,8 +9,8 @@ import {useActions} from '../../utils/custom-hooks/useActions';
 import {selectTodolists, todolistsActions} from '.';
 import {useAppDispatch} from '../../utils/custom-hooks/useAppDispatch';
 import styles from './TodolistsList.module.scss';
-import {closestCenter, DndContext, DragEndEvent, KeyboardSensor, useSensor, useSensors} from '@dnd-kit/core';
-import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from '@dnd-kit/sortable';
+import {closestCenter, DndContext, DragEndEvent, useSensor, useSensors} from '@dnd-kit/core';
+import {rectSortingStrategy, SortableContext} from '@dnd-kit/sortable';
 import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
 import {SmartTouchSensor} from '../../common/custom-sensors/SmartTouchSensor';
 import {restrictToParentElement} from '@dnd-kit/modifiers';
@@ -28,9 +28,6 @@ export const TodolistsList = () => {
                 delay: 300,
                 tolerance: 8,
             },
-        }),
-        useSensor(KeyboardSensor, {
-            coordinateGetter: sortableKeyboardCoordinates,
         }),
     );
 
