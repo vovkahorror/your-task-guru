@@ -24,9 +24,10 @@ import {CSS} from '@dnd-kit/utilities';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType;
+    isMobile: boolean;
 }
 
-export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
+export const Todolist: FC<TodolistPropsType> = memo(({todolist, isMobile}) => {
     const {
         id,
         title,
@@ -40,19 +41,20 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     const {setTodolistNotificationShowing} = useActions(appActions);
     const dispatch = useAppDispatch();
     const [openDialog, setOpenDialog] = useState(false);
+    console.log(isMobile);
 
     const {
+        isDragging,
         attributes,
         listeners,
         setNodeRef,
         transform,
         transition,
-        active,
     } = useSortable({
         id, animateLayoutChanges: () => false,
     });
 
-    const todolistWrapperStyle = {
+    const todolistStyle = {
         transform: CSS.Translate.toString(transform),
         transition,
     };
@@ -112,9 +114,10 @@ export const Todolist: FC<TodolistPropsType> = memo(({todolist}) => {
     };
 
     return (
-        <Grid item className={styles.todolistWrapper} ref={setNodeRef}
-              style={todolistWrapperStyle} {...attributes} {...listeners}>
-            <Paper className={`${styles.todolist} ${active ? styles.grabbing : ''}`} elevation={5}
+        <Grid item
+              className={`${styles.todolistWrapper} ${isDragging ? styles.grabbing : ''} ${(isDragging && isMobile) ? styles.scale : ''}`}
+              ref={setNodeRef} {...attributes} {...listeners}>
+            <Paper className={styles.todolist} elevation={5} style={todolistStyle}
                    sx={{backgroundImage: `url(${paperTextureImage})`}}>
                 <img className={styles.topTape} src={tapeImage} alt=""/>
                 <h3 className={styles.title}>

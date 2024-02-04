@@ -13,12 +13,15 @@ import {closestCenter, DndContext, DragEndEvent, KeyboardSensor, useSensor, useS
 import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {SmartMouseSensor} from '../../common/custom-sensors/SmartMouseSensor';
 import {SmartTouchSensor} from '../../common/custom-sensors/SmartTouchSensor';
+import {useScreenSize} from '../../utils/custom-hooks/useScreenSize';
 
 export const TodolistsList = () => {
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn);
     const todolists = useAppSelector(selectTodolists);
     const {fetchTodolists, reorderTodolist} = useActions(todolistsActions);
     const dispatch = useAppDispatch();
+    const screenSize = useScreenSize();
+    const isMobile = screenSize.width <= 768;
 
     const sensors = useSensors(
         useSensor(SmartMouseSensor),
@@ -32,8 +35,6 @@ export const TodolistsList = () => {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
     );
-
-    const isMobile = () => window.innerWidth <= 768;
 
     const addTodolistHandler = useCallback(async (title: string, helpers: AddItemFormSubmitHelpersType) => {
         const resultAction = await dispatch(todolistsActions.addTodolist(title));
@@ -77,7 +78,7 @@ export const TodolistsList = () => {
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
-                autoScroll={isMobile()}
+                autoScroll={isMobile}
             >
                 <SortableContext
                     items={todolists}
@@ -90,6 +91,7 @@ export const TodolistsList = () => {
                             return (
                                 <Todolist key={tl.id}
                                           todolist={tl}
+                                          isMobile={isMobile}
                                 />
                             );
                         })}
