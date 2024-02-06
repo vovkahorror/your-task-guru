@@ -42,6 +42,11 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
                 error={!!error}
                 helperText={error}
                 disabled={disabled}
+                sx={{
+                    input: {
+                        color: "rgba(0, 0, 0, 0.87)",
+                    }
+                }}
             />
             <Button variant="contained" color={'success'} disabled={disabled}
                     className={styles.button}
