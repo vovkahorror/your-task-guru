@@ -37,6 +37,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled}) 
                 onKeyDown={onKeyDownHandler}
                 label={'Title'}
                 variant="outlined"
+                color={'success'}
                 size="small"
                 error={!!error}
                 helperText={error}
